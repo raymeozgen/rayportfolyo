@@ -64,6 +64,17 @@ body.insp-off .app{grid-template-columns:0 1fr var(--pw)}body.insp-off .right{di
 body:not(.tool-H):not(.tool-I) [data-tag], body:not(.tool-H):not(.tool-I) [data-tag] *{cursor:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2222%22%20height%3D%2226%22%20viewBox%3D%220%200%2022%2026%22%3E%3Cpath%20d%3D%22M2%202%20L2%2021%20L7.5%2016%20L11%2024%20L14%2022.6%20L10.6%2015%20L18%2015%20Z%22%20fill%3D%22%23C8142B%22%20stroke%3D%22%23fff%22%20stroke-width%3D%221.6%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E") 2 2, default}
 #ctag{position:fixed;left:0;top:0;z-index:60;pointer-events:none;background:var(--red);color:#fff;font:600 13px/1.2 var(--f);letter-spacing:0;padding:4px 9px;border-radius:5px 12px 12px 12px;white-space:nowrap;will-change:transform}
 #ctag[hidden]{display:none}
+/* küçük sürprizler */
+#toast{position:fixed;left:50%;bottom:28px;z-index:70;transform:translate(-50%,8px);opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;display:flex;align-items:center;gap:10px;background:#161616;color:#F2F2F0;font:500 13px/1.35 var(--f);letter-spacing:0;padding:11px 16px;border-radius:9px;box-shadow:0 10px 30px rgba(0,0,0,.22);max-width:min(92vw,460px)}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+#toast i{width:8px;height:8px;border-radius:50%;background:#14AE5C;flex:none}
+.cexp{margin-top:34px;border-top:1px solid #E6E6E3;padding-top:20px}
+.cexp .lab2{font-size:12px;font-weight:600;color:#6B6B68;display:block;margin-bottom:12px}
+.cexp .rows{display:flex;flex-wrap:wrap;gap:8px}
+.cexp button{display:flex;align-items:center;gap:10px;border:1px solid #E1E1DE;background:#fff;color:#161616;border-radius:8px;padding:9px 12px;cursor:pointer;font:500 14px/1 var(--f)}
+.cexp button:hover{border-color:#161616}
+.cexp button small{color:#8E8E8A;font-size:12px}
+.sw button{flex-wrap:wrap}.sw button em{font-style:normal;color:var(--mute);font-size:11px;flex-basis:100%;padding-left:34px;margin-top:-4px}
 /* anahat görünümü (⌘Y): renk ve fotoğraf kalkar, iskelet ve tip ölçüleri kalır */
 :root{--olk:#161616;--olc:rgba(13,153,255,.55)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--olk:#E8E8E6}}
@@ -385,6 +396,7 @@ body.is-print .left,body.is-print .tbx,body.is-print .canvas,body.is-print .righ
 </div></div>
 <div id="frm" hidden><b id="frm-t"></b><span id="frm-s"></span><button type="button" id="frm-x" aria-label="Kapat">✕</button></div>
 <div id="ctag" hidden></div>
+<div id="toast" role="status" aria-live="polite"><i></i><span></span></div>
 <div id="loupe" hidden><canvas width="11" height="11"></canvas><b><i></i><span></span></b></div>
 <div id="ov"><div class="b" id="hv" hidden></div><div class="b" id="sl" hidden><i></i><i></i><i></i><i></i><span id="bd"></span></div></div>
 <div class="lb" id="lb" hidden>
@@ -400,7 +412,7 @@ const UI = {
       size:'Görsel boyutu',mm:'Gerçek ölçü',proj:'Proje',desc:'Açıklama',big:'Büyüt',close:'Kapat',
       copy:'Kopyala',copied:'Kopyalandı',del:'Teslimler',profile:'Profil',note:'Not',card:'Kart',name:'Ad',bio:'Biyografi',info:'Bilgiler',projs:'Projeler',
       email:'E-posta',kapak:'Kapak',files:'Dosyalar',design:'Tasarım',inspect:'İncele',pins:'Yorumlar (⇧C)',grid:'Izgara (⌃G)',zoomIn:'Yakınlaştır (⌘+)',zoomOut:'Uzaklaştır (⌘−)',zoom100:'%100 (⇧0)',exp:'PDF indir',copyCss:'CSS kopyala',measure:'Seçiliyken ⌥ basılı tutup başka bir öğenin üzerine gel: aradaki mesafe kırmızıyla görünür.',role:'Unvan',kind:'Tür',rule:'Kural',list:'Liste',logo:'Logo',portrait:'Portre',city:'Şehir',contact:'İletişim',
-      inspT:'Tasarım panelini aç / kapat',inspX:'Paneli küçült',ysT:'Yapım sırası',ysS:['Çizgi','Değer','Ton','Renk'],ysPlay:'▶ Oynat',ysStop:'■ Durdur',ysN:'Katmanlar final dosyadan türetilir: kontur, üç tonlu değer çalışması, gri ton ve renk.',move:'Seç (V)',hand:'El (H)',eye:'Damlalık (C)',ol:'Anahat (⌘Y)',eyeT:'Damlalık',eyeHint:'Görselin ya da bir öğenin üzerinde gezin, büyüteçte rengi gör. Tıklayınca HEX kodu kopyalanır ve aşağıya eklenir.',eyeNone:'Henüz renk alınmadı.',eyeErr:'Bu görselin rengi okunamadı.',undo:'Geri al (⌘Z)',redo:'Yinele (⇧⌘Z)',reset:'Sıfırla',
+      inspT:'Tasarım panelini aç / kapat',inspX:'Paneli küçült',saveA:'Kaydedildi. Aslında bir şey değiştirmedin ama refleksini sevdim.',saveB:'Değişikliklerin bu tarayıcıda kaldı. Rayme’nin dosyası güvende.',noUndo:'Geri alınacak bir şey yok, her şey olması gerektiği yerde.',expT:'Dışa aktar',expV:'Rayme',expP:'Portfolyo',vcfOk:'Kartvizit indirildi, rehberine ekleyebilirsin.',ysT:'Yapım sırası',ysS:['Çizgi','Değer','Ton','Renk'],ysPlay:'▶ Oynat',ysStop:'■ Durdur',ysN:'Katmanlar final dosyadan türetilir: kontur, üç tonlu değer çalışması, gri ton ve renk.',move:'Seç (V)',hand:'El (H)',eye:'Damlalık (C)',ol:'Anahat (⌘Y)',eyeT:'Damlalık',eyeHint:'Görselin ya da bir öğenin üzerinde gezin, büyüteçte rengi gör. Tıklayınca HEX kodu kopyalanır ve aşağıya eklenir.',eyeNone:'Henüz renk alınmadı.',eyeErr:'Bu görselin rengi okunamadı.',undo:'Geri al (⌘Z)',redo:'Yinele (⇧⌘Z)',reset:'Sıfırla',
       pos:'Konum',text:'Metin',fsize:'Boyut',color:'Renk',opacity:'Opaklık',rot:'Açı',scale:'Ölçek',
       hide:'Gizle',show:'Göster',parent:'Üst katman',child:'Alt katman',resetEl:'Sıfırla',open:'Sayfaya git',hidden:'gizli',
       kinds:{frame:'Çerçeve',group:'Grup',text:'Metin',char:'Harf',img:'Görsel'},
@@ -410,7 +422,7 @@ const UI = {
       size:'Image size',mm:'Actual size',proj:'Project',desc:'Description',big:'Enlarge',close:'Close',
       copy:'Copy',copied:'Copied',del:'Deliverables',profile:'Profile',note:'Note',card:'Card',name:'Name',bio:'Bio',info:'Details',projs:'Projects',
       email:'Email',kapak:'Cover',files:'Files',design:'Design',inspect:'Inspect',pins:'Comments (⇧C)',grid:'Grid (⌃G)',zoomIn:'Zoom in (⌘+)',zoomOut:'Zoom out (⌘−)',zoom100:'100% (⇧0)',exp:'Download PDF',copyCss:'Copy CSS',measure:'With something selected, hold ⌥ and hover another element to see the distance in red.',role:'Role',kind:'Type',rule:'Rule',list:'List',logo:'Logo',portrait:'Portrait',city:'City',contact:'Contact',
-      inspT:'Show / hide design panel',inspX:'Collapse panel',ysT:'Build-up',ysS:['Line','Value','Tone','Colour'],ysPlay:'▶ Play',ysStop:'■ Stop',ysN:'Layers are derived from the final file: contour, three-tone value study, greyscale and colour.',move:'Select (V)',hand:'Hand (H)',eye:'Eyedropper (C)',ol:'Outline (⌘Y)',eyeT:'Eyedropper',eyeHint:'Move over an image or any element to see its colour in the loupe. Click to copy the HEX code and add it below.',eyeNone:'No colours picked yet.',eyeErr:'Could not read this image.',undo:'Undo (⌘Z)',redo:'Redo (⇧⌘Z)',reset:'Reset',
+      inspT:'Show / hide design panel',inspX:'Collapse panel',saveA:'Saved. You didn’t actually change anything, but I like the reflex.',saveB:'Your changes stay in this browser. Rayme’s file is safe.',noUndo:'Nothing to undo. Everything is where it should be.',expT:'Export',expV:'Rayme',expP:'Portfolio',vcfOk:'Contact card downloaded, add it to your contacts.',ysT:'Build-up',ysS:['Line','Value','Tone','Colour'],ysPlay:'▶ Play',ysStop:'■ Stop',ysN:'Layers are derived from the final file: contour, three-tone value study, greyscale and colour.',move:'Select (V)',hand:'Hand (H)',eye:'Eyedropper (C)',ol:'Outline (⌘Y)',eyeT:'Eyedropper',eyeHint:'Move over an image or any element to see its colour in the loupe. Click to copy the HEX code and add it below.',eyeNone:'No colours picked yet.',eyeErr:'Could not read this image.',undo:'Undo (⌘Z)',redo:'Redo (⇧⌘Z)',reset:'Reset',
       pos:'Position',text:'Text',fsize:'Size',color:'Fill',opacity:'Opacity',rot:'Angle',scale:'Scale',
       hide:'Hide',show:'Show',parent:'Parent',child:'Child',resetEl:'Reset',open:'Go to page',hidden:'hidden',
       kinds:{frame:'Frame',group:'Group',text:'Text',char:'Letter',img:'Image'},
@@ -480,7 +492,8 @@ function render(){
   } else if(sec.id==='iletisim'){
     h += '<section class="card contact"'+N(u.card,'frame')+'><span class="lab">'+u.card+'</span><div class="mail"><span class="addr" id="addr"'+N(u.email,'text')+'>'+split('raymeozgen@gmail.com')+'</span>'
       + '<button class="btn" type="button" id="copy">'+u.copy+'</button></div>'
-      + '<p style="margin:22px 0 0"><a href="https://www.linkedin.com/in/rayme-ozgen-6a9b15262/" target="_blank" rel="noopener">linkedin.com/in/rayme-ozgen-6a9b15262</a></p></section>';
+      + '<p style="margin:22px 0 0"><a href="https://www.linkedin.com/in/rayme-ozgen-6a9b15262/" target="_blank" rel="noopener">linkedin.com/in/rayme-ozgen-6a9b15262</a></p>'
+      + '<div class="cexp"><span class="lab2">'+u.expT+'</span><div class="rows"><button type="button" id="x-vcf">'+u.expV+' <small>.vcf</small></button><button type="button" id="x-pdf">'+u.expP+' <small>.pdf</small></button></div></div></section>';
   } else {
     const s = sec.proj;
     h += '<section class="card pcover"'+N(u.kapak,'frame')+'><span class="lab">'+u.kapak+'</span><div class="stack"><div class="nm"><span class="logo"'+N(u.logo,'img')+'>'+P.logos[s.id]+'</span><div><h2'+N(s.name,'text')+'>'+split(s.name)+'</h2><div class="kind"'+N(u.kind,'text')+'>'+esc(s.kind)+'</div></div></div>'
@@ -720,7 +733,8 @@ addEventListener('keydown', e=>{
   if(m && (k==='-'||k==='_')){ e.preventDefault(); zoomBy(0.8); return; }
   if(e.ctrlKey && k.toLowerCase()==='g'){ e.preventDefault(); toggleGrid(); return; }
   if(k==='Alt'){ alt = true; e.preventDefault(); return; }
-  if(m && k.toLowerCase()==='z'){ e.preventDefault(); e.shiftKey ? redo() : undo(); return; }
+  if(m && k.toLowerCase()==='s'){ e.preventDefault(); toast(UI[lang][HIST.length ? 'saveB' : 'saveA']); return; }
+  if(m && k.toLowerCase()==='z'){ e.preventDefault(); if(!e.shiftKey && !HIST.length){ toast(UI[lang].noUndo); return; } e.shiftKey ? redo() : undo(); return; }
   if(m && k.toLowerCase()==='y'){ e.preventDefault(); toggleOl(); return; }
   if(m || e.altKey) return;
   if(e.shiftKey && (k===')'||k==='=' || e.code==='Digit0' || e.code==='Digit1')){ e.preventDefault(); setZoom(1); return; }
@@ -854,6 +868,8 @@ document.addEventListener('click', e=>{
   if(e.target.closest('#lb-x')){ closeLB(); return; }
   if(e.target.closest('#lb-prev')){ stepLB(-1); return; }
   if(e.target.closest('#lb-next')){ stepLB(1); return; }
+  if(e.target.closest('#x-vcf')){ vcf(); return; }
+  if(e.target.closest('#x-pdf')){ download(PDF[lang][0], PDF[lang][1]); return; }
   if(e.target.closest('#copy')){ const b=e.target.closest('#copy'), u=UI[lang];
     try{ navigator.clipboard.writeText('raymeozgen@gmail.com').then(()=>{ b.textContent=u.copied; setTimeout(()=>b.textContent=u.copy,1600); }, ()=>{}); }catch(err){} return; }
   if(e.target.closest('#lang-tr')){ setLang('tr'); return; } if(e.target.closest('#lang-en')){ setLang('en'); return; }
@@ -914,7 +930,7 @@ addEventListener('pointermove', e=>{ if(!olOn || e.pointerType!=='mouse'){ OLH.h
 const LP = $('#loupe'), LC = LP.querySelector('canvas'), LX = LC.getContext('2d'), SW = {}; const IMC = new Map();
 function eyeHTML(){ const u = UI[lang], L = SW[key()]||[];
   return '<div class="grp"><div class="ttlv"><span>'+u.eyeT+'</span></div><div class="k" style="margin-top:6px;line-height:1.5">'+u.eyeHint+'</div></div>'
-    + '<div class="grp">'+(L.length ? '<div class="sw">'+L.map(h=>'<button type="button" data-hex="'+h+'"><i style="background:'+h+'"></i><span>'+h.toUpperCase()+'</span></button>').join('')+'</div>' : '<div class="k">'+u.eyeNone+'</div>')+'</div>'; }
+    + '<div class="grp">'+(L.length ? '<div class="sw">'+L.map(h=>'<button type="button" data-hex="'+h+'"><i style="background:'+h+'"></i><span>'+h.toUpperCase()+'</span>'+((n=>n ? '<em>'+n.name+'</em>' : '')(named(h)))+'</button>').join('')+'</div>' : '<div class="k">'+u.eyeNone+'</div>')+'</div>'; }
 function copyHex(h, lab){ try{ navigator.clipboard.writeText(h.toUpperCase()).catch(()=>{}); }catch(e){} if(lab){ const o = lab.textContent; lab.textContent = UI[lang].copied; setTimeout(()=>{ lab.textContent = o; }, 1200); } }
 function imgData(img){ let c = IMC.get(img.currentSrc||img.src); if(c!==undefined) return c;
   try{ const w = img.naturalWidth, h = img.naturalHeight; if(!w) return null; const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
@@ -936,10 +952,11 @@ function eyeAt(t, X, Y, take, flash){
     if(p){ const d = c.getImageData(p[0]-5, p[1]-5, 11, 11); LX.putImageData(d, 0, 0); const i = (5*11+5)*4; hx = '#'+[d.data[i],d.data[i+1],d.data[i+2]].map(v=>v.toString(16).padStart(2,'0')).join(''); }
     else if(!c){ LP.querySelector('span').textContent = UI[lang].eyeErr; LP.querySelector('i').style.background = 'transparent'; place(X,Y); return; } }
   if(!hx){ hx = hex(cssColor(t)); LX.fillStyle = hx; LX.fillRect(0,0,11,11); }
+  const nm = named(hx); if(nm) hx = nm.hex;
   LX.strokeStyle = 'rgba(0,0,0,.6)'; LX.lineWidth = .12; LX.strokeRect(5.06,5.06,.88,.88);
-  LP.querySelector('span').textContent = hx.toUpperCase(); LP.querySelector('i').style.background = hx; place(X,Y);
+  LP.querySelector('span').textContent = (nm ? nm.name+' · ' : '')+hx.toUpperCase(); LP.querySelector('i').style.background = hx; place(X,Y);
   if(take){ const k = key(), L = SW[k] || (SW[k] = []); const i = L.indexOf(hx); if(i>=0) L.splice(i,1); L.unshift(hx); if(L.length>12) L.pop();
-    copyHex(hx, null); LP.querySelector('span').textContent = UI[lang].copied+' · '+hx.toUpperCase(); inspector(); }
+    copyHex(hx, null); LP.querySelector('span').textContent = UI[lang].copied+' · '+(nm ? nm.name+' · ' : '')+hx.toUpperCase(); if(nm) toast(nm.name+' · '+hx.toUpperCase()); inspector(); }
   if(flash){ clearTimeout(eyeAt.t); eyeAt.t = setTimeout(()=>{ LP.hidden = true; }, 1600); }
   function place(x, y){ LP.hidden = false; const w = 120, nx = x+w+24 > innerWidth ? x-w-18 : x+18, ny = y+170 > innerHeight ? y-170 : y+18; LP.style.transform = 'translate('+nx+'px,'+ny+'px)'; }
 }
@@ -948,6 +965,20 @@ document.addEventListener('mouseleave', ()=>{ LP.hidden = true; });
 function toggleInsp(on){ const off = on==null ? !document.body.classList.contains('insp-off') : !on; document.body.classList.toggle('insp-off', off); $('#t-insp').setAttribute('aria-pressed', !off);
   try{ localStorage.setItem('insp-off', off ? '1' : ''); }catch(e){} dispatchEvent(new Event('resize')); }
 try{ if(localStorage.getItem('insp-off')) document.body.classList.add('insp-off'), $('#t-insp').setAttribute('aria-pressed', false); }catch(e){}
+/* ---------- küçük sürprizler ---------- */
+function toast(msg){ const T = $('#toast'); T.querySelector('span').textContent = msg; T.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(()=>T.classList.remove('on'), 3200); }
+function vcf(){ const v = ['BEGIN:VCARD','VERSION:3.0','N:Özgen;Rayme;;;','FN:Rayme Özgen','TITLE:'+(lang==='tr' ? 'Grafik Tasarımcı' : 'Graphic Designer'),'ADR;TYPE=WORK:;;;Ankara;;;'+(lang==='tr' ? 'Türkiye' : 'Türkiye'),
+    'EMAIL;TYPE=INTERNET:raymeozgen@gmail.com','URL:https://raymeozgen.github.io/rayportfolyo/','X-SOCIALPROFILE;TYPE=linkedin:https://www.linkedin.com/in/rayme-ozgen-6a9b15262/','END:VCARD'].join('\r\n');
+  const u = URL.createObjectURL(new Blob([v], {type:'text/vcard'})); download(u, 'Rayme_Ozgen.vcf'); setTimeout(()=>URL.revokeObjectURL(u), 4000); toast(UI[lang].vcfOk); }
+/* projelerin adı konmuş renkleri: damlalık yakın bir renge denk gelirse adıyla gösterir */
+const NAMED = [['#1E3A2C','Rahvan yeşili','Rahvan green'],['#8FA39A','Rahvan adaçayı','Rahvan sage'],['#9A3A22','Rahvan kiremidi','Rahvan brick'],['#F4F4F2','Rahvan kâğıdı','Rahvan paper'],
+  ['#18171A','Roison siyahı','Roison black'],['#5C1622','Roison bordosu','Roison burgundy'],['#F0F1F1','Roison sisi','Roison mist'],['#6E7074','Roison grafiti','Roison graphite'],
+  ['#74C8A2','Reseplia yeşili','Reseplia green'],['#1D3E31','Reseplia koyu yeşili','Reseplia deep green'],['#F7FCF9','Reseplia nanesi','Reseplia mint'],
+  ['#88458C','Uğur moru','Uğur purple'],['#E7BE6E','Uğur sarısı','Uğur yellow'],['#F4E4C0','Uğur kremi','Uğur cream'],
+  ['#151342','Beyond laciverti','Beyond navy'],['#781119','Beyond bordosu','Beyond burgundy'],['#231F20','Beyond antrasiti','Beyond anthracite']];
+function named(h){ const p = s=>[1,3,5].map(i=>parseInt(s.slice(i,i+2),16)), a = p(h); let best = null, bd = 30;
+  NAMED.forEach(n=>{ const b = p(n[0]), d = Math.hypot(a[0]-b[0], a[1]-b[1], a[2]-b[2]); if(d<bd){ bd = d; best = n; } });
+  return best ? {hex:best[0].toLowerCase(), name:best[lang==='tr' ? 1 : 2]} : null; }
 function togglePins(){ pinsOn = !pinsOn; document.body.classList.toggle('no-pins', !pinsOn); $('#t-pins').setAttribute('aria-pressed', pinsOn); }
 
 /* ---------- ölçü ---------- */
