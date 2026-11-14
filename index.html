@@ -1,0 +1,862 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Rayme Özgen, grafik tasarımcı. Marka kimliği, basılı işler, afiş, katalog ve dijital uygulamalar. Ankara.">
+<meta property="og:title" content="Rayme Özgen · Portfolyo">
+<meta property="og:description" content="Grafik tasarımcı. Marka kimliği, basılı işler ve dijital uygulamalar.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://raymeozgen.github.io/rayportfolyo/">
+<meta property="og:image" content="https://raymeozgen.github.io/rayportfolyo/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://raymeozgen.github.io/rayportfolyo/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23161616'/%3E%3Cpath d='M22 48V16h12a9 9 0 0 1 0 18h-12m12 0 9 14' fill='none' stroke='%23fff' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<title>Rayme Özgen Portfolyo</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* düzen: tasarım programı — solda sayfalar ve katmanlar, ortada tuval, sağda seçili öğenin özellikleri */
+:root{
+  --canvas:#EBEBEA; --panel:#FFFFFF; --line:#E3E3E1; --ink:#161616; --mute:#6B6B68; --lab:#8A8A88;
+  --on:#F1F1EF; --sel:#0D99FF; --selbg:#E5F1FD; --red:#C8142B; --paper:#FFFFFF; --chip:#F1F1EF;
+  --f:"Instrument Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --pw:248px; --iw:264px; --bar:44px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --canvas:#1E1E1E; --panel:#2C2C2C; --line:#3A3A3A; --ink:#F2F2F2; --mute:#A3A39F; --lab:#8E8E8A;
+  --on:#383838; --selbg:#0D99FF33; --chip:#EEEEEC; color-scheme:dark}}
+:root[data-theme="dark"]{--canvas:#1E1E1E; --panel:#2C2C2C; --line:#3A3A3A; --ink:#F2F2F2; --mute:#A3A39F; --lab:#8E8E8A;
+  --on:#383838; --selbg:#0D99FF33; --chip:#EEEEEC; color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--canvas);color:var(--ink);font-family:var(--f);font-size:14px;-webkit-font-smoothing:antialiased;overflow:hidden}
+button{font:inherit;color:inherit}
+.app{height:100%;display:grid;grid-template-rows:var(--bar) 1fr;grid-template-columns:var(--pw) 1fr var(--iw)}
+.bar{grid-column:1/-1;height:var(--bar);flex:none;background:var(--panel);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.bar .who{font-weight:600}
+.bar .path{color:var(--lab)}
+.bar .sp{flex:1}
+.tools{display:flex;align-items:center;gap:2px}
+.tools button{display:grid;place-items:center;min-width:32px;height:30px;padding:0 8px;border:0;border-radius:6px;background:none;cursor:pointer;color:var(--ink)}
+.tools button:hover{background:var(--on)}
+.tools button[aria-pressed="true"]{background:var(--sel);color:#fff}
+.tools button:disabled{opacity:.35;cursor:default;background:none}
+.tools #t-pins[aria-pressed="true"],.tools #t-grid[aria-pressed="true"]{background:var(--selbg);color:var(--sel)}
+#bd[hidden]{display:none}
+body:not(.tool-H) [data-tag], body:not(.tool-H) [data-tag] *{cursor:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2222%22%20height%3D%2226%22%20viewBox%3D%220%200%2022%2026%22%3E%3Cpath%20d%3D%22M2%202%20L2%2021%20L7.5%2016%20L11%2024%20L14%2022.6%20L10.6%2015%20L18%2015%20Z%22%20fill%3D%22%23C8142B%22%20stroke%3D%22%23fff%22%20stroke-width%3D%221.6%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E") 2 2, default}
+#ctag{position:fixed;left:0;top:0;z-index:60;pointer-events:none;background:var(--red);color:#fff;font:600 13px/1.2 var(--f);letter-spacing:0;padding:4px 9px;border-radius:5px 12px 12px 12px;white-space:nowrap;will-change:transform}
+#ctag[hidden]{display:none}
+.tools .vs{width:1px;height:18px;background:var(--line);margin:0 6px}
+.tools button[hidden]{display:none}
+.canvas:focus,.canvas:focus-visible{outline:none}
+.f input::-webkit-inner-spin-button,.f input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.f input[type=number]{-moz-appearance:textfield;appearance:textfield}
+.tools #t-reset{font-size:12.5px;font-weight:600}
+.seg{display:flex;border:1px solid var(--line);border-radius:7px;overflow:hidden}
+.seg button{background:none;border:0;padding:5px 10px;cursor:pointer;color:var(--mute);font-weight:600;font-size:12.5px}
+.seg button[aria-pressed="true"]{background:var(--on);color:var(--ink)}
+.left,.right{background:var(--panel);overflow:auto;min-height:0}
+.left{border-right:1px solid var(--line)}
+.right{border-left:1px solid var(--line)}
+.h{font-size:12px;font-weight:600;padding:16px 16px 8px}
+.list{display:flex;flex-direction:column}
+.row{display:flex;align-items:center;gap:6px;height:30px;padding:0 16px;background:none;border:0;text-align:left;cursor:pointer;white-space:nowrap;overflow:hidden;font-size:13px;flex:none}
+.row:hover{background:var(--on)}
+.row.on{background:var(--on);font-weight:600}
+.row.sel{background:var(--selbg)}
+.row .car{width:12px;flex:none;color:var(--lab);font-size:9px;text-align:center}
+.row .ic{width:14px;flex:none;color:var(--lab);font-size:12px;text-align:center;display:grid;place-items:center}
+.row.sel .ic{color:var(--sel)}
+.row .t{overflow:hidden;text-overflow:ellipsis}
+.row.off .t,.row.off .ic{opacity:.4}
+.row .hid{margin-left:auto;font-size:11px;color:var(--lab)}
+.sep{height:1px;background:var(--line);margin-top:10px}
+.canvas{position:relative;overflow:auto;min-width:0;min-height:0;outline:none}
+body.tool-H .canvas{cursor:grab}
+body.panning,body.panning *{cursor:grabbing!important}
+body.dragging,body.dragging *{cursor:default!important}
+.stage{padding:64px 56px 120px;display:flex;flex-direction:column;gap:84px;align-items:center;min-height:100%;user-select:none;-webkit-user-select:none}
+.stage img{-webkit-user-drag:none}
+.counter{position:sticky;top:0;align-self:flex-end;margin:-40px -24px 0 0;color:var(--lab);font-variant-numeric:tabular-nums;font-size:13px}
+.work{width:100%;max-width:1180px;display:flex;flex-direction:column;gap:18px}
+.frames{position:relative;width:100%}
+.fr{position:absolute}
+.fr img{display:block;width:100%;height:100%;object-fit:cover;background:var(--paper)}
+.fr.box img{box-shadow:0 1px 2px rgba(0,0,0,.06),0 10px 30px -12px rgba(0,0,0,.18)}
+.fr.cut img{object-fit:contain;background:none;filter:drop-shadow(0 10px 18px rgba(0,0,0,.16))}
+.fr .lab{position:absolute;left:0;top:-21px;font-size:12px;color:var(--lab);white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.fr.isSel .lab{color:var(--sel)}
+.fr.isSel{z-index:5}
+p,.cap,.lead,.small,.rule,.kv span,.cm,.empty,.v{text-wrap:pretty}
+.cap{font-size:16px;line-height:1.5;max-width:70ch;color:var(--mute);margin-top:34px}
+.cap b{color:var(--ink);font-weight:600}
+.wt{margin:0 0 -6px;font-size:17px;font-weight:600;letter-spacing:-.01em;color:var(--ink)}
+.card{background:var(--paper);color:#161616;box-shadow:0 1px 2px rgba(0,0,0,.06),0 10px 30px -12px rgba(0,0,0,.16);position:relative}
+.card .lab{position:absolute;left:0;top:-21px;font-size:12px;color:var(--lab)}
+.pcover{width:min(100%,1180px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:48px;padding:44px}
+.pcover .nm{display:flex;align-items:center;gap:18px}
+.pcover .logo{display:block;flex:none}
+.pcover .nm > div{flex:1;min-width:0}
+.pcover .nm > div{min-width:0}
+.pcover h2{white-space:nowrap;font-size:var(--fit,clamp(20px,2.1cqi,30px));letter-spacing:-.03em;line-height:1;margin:0;text-wrap:nowrap}
+.pcover .kind{color:#6B6B68;margin-top:6px}
+.pcover .rule{font-size:var(--fit,clamp(22px,2.4cqi,30px));font-weight:500;letter-spacing:-.025em;line-height:1.15;margin:28px 0 0;text-wrap:balance}
+.pcover p{font-size:15.5px;line-height:1.6;margin:0;max-width:62ch}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{background:var(--chip);color:#161616;border-radius:6px;padding:6px 10px 5px;font-size:13px;font-weight:500}
+.kv{display:grid;grid-template-columns:72px 1fr;font-size:14px;line-height:1.45;border-top:1px solid #E2E1DD;padding:9px 0}
+.kv span:first-child{color:#6B6B68}
+.small{font-size:13px;color:#6B6B68;line-height:1.55}
+.stack{display:flex;flex-direction:column;gap:16px}
+.cover{flex:1;display:grid;place-items:center;width:100%;min-height:60vh}
+.ttl{position:relative;font-weight:700;font-size:var(--fit,clamp(64px,11cqi,150px));letter-spacing:-.05em;line-height:1;padding:4px 18px 10px}
+.cur{position:absolute;pointer-events:none}
+.cur svg{display:block}
+.cur b{letter-spacing:0;line-height:1.2;position:absolute;left:18px;top:22px;background:var(--red);color:#fff;font-size:13px;font-weight:600;padding:4px 9px;border-radius:5px 12px 12px 12px;white-space:nowrap}
+.about{width:min(100%,1180px);padding:44px;display:flex;flex-direction:column;gap:36px}
+.about .nm{position:relative;display:inline-block;align-self:flex-start;max-width:100%;font-weight:700;font-size:var(--fit,clamp(36px,5cqi,56px));letter-spacing:-.04em;line-height:1;padding:4px 8px;margin-left:-8px}
+.about .role{align-self:flex-start}
+.ahead{display:flex;align-items:flex-start;gap:36px}
+.ahead .ph{width:220px;height:220px;flex:none}
+.ahead .ph img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.aname{display:flex;flex-direction:column;gap:14px;min-width:0;flex:1}
+.about .lead{font-size:16px;line-height:1.6;max-width:68ch;margin:0}
+.about .lead b{font-weight:600}
+.city b{display:block;font-size:22px;font-weight:700;letter-spacing:-.02em;line-height:1.2}
+.city span{font-size:13px;color:#6B6B68}
+.about .chips a{text-decoration:none;color:#161616}
+.projs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.proj{display:flex;flex-direction:column;align-items:center;gap:8px;background:none;border:0;padding:10px 4px;border-radius:8px;color:#161616;cursor:default}
+.proj small{color:#6B6B68}
+.cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;border-top:1px solid #E2E1DD;padding-top:22px}
+.cols h4{margin:0 0 8px;font-size:15px}
+.cols ul{list-style:none;margin:0;padding:0;font-size:14px;line-height:1.65;color:#333}
+.note{width:min(100%,1180px);padding:28px 44px}
+.contact{width:min(100%,1000px);padding:56px}
+.mail{display:flex;flex-wrap:wrap;align-items:center;gap:16px}
+.mail .addr{position:relative;font-weight:700;font-size:var(--fit,clamp(20px,5.6cqi,70px));letter-spacing:-.045em;line-height:1.1;padding:4px 8px;margin-left:-8px;white-space:nowrap;min-width:0;max-width:calc(100% + 8px)}
+.btn{border:1px solid #D8D8D5;background:#fff;color:#161616;border-radius:8px;padding:9px 14px;font-weight:600;cursor:pointer}
+.btn:hover{background:#F4F4F2}
+.contact a{color:#161616;display:inline-block;max-width:100%;white-space:nowrap;font-size:var(--fit,clamp(17px,2cqi,23px))}
+/* seçim katmanı */
+#ov{position:fixed;z-index:12;pointer-events:none;overflow:hidden;left:0;top:0;width:0;height:0}
+#ov .b{position:absolute;left:0;top:0;border:1.5px solid var(--sel);will-change:transform}
+#ov .b[hidden]{display:none}
+#sl i{position:absolute;width:8px;height:8px;background:#fff;border:1.5px solid var(--sel)}
+#sl.rs i{pointer-events:auto}#sl.rs i:nth-child(1),#sl.rs i:nth-child(4){cursor:nwse-resize}#sl.rs i:nth-child(2),#sl.rs i:nth-child(3){cursor:nesw-resize}
+body.sizing,body.sizing *{cursor:nwse-resize!important}
+#sl i:nth-child(1){left:-5px;top:-5px}#sl i:nth-child(2){right:-5px;top:-5px}#sl i:nth-child(3){left:-5px;bottom:-5px}#sl i:nth-child(4){right:-5px;bottom:-5px}
+#bd{position:absolute;left:50%;top:100%;margin-top:7px;transform:translateX(-50%);background:var(--sel);color:#fff;font:600 11px/1 var(--f);padding:4px 6px;border-radius:3px;white-space:nowrap;font-variant-numeric:tabular-nums}
+/* özellikler paneli */
+.insp{padding-bottom:24px}
+.insp .grp{padding:6px 16px 14px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
+.insp .k{font-size:12px;color:var(--lab)}
+.insp .v{font-size:13px;line-height:1.5;font-variant-numeric:tabular-nums}
+.insp .ttlv{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px;min-width:0}
+.insp .ttlv span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.insp .ttlv .ic{color:var(--sel);display:grid;place-items:center;width:14px}
+.insp .btn{background:var(--panel);color:var(--ink);border-color:var(--line);padding:7px 12px;font-size:12.5px}
+.insp .btn:hover{background:var(--on)}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.f{display:flex;align-items:center;gap:6px;background:var(--on);border-radius:5px;padding:0 8px;height:30px;font-size:12px;color:var(--lab);min-width:0}
+.f input{width:100%;min-width:0;border:0;background:none;font:inherit;font-size:12.5px;color:var(--ink);font-variant-numeric:tabular-nums;outline:none;padding:0}
+.f:focus-within{box-shadow:inset 0 0 0 1px var(--sel)}
+.f.ro input{color:var(--mute)}
+.f input[type=color]{width:18px;height:18px;flex:none;border:0;padding:0;background:none;cursor:pointer}
+.f .hx{color:var(--ink);font-size:12.5px}
+.acts{display:flex;flex-wrap:wrap;gap:6px}
+.empty{padding:4px 16px;color:var(--lab);font-size:13px;line-height:1.55}
+.keys{margin-top:14px;display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:12px;color:var(--lab)}
+.keys kbd{font:600 11px/1 var(--f);color:var(--ink);background:var(--on);border-radius:4px;padding:4px 6px;justify-self:start}
+.lb[hidden]{display:none}
+.lb{position:fixed;inset:0;background:rgba(14,14,14,.92);display:grid;grid-template-rows:auto 1fr;z-index:50;
+  padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
+.lb header{display:flex;align-items:center;gap:12px;color:#EDEDED;padding:12px 16px}
+.lb header .sp{flex:1}
+.lb header button{background:#2C2C2C;border:0;color:#EDEDED;border-radius:7px;padding:7px 12px;cursor:pointer;font-weight:600}
+.lb .im{min-height:0;display:grid;place-items:center;padding:0 16px 16px}
+.lb img{max-width:100%;max-height:100%;object-fit:contain}
+:focus-visible{outline:2px solid var(--sel);outline-offset:2px}
+/* yakınlaştırma, ızgara, ölçü, yorum, dışa aktarma, dosyalar */
+.stage{margin-inline:auto;position:relative}
+.projs,.cols{position:relative}
+.gl{position:absolute;pointer-events:none;z-index:3;display:none}
+body.grid .gl{display:grid}
+.gl.box{outline:1px dashed rgba(242,72,34,.75)}
+.gl i{background:rgba(242,72,34,.10);outline:1px solid rgba(242,72,34,.28)}
+.ml{position:absolute;background:#F24822}
+.ml.h{height:1px}.ml.v{width:1px}
+.ml b{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#F24822;color:#fff;font:600 11px/1 var(--f);padding:3px 5px;border-radius:3px;white-space:nowrap;font-variant-numeric:tabular-nums}
+#hv.m{border-color:#F24822}
+.zoom{display:flex;align-items:center}
+.zoom #z-pct{min-width:52px;font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums}
+.exp{position:relative}
+.exp #t-exp{gap:6px;display:flex;font-size:12.5px;font-weight:600}
+.menu{position:absolute;top:36px;right:0;z-index:40;background:var(--panel);border:1px solid var(--line);border-radius:8px;box-shadow:0 12px 32px -8px rgba(0,0,0,.25);padding:6px;min-width:250px;display:flex;flex-direction:column}
+.menu[hidden]{display:none}
+.menu button{display:flex;justify-content:space-between;gap:16px;align-items:center;border:0;background:none;text-align:left;padding:9px 10px;border-radius:6px;cursor:pointer;font-size:13px}
+.menu button:hover{background:var(--on)}
+.menu small{color:var(--lab);font-size:12px}
+.pin{position:absolute;top:-13px;right:-13px;z-index:4;width:26px;height:26px;border-radius:13px 13px 13px 3px;border:2px solid #fff;background:var(--red);color:#fff;font:700 12px/1 var(--f);cursor:pointer;display:grid;place-items:center;padding:0;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.cm{position:absolute;top:20px;left:calc(100% - 13px);z-index:6;width:min(280px,80cqi);background:var(--panel);color:var(--ink);border-radius:10px;box-shadow:0 14px 34px -8px rgba(0,0,0,.3);padding:12px 14px;font-size:13px;line-height:1.5;cursor:default}
+.cm[hidden]{display:none}
+.cm.flip{left:auto;right:-13px}
+body.is-home{background:var(--panel)}
+.cm b{display:block;font-size:12.5px;margin-bottom:4px}
+.fr.open{z-index:7}
+body.no-pins .pin,body.no-pins .cm{display:none}
+.tabs{display:flex;gap:4px}
+.tabs button{border:0;background:none;padding:4px 8px;border-radius:5px;font-size:12px;font-weight:600;color:var(--lab);cursor:pointer}
+.tabs button[aria-pressed="true"]{color:var(--ink);background:var(--on)}
+#h-insp{padding:12px 12px 8px}
+.code{margin:0;background:var(--on);border-radius:6px;padding:10px 12px;font:12px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap;word-break:break-word;color:var(--ink);user-select:text}
+.code .p{color:var(--lab)}
+.home{grid-column:1/-1;background:var(--panel);overflow:auto;min-height:0}
+.home[hidden]{display:none}
+body.is-home .left,body.is-home .canvas,body.is-home .right,body.is-home .tools,body.is-home .bar .seg{display:none}
+.dev{height:100%;container-type:inline-size;container-name:dev;background:var(--canvas)}
+body.framed{background:#D4D4D2}
+body.framed .dev{position:fixed;transform-origin:0 0;box-shadow:0 0 0 1px rgba(0,0,0,.08),0 24px 60px -20px rgba(0,0,0,.35);overflow:hidden}
+#frm{position:fixed;z-index:13;display:flex;align-items:center;gap:10px;font-size:12px;color:#555;font-variant-numeric:tabular-nums}
+#frm[hidden]{display:none}
+#frm b{color:#161616;font-weight:600}
+#frm button{border:0;background:none;cursor:pointer;color:#555;font-size:13px;padding:2px 6px;border-radius:4px}
+#frm button:hover{background:rgba(0,0,0,.08)}
+.hh{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px}
+.hh h1{margin:0}
+.presets{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:12px;margin-bottom:48px}
+.preset{display:flex;flex-direction:column;align-items:center;gap:4px;padding:16px 8px 14px;border:1px solid var(--line);border-radius:10px;background:var(--panel);cursor:pointer;color:var(--ink);font:inherit}
+.preset:hover{outline:2px solid var(--sel);outline-offset:-1px}
+.pv{width:64px;height:64px;display:grid;place-items:center;margin-bottom:6px}
+.pv i{display:block;border:1.5px solid var(--ink);border-radius:3px;background:var(--on)}
+.preset b{font-size:13px;font-weight:600}
+.preset small{font-size:11.5px;color:var(--lab);font-variant-numeric:tabular-nums}
+.print{grid-column:1/-1;background:var(--canvas);overflow:auto;min-height:0}
+.print[hidden]{display:none}
+body.is-print .left,body.is-print .canvas,body.is-print .right,body.is-print .tools,body.is-print .bar .seg{display:none}
+.print-in{max-width:1100px;margin:0 auto;padding:40px max(16px,env(safe-area-inset-left,0px)) 80px max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:32px}
+.ph{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.ph h1{font-size:13px;margin:0;font-weight:600}
+.ph h1 span{color:var(--lab);font-weight:500}
+.ph .btn{background:var(--panel);color:var(--ink);border-color:var(--line)}
+.pb{margin:0;display:flex;flex-direction:column;gap:8px}
+.pb figcaption{font-size:12px;color:var(--lab);font-variant-numeric:tabular-nums}
+.pg{background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.06),0 10px 30px -12px rgba(0,0,0,.18)}
+.pg img{display:block;width:100%;height:100%;object-fit:contain}
+.home-in{max-width:980px;margin:0 auto;padding:56px max(16px,env(safe-area-inset-left,0px)) 80px max(16px,env(safe-area-inset-right,0px))}
+.home h1{font-size:13px;font-weight:600;margin:0 0 18px;color:var(--ink)}
+.home h1 span{color:var(--lab);font-weight:500}
+.files{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.file{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--panel);padding:0;cursor:pointer;text-align:left}
+.file:hover{outline:2px solid var(--sel);outline-offset:-1px}
+.th{aspect-ratio:16/10;background:#EBEBEA;display:grid;place-items:center;position:relative}
+.th-t{position:relative;font-weight:700;font-size:44px;letter-spacing:-.05em;line-height:1;color:#161616}
+.th-t .cur{right:-16px;bottom:-24px;transform:scale(.7);transform-origin:top left}
+.fm{display:flex;flex-direction:column;gap:3px;padding:12px 14px;border-top:1px solid var(--line)}
+.fm b{font-size:13.5px}
+.fm span{font-size:12px;color:var(--lab)}
+@container dev (max-width:1240px){.zoom{display:none}}
+@container dev (max-width:1000px){.pcover{grid-template-columns:1fr;gap:28px}}
+@container dev (max-width:1100px){.app{grid-template-columns:var(--pw) 1fr}.right{display:none}}
+@media (max-width:760px){body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--panel)}}
+@container dev (max-width:760px){
+  .app{display:block;height:100%;overflow:auto}
+  .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20}
+  .tools{display:none}
+  .left{position:sticky;top:calc(var(--bar) + env(safe-area-inset-top,0px));z-index:19;border-right:0;border-bottom:1px solid var(--line);overflow:visible}
+  .left .h,.left .sep,#layers{display:none}
+  #pages{flex-direction:row;overflow-x:auto;padding:6px max(8px,env(safe-area-inset-left,0px));gap:4px;scrollbar-width:none}
+  #pages .row{height:32px;border-radius:7px;padding:0 10px}
+  .canvas{overflow:visible}
+  .stage{padding:44px max(16px,env(safe-area-inset-left,0px)) 80px max(16px,env(safe-area-inset-right,0px));gap:64px}
+  .counter{display:none}
+  .pcover{grid-template-columns:1fr;padding:24px;gap:28px}
+  .about,.contact{padding:24px}
+  .ahead{flex-direction:column;align-items:flex-start;gap:18px}
+  .ahead .ph{width:120px;height:120px}
+  .ttl .cur,.about .nm .cur{right:12px!important}
+  .note{padding:20px 24px}
+  .projs{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .cols{grid-template-columns:1fr 1fr}
+  .bar .path{display:none}
+}
+</style>
+
+</head>
+<body>
+<div class="dev" id="dev"><div class="app">
+  <header class="bar">
+    <button type="button" class="who" id="t-home" style="border:0;background:none;padding:0;cursor:pointer;font-weight:600">Rayme Özgen</button><span class="path" id="path"></span><span class="sp"></span>
+    <div class="tools" role="toolbar" aria-label="Araçlar">
+      <button type="button" id="t-move" data-tool="V"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M2 1.5v12l3.4-3.1 2.3 4.6 2-1-2.3-4.5H12z" fill="currentColor"/></svg></button>
+      <button type="button" id="t-hand" data-tool="H"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M5 8V3.2a1 1 0 0 1 2 0V7m0-.5V2.4a1 1 0 0 1 2 0v4.6m0-3.6a1 1 0 0 1 2 0V8m0-2.6a1 1 0 0 1 2 0v4.2c0 3-2 5-4.6 5-2 0-3-.8-4.2-2.4L2.5 9.6a1 1 0 0 1 1.6-1.2L5 9.5"/></svg></button>
+      <span class="vs"></span>
+      <button type="button" id="t-pins"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M8 2.5a5.5 5.5 0 1 1-2.6 10.3L2.5 13.5l.8-2.8A5.5 5.5 0 0 1 8 2.5z"/></svg></button>
+      <button type="button" id="t-grid"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="2.5" y="2.5" width="11" height="11" rx="1"/><path d="M6.2 2.5v11M9.8 2.5v11"/></svg></button>
+      <span class="vs"></span>
+      <button type="button" id="t-undo"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 3 2.5 6l3 3"/><path d="M2.5 6h7a4 4 0 0 1 0 8H7"/></svg></button>
+      <button type="button" id="t-redo"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 3l3 3-3 3"/><path d="M13.5 6h-7a4 4 0 0 0 0 8H9"/></svg></button>
+      <button type="button" id="t-reset" hidden></button>
+      <span class="vs"></span>
+      <div class="zoom"><button type="button" id="z-out" aria-label="−">−</button><button type="button" id="z-pct">100%</button><button type="button" id="z-in" aria-label="+">+</button></div>
+      <span class="vs"></span>
+      <div class="exp"><button type="button" id="t-exp" aria-haspopup="true" aria-expanded="false"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 1.5v8M3.8 6.3 7 9.5l3.2-3.2M2 12.5h10"/></svg><span id="t-exp-l">PDF</span></button>
+        <div class="menu" id="exp-menu" hidden>
+          <button type="button" data-pdf="tr"><span>Portfolyo · Türkçe</span><small>PDF · 9 MB</small></button>
+          <button type="button" data-pdf="en"><span>Portfolio · English</span><small>PDF · 9 MB</small></button>
+        </div></div>
+    </div>
+    <span class="sp"></span>
+    <div class="seg" role="group" aria-label="Dil / Language"><button id="lang-tr" type="button">TR</button><button id="lang-en" type="button">EN</button></div>
+  </header>
+  <nav class="left" aria-label="Sayfalar">
+    <div class="h" id="h-pages"></div><div class="list" id="pages"></div>
+    <div class="sep"></div>
+    <div class="h" id="h-layers"></div><div class="list" id="layers"></div>
+  </nav>
+  <main class="canvas" id="canvas" tabindex="-1"><div class="stage" id="stage"></div></main>
+  <section class="home" id="home" hidden><div class="home-in">
+      <div class="hh"><h1 id="new-h"></h1><div class="seg" role="group" aria-label="Dil / Language"><button type="button" data-nl="tr">TR</button><button type="button" data-nl="en">EN</button></div></div>
+      <div class="presets" id="presets"></div>
+      <h1>Dosyalar <span>· Files</span></h1><div class="files">
+      <button class="file" type="button" data-open="tr"><div class="th"><div class="th-t">Portfolyo</div></div><div class="fm"><b>Portfolyo Türkçe</b><span>8 sayfa</span></div></button>
+      <button class="file" type="button" data-open="en"><div class="th"><div class="th-t">Portfolio</div></div><div class="fm"><b>Portfolyo English</b><span>8 pages</span></div></button>
+    </div></div></section>
+  <section class="print" id="print" hidden></section>
+  <aside class="right" aria-label="Özellikler"><div class="h" id="h-insp"></div><div class="insp" id="insp"></div></aside>
+</div></div>
+<div id="frm" hidden><b id="frm-t"></b><span id="frm-s"></span><button type="button" id="frm-x" aria-label="Kapat">✕</button></div>
+<div id="ctag" hidden></div>
+<div id="ov"><div class="b" id="hv" hidden></div><div class="b" id="sl" hidden><i></i><i></i><i></i><i></i><span id="bd"></span></div></div>
+<div class="lb" id="lb" hidden>
+  <header><span id="lb-t"></span><span class="sp"></span><button id="lb-prev" type="button">←</button><button id="lb-next" type="button">→</button><button id="lb-x" type="button"></button></header>
+  <div class="im"><img id="lb-img" alt=""></div>
+</div>
+
+<script>
+const P = {"data": {"tr": [{"id": "beyond", "name": "Beyond Technologies", "kind": "Kurum içi · 2025–2026", "rule": "", "bio": "Bir savunma sanayi şirketinin bir yıl boyunca basılı, fuar ve dijital işlerinin neredeyse tamamını hazırladım. Ürünü öne çıkaran afiş dilini, fuar duyurularını ve kurumsal uygulamaları tasarladım.", "tags": ["katalog", "billboard", "afiş", "fuar", "roll-up", "kurumsal kimlik", "kırtasiye"], "rows": [["Rol", "Görsel İletişim Uzmanı"], ["Süre", "Kasım 2025 – Kasım 2026"]], "note": "Logotip ve ürün görselleri şirkete aittir.", "works": [{"title": "Master the Future", "desc": "Billboard baskı dosyası, 350 × 190 cm", "frames": [{"src": "img/6d43c51872.jpg", "w": 2000, "h": 1086, "px": "2000 × 1086", "name": "Master the Future"}], "dup": false}, {"title": "Master the Future", "desc": "Billboard, açık ve koyu tema", "frames": [{"src": "img/789936e58e.jpg", "w": 1600, "h": 869, "px": "1600 × 869", "name": "Master the Future 1"}, {"src": "img/b54106314e.jpg", "w": 1600, "h": 869, "px": "1600 × 869", "name": "Master the Future 2"}], "dup": true}, {"title": "BAZNA ürün afişi", "desc": "Açık ve koyu tema", "frames": [{"src": "img/f98506e2dc.jpg", "w": 1000, "h": 1250, "px": "1000 × 1250", "name": "BAZNA ürün afişi 1"}, {"src": "img/1c9b84b741.jpg", "w": 1000, "h": 1250, "px": "1000 × 1250", "name": "BAZNA ürün afişi 2"}], "dup": false}, {"title": "ZİFİRİ ürün afişi", "desc": "", "frames": [{"src": "img/7ae39e39f4.jpg", "w": 1000, "h": 1250, "px": "1000 × 1250", "name": "ZİFİRİ ürün afişi 1"}, {"src": "img/8515c430b0.jpg", "w": 1000, "h": 1250, "px": "1000 × 1250", "name": "ZİFİRİ ürün afişi 2"}], "dup": false}, {"title": "BAZNA roll-up ve ADEX 2026 duyurusu", "desc": "Roll-up 100 × 200 cm", "frames": [{"src": "img/6d081f0cf6.jpg", "w": 854, "h": 1067, "px": "854 × 1067", "name": "BAZNA roll-up ve ADEX 2026 duyurusu 1"}, {"src": "img/ac12b06947.jpg", "w": 1228, "h": 1536, "px": "1228 × 1536", "name": "BAZNA roll-up ve ADEX 2026 duyurusu 2"}], "dup": false}, {"title": "DIMDEX 2026 ve SAHA 2026 fuar duyuruları", "desc": "Sosyal medya", "frames": [{"src": "img/d6cfe3375d.jpg", "w": 1030, "h": 1030, "px": "1030 × 1030", "name": "DIMDEX 2026 ve SAHA 2026 fuar duyuruları 1"}, {"src": "img/43bf507783.jpg", "w": 1030, "h": 1030, "px": "1030 × 1030", "name": "DIMDEX 2026 ve SAHA 2026 fuar duyuruları 2"}], "dup": false}, {"title": "Kartvizit, misafir kartı, tişört baskısı, arma", "desc": "Kişi bilgileri değiştirildi", "frames": [{"src": "img/f7aedf47b8.jpg", "w": 1600, "h": 1067, "px": "1600 × 1067", "name": "Kartvizit, misafir kartı, tişört baskısı, arma"}], "dup": false}, {"title": "Antetli kağıt ve 2026 takvimi", "desc": "A4, 300 g parlak kuşe", "frames": [{"src": "img/767edd50cb.jpg", "w": 1600, "h": 1067, "px": "1600 × 1067", "name": "Antetli kağıt ve 2026 takvimi"}], "dup": false}, {"title": "Bez çanta", "desc": "Promosyon", "frames": [{"src": "img/57881535f4.jpg", "w": 1600, "h": 940, "px": "1600 × 940", "name": "Bez çanta"}], "dup": false}, {"title": "Oryantasyon kitapçıkları", "desc": "Rehber ve Yeni Takım Üyesi, A5", "frames": [{"src": "img/d3135ec217.jpg", "w": 1600, "h": 1067, "px": "1600 × 1067", "name": "Oryantasyon kitapçıkları"}], "dup": false}]}, {"id": "rahvan", "name": "Rahvan Atçılık Kulübü", "kind": "Kişisel proje · 2026", "rule": "", "bio": "Gölbaşı’nda kurgusal bir atçılık kulübü. Kimliği tek bir mühür üzerine kurdum: eyer örtüsündeki nakıştan üyelik kartına, web sitesinden ders rezervasyonu uygulamasına kadar aynı işaret, aynı yeşil, aynı bilgi sırası.", "tags": ["mühür", "kurumsal kimlik", "binicilik seti", "basılı iş", "web", "mobil uygulama"], "rows": [["Rol", "Marka kimliği, basılı işler, web ve mobil arayüz, sanat yönetimi"], ["Yıl", "2026"]], "note": "Mühür ve logotip benim tasarımım.", "works": [{"title": "Mühür ve kimlik", "desc": "Logotip, renk, yazı", "frames": [{"src": "img/2bc3e6f64c.jpg", "w": 2000, "h": 1500, "px": "3200 × 2400", "name": "Mühür ve kimlik"}], "dup": false}, {"title": "Kulüp binicilik seti", "desc": "Kaskta kazıma rozet, yelekte deri arma, taytta dokuma etiket, eldivende kör baskı", "frames": [{"src": "img/478ffc96a0.jpg", "w": 1600, "h": 1067, "px": "1600 × 1067", "name": "Kulüp binicilik seti"}], "dup": false}, {"title": "Eyer örtüsünde nakış mühür", "desc": "", "frames": [{"src": "img/feb79a9152.jpg", "w": 1600, "h": 1067, "px": "1600 × 1067", "name": "Eyer örtüsünde nakış mühür"}], "dup": false}, {"title": "Basılı işler", "desc": "", "frames": [{"src": "img/ba2b7a2bf5.png", "w": 1413, "h": 2000, "px": "2160 × 3057", "name": "Antetli kağıt", "cut": false, "mm": [210, 297]}, {"src": "img/407d703ac8.png", "w": 879, "h": 570, "px": "879 × 570", "name": "Üyelik kartı · ön", "cut": false, "mm": [85, 55]}, {"src": "img/7ca1fa8301.png", "w": 876, "h": 570, "px": "876 × 570", "name": "Üyelik kartı · arka", "cut": false, "mm": [85, 55]}, {"src": "img/6858933a97.png", "w": 1854, "h": 672, "px": "1854 × 672", "name": "Ders bileti · ön", "cut": false, "mm": [180, 65]}, {"src": "img/5d89b63fd9.png", "w": 1854, "h": 669, "px": "1854 × 669", "name": "Ders bileti · arka", "cut": false, "mm": [180, 65]}], "dup": false}, {"title": "Web sitesi", "desc": "", "frames": [{"src": "img/d92618f149.jpg", "w": 1246, "h": 2000, "px": "1929 × 3096", "name": "Ana sayfa", "cut": false, "mm": null}, {"src": "img/86cf9c34d3.jpg", "w": 1246, "h": 2000, "px": "1929 × 3096", "name": "Ders takvimi", "cut": false, "mm": null}], "dup": false}, {"title": "Mobil uygulama", "desc": "", "frames": [{"src": "img/a4af9c2c10.png", "w": 955, "h": 2000, "px": "1095 × 2292", "name": "At profili", "cut": true, "mm": null}, {"src": "img/559508f0cb.png", "w": 954, "h": 2000, "px": "1242 × 2604", "name": "Bugün", "cut": true, "mm": null}, {"src": "img/f3ec02f4d4.png", "w": 955, "h": 2000, "px": "1095 × 2292", "name": "Saat seçimi", "cut": true, "mm": null}], "dup": false}, {"title": "Mobil uygulama", "desc": "", "frames": [{"src": "img/0548c506e5.png", "w": 954, "h": 2000, "px": "1242 × 2604", "name": "Kilit ekranı", "cut": true, "mm": null}, {"src": "img/93318b7a2d.png", "w": 954, "h": 2000, "px": "1242 × 2604", "name": "Cüzdan kartı", "cut": true, "mm": null}], "dup": true}]}, {"id": "roison", "name": "Roison", "kind": "Kişisel proje · 2026", "rule": "", "bio": "Ankara’da döküm alüminyum iki sandalye yapan kurgusal bir atölye. Logodaki r ve n, sandalyenin ayağı gibi tek parça: gövde kemere eklenmiyor, boru gibi bükülüyor.", "tags": ["logo", "kurumsal kimlik", "kırtasiye", "e-posta", "sosyal medya", "web", "dergi"], "rows": [["Rol", "Logo, kurumsal kimlik, katalog fotoğrafı, web arayüzü, sanat yönetimi"], ["Yıl", "2026"]], "note": "Logo ve kimlik benim tasarımım.", "works": [{"title": "Kollu yemek sandalyesi", "desc": "Döküm alüminyum gövde, inek postu döşeme", "frames": [{"src": "img/4c86c0f675.jpg", "w": 1600, "h": 1067, "px": "1600 × 1067", "name": "Kollu yemek sandalyesi"}], "dup": false}, {"title": "Logo kurgusu", "desc": "Jost 300 temelli, r ve n elle çizildi", "frames": [{"src": "img/ca83c1e896.jpg", "w": 2000, "h": 1500, "px": "1400 × 1050", "name": "Logo kurgusu"}], "dup": false}, {"title": "Kimlik", "desc": "Logotip, koruma alanı, işaret, renk, yazı", "frames": [{"src": "img/2bc0e0e123.jpg", "w": 2000, "h": 1500, "px": "3200 × 2400", "name": "Kimlik"}], "dup": false}, {"title": "Web sitesi", "desc": "", "frames": [{"src": "img/4ec1a064d3.png", "w": 1441, "h": 2000, "px": "2205 × 3060", "name": "Masaüstü ana sayfa", "cut": true, "mm": null}, {"src": "img/77a49c68ec.png", "w": 927, "h": 2000, "px": "966 × 2085", "name": "Mobil ürün sayfası", "cut": true, "mm": null}, {"src": "img/f212a9969e.png", "w": 924, "h": 2000, "px": "963 × 2085", "name": "Mobil kaplama seçimi", "cut": true, "mm": null}], "dup": false}, {"title": "Kırtasiye", "desc": "Antetli kağıt, zarf, kartvizit ön ve arka yüz, seri plakası", "frames": [{"src": "img/b852b589c7.jpg", "w": 2000, "h": 1500, "px": "2400 × 1800", "name": "Kırtasiye"}], "dup": false}, {"title": "Basılı uygulamalar", "desc": "Hepsi aynı ölçekte", "frames": [{"src": "img/b5e15760e1.jpg", "w": 1414, "h": 2000, "px": "1680 × 2376", "name": "Antetli kağıt", "cut": false, "mm": [210, 297]}, {"src": "img/d1a3c41936.jpg", "w": 2000, "h": 1000, "px": "2000 × 1000", "name": "Zarf", "cut": false, "mm": [220, 110]}, {"src": "img/553e036716.jpg", "w": 2000, "h": 1294, "px": "2000 × 1294", "name": "Kartvizit · ön", "cut": false, "mm": [85, 55]}, {"src": "img/3abbe9bdf5.jpg", "w": 2000, "h": 1294, "px": "2000 × 1294", "name": "Kartvizit · arka", "cut": false, "mm": [85, 55]}, {"src": "img/48bb55b51e.jpg", "w": 1333, "h": 2000, "px": "1333 × 2000", "name": "Numune kartı", "cut": false, "mm": [100, 150]}, {"src": "img/7af1a8b09b.jpg", "w": 1419, "h": 2000, "px": "1419 × 2000", "name": "Bakım kartı", "cut": false, "mm": [105, 148]}, {"src": "img/1af17f5566.png", "w": 2000, "h": 688, "px": "2000 × 688", "name": "Seri plakası", "cut": false, "mm": [64, 22]}], "dup": false}, {"title": "Dijital", "desc": "E-posta reklamı, Instagram, e-posta imzası", "frames": [{"src": "img/80aa89e467.png", "w": 682, "h": 2000, "px": "774 × 2270", "name": "E-posta reklamı ve imza", "cut": false, "mm": null}, {"src": "img/300c006afa.jpg", "w": 1600, "h": 2000, "px": "1600 × 2000", "name": "Instagram 1", "cut": false, "mm": null}, {"src": "img/3858e32146.jpg", "w": 1600, "h": 2000, "px": "1600 × 2000", "name": "Instagram 2", "cut": false, "mm": null}, {"src": "img/9e39a9ebb3.jpg", "w": 1600, "h": 2000, "px": "1600 × 2000", "name": "Instagram 3", "cut": false, "mm": null}, {"src": "img/77436a363c.jpg", "w": 1125, "h": 2000, "px": "1125 × 2000", "name": "Hikaye", "cut": false, "mm": null}], "dup": false}, {"title": "Dergi editoryal sayfası", "desc": "Çift sayfa A4, atölye ziyareti", "frames": [{"src": "img/e22a8af725.jpg", "w": 2000, "h": 1500, "px": "2400 × 1800", "name": "Dergi editoryal sayfası"}], "dup": false}]}, {"id": "reseplia", "name": "Reseplia", "kind": "Beyond bünyesinde · 2026", "rule": "", "bio": "Oteller için misafir uygulaması ve yönetim paneli. Kimliği bir sisteme bağladım: Fraunces başlık ve tek italik vurgu, DM Sans metin, numaralı bölüm etiketleri.", "tags": ["kimlik sistemi", "kitapçık", "afiş", "sosyal medya"], "rows": [["Rol", "Kurumsal kimlik sistemi, tanıtım kitapçığı, afiş ve sosyal medya"], ["Yıl", "2026"]], "note": "Logo, renkler ve uygulama arayüzü bana ait değildir.", "works": [{"title": "Kurumsal kimlik sistemi", "desc": "Yazı, renk oranı, etiket, çağrı", "frames": [{"src": "img/349377a6c0.jpg", "w": 2000, "h": 1500, "px": "1400 × 1050", "name": "Kurumsal kimlik sistemi"}], "dup": false}, {"title": "Tanıtım kitapçığı", "desc": "A5, 12 sayfa", "frames": [{"src": "img/fbbcca10be.jpg", "w": 1600, "h": 1067, "px": "1600 × 1067", "name": "Tanıtım kitapçığı"}], "dup": false}, {"title": "Afiş", "desc": "50 × 70 cm, otel asansör holü", "frames": [{"src": "img/a8e7f1f3da.jpg", "w": 1600, "h": 1067, "px": "1600 × 1067", "name": "Afiş"}], "dup": false}, {"title": "Sosyal medya seti", "desc": "1080 × 1350", "frames": [{"src": "img/45527f20b8.jpg", "w": 1600, "h": 2000, "px": "1620 × 2025", "name": "Sosyal medya seti 1"}, {"src": "img/2c29dfe0e2.jpg", "w": 1600, "h": 2000, "px": "1620 × 2025", "name": "Sosyal medya seti 2"}, {"src": "img/e6eb08accd.jpg", "w": 1600, "h": 2000, "px": "1620 × 2025", "name": "Sosyal medya seti 3"}], "dup": false}]}, {"id": "ugur", "name": "Uğur Okulları", "kind": "Samsun şubeleri · 2025", "rule": "", "bio": "Okulun mor ve sarısıyla eğitim modellerini, kulüpleri ve öğrenci başarılarını anlatan içerikler hazırladım. Beyond’dan hemen önceki işim.", "tags": ["instagram", "sosyal medya", "duyuru", "kulüp"], "rows": [["Rol", "Sosyal Medya Yöneticisi; grafik tasarım ve içerik"], ["Süre", "2025 · 3 ay"]], "note": "Logo kuruma aittir. Öğrenci adları gizlendi.", "works": [{"title": "Dijital güvenlik ve kulüp gönderileri", "desc": "Instagram", "frames": [{"src": "img/b30679738a.jpg", "w": 1168, "h": 1449, "px": "1168 × 1449", "name": "Dijital güvenlik ve kulüp gönderileri 1"}, {"src": "img/6dadbbcf00.jpg", "w": 1168, "h": 1465, "px": "1168 × 1465", "name": "Dijital güvenlik ve kulüp gönderileri 2"}, {"src": "img/f8c53aff04.jpg", "w": 1147, "h": 1162, "px": "1147 × 1162", "name": "Dijital güvenlik ve kulüp gönderileri 3"}], "dup": false}, {"title": "Eğitim modeli, turnuva ve başarı duyuruları", "desc": "", "frames": [{"src": "img/360400ea08.jpg", "w": 1175, "h": 1556, "px": "1175 × 1556", "name": "Eğitim modeli, turnuva ve başarı duyuruları 1"}, {"src": "img/11c05fabb5.jpg", "w": 1179, "h": 1560, "px": "1179 × 1560", "name": "Eğitim modeli, turnuva ve başarı duyuruları 2"}, {"src": "img/426372d080.jpg", "w": 1127, "h": 1546, "px": "1127 × 1546", "name": "Eğitim modeli, turnuva ve başarı duyuruları 3"}], "dup": false}]}], "en": [{"id": "beyond", "name": "Beyond Technologies", "kind": "In-house · 2025–2026", "rule": "", "bio": "For a year I produced almost all of a Turkish defence company’s print, trade-show and digital work. I designed the product-led poster language, show announcements and corporate applications.", "tags": ["catalogue", "billboard", "poster", "trade show", "roll-up", "identity", "stationery"], "rows": [["Role", "Visual Communication Specialist"], ["Period", "November 2025 – November 2026"]], "note": "The logotype and product images belong to the company.", "works": [{"title": "Master the Future", "desc": "Billboard print file, 350 × 190 cm", "frames": [{"src": "img/6d43c51872.jpg", "w": 2000, "h": 1086, "px": "2000 × 1086", "name": "Master the Future"}], "dup": false}, {"title": "Master the Future", "desc": "Billboard, light and dark versions", "frames": [{"src": "img/789936e58e.jpg", "w": 1600, "h": 869, "px": "1600 × 869", "name": "Master the Future 1"}, {"src": "img/b54106314e.jpg", "w": 1600, "h": 869, "px": "1600 × 869", "name": "Master the Future 2"}], "dup": true}, {"title": "BAZNA product poster", "desc": "Light and dark versions", "frames": [{"src": "img/f98506e2dc.jpg", "w": 1000, "h": 1250, "px": "1000 × 1250", "name": "BAZNA product poster 1"}, {"src": "img/1c9b84b741.jpg", "w": 1000, "h": 1250, "px": "1000 × 1250", "name": "BAZNA product poster 2"}], "dup": false}, {"title": "ZİFİRİ product poster", "desc": "", "frames": [{"src": "img/7ae39e39f4.jpg", "w": 1000, "h": 1250, "px": "1000 × 1250", "name": "ZİFİRİ product poster 1"}, {"src": "img/8515c430b0.jpg", "w": 1000, "h": 1250, "px": "1000 × 1250", "name": "ZİFİRİ product poster 2"}], "dup": false}, {"title": "BAZNA roll-up and ADEX 2026 announcement", "desc": "Roll-up 100 × 200 cm", "frames": [{"src": "img/6d081f0cf6.jpg", "w": 854, "h": 1067, "px": "854 × 1067", "name": "BAZNA roll-up and ADEX 2026 announcement 1"}, {"src": "img/ac12b06947.jpg", "w": 1228, "h": 1536, "px": "1228 × 1536", "name": "BAZNA roll-up and ADEX 2026 announcement 2"}], "dup": false}, {"title": "DIMDEX 2026 and SAHA 2026 show announcements", "desc": "Social media", "frames": [{"src": "img/d6cfe3375d.jpg", "w": 1030, "h": 1030, "px": "1030 × 1030", "name": "DIMDEX 2026 and SAHA 2026 show announcements 1"}, {"src": "img/43bf507783.jpg", "w": 1030, "h": 1030, "px": "1030 × 1030", "name": "DIMDEX 2026 and SAHA 2026 show announcements 2"}], "dup": false}, {"title": "Business card, visitor badge, T-shirt print, patch", "desc": "Personal details replaced", "frames": [{"src": "img/f7aedf47b8.jpg", "w": 1600, "h": 1067, "px": "1600 × 1067", "name": "Business card, visitor badge, T-shirt print, patch"}], "dup": false}, {"title": "Letterhead and 2026 calendar", "desc": "A4, 300 gsm gloss", "frames": [{"src": "img/767edd50cb.jpg", "w": 1600, "h": 1067, "px": "1600 × 1067", "name": "Letterhead and 2026 calendar"}], "dup": false}, {"title": "Tote bag", "desc": "Promotional", "frames": [{"src": "img/57881535f4.jpg", "w": 1600, "h": 940, "px": "1600 × 940", "name": "Tote bag"}], "dup": false}, {"title": "Onboarding booklets", "desc": "Guide and New Team Member, A5, Turkish", "frames": [{"src": "img/d3135ec217.jpg", "w": 1600, "h": 1067, "px": "1600 × 1067", "name": "Onboarding booklets"}], "dup": false}]}, {"id": "rahvan", "name": "Rahvan Atçılık Kulübü", "kind": "Self-initiated · 2026", "rule": "", "bio": "A fictional riding club in Gölbaşı. I built the identity on a single seal: from the embroidery on the saddle pad to the membership card, the website and the lesson-booking app, the same mark, the same green and the same order of information.", "tags": ["seal", "identity", "riding kit", "print", "web", "app"], "rows": [["Role", "Brand identity, print, web and mobile interface, art direction"], ["Year", "2026"]], "note": "The seal and logotype are my design.", "works": [{"title": "Seal and identity", "desc": "Logotype, colour, type", "frames": [{"src": "img/5311151169.jpg", "w": 2000, "h": 1500, "px": "3200 × 2400", "name": "Seal and identity"}], "dup": false}, {"title": "Club riding kit", "desc": "Engraved badge on the helmet, leather patch on the vest, woven label on the breeches, blind deboss on the gloves", "frames": [{"src": "img/478ffc96a0.jpg", "w": 1600, "h": 1067, "px": "1600 × 1067", "name": "Club riding kit"}], "dup": false}, {"title": "Embroidered seal on the saddle pad", "desc": "", "frames": [{"src": "img/feb79a9152.jpg", "w": 1600, "h": 1067, "px": "1600 × 1067", "name": "Embroidered seal on the saddle pad"}], "dup": false}, {"title": "Print", "desc": "", "frames": [{"src": "img/de3a5276ee.png", "w": 1413, "h": 2000, "px": "2160 × 3057", "name": "Letterhead", "cut": false, "mm": [210, 297]}, {"src": "img/4e12d64563.png", "w": 879, "h": 570, "px": "879 × 570", "name": "Membership card · front", "cut": false, "mm": [85, 55]}, {"src": "img/a3f7373ee3.png", "w": 876, "h": 570, "px": "876 × 570", "name": "Membership card · back", "cut": false, "mm": [85, 55]}, {"src": "img/9b50c608b5.png", "w": 1854, "h": 672, "px": "1854 × 672", "name": "Lesson ticket · front", "cut": false, "mm": [180, 65]}, {"src": "img/eb63db6397.png", "w": 1854, "h": 669, "px": "1854 × 669", "name": "Lesson ticket · back", "cut": false, "mm": [180, 65]}], "dup": false}, {"title": "Website", "desc": "", "frames": [{"src": "img/939e2ccc99.jpg", "w": 1246, "h": 2000, "px": "1929 × 3096", "name": "Home page", "cut": false, "mm": null}, {"src": "img/f531294194.jpg", "w": 1246, "h": 2000, "px": "1929 × 3096", "name": "Lesson calendar", "cut": false, "mm": null}], "dup": false}, {"title": "Mobile app", "desc": "", "frames": [{"src": "img/b4a84f69ca.png", "w": 955, "h": 2000, "px": "1095 × 2292", "name": "Horse profile", "cut": true, "mm": null}, {"src": "img/eb676eb22b.png", "w": 954, "h": 2000, "px": "1242 × 2604", "name": "Today", "cut": true, "mm": null}, {"src": "img/b75ab12b2b.png", "w": 955, "h": 2000, "px": "1095 × 2292", "name": "Time picker", "cut": true, "mm": null}], "dup": false}, {"title": "Mobile app", "desc": "", "frames": [{"src": "img/c35375a8cf.png", "w": 954, "h": 2000, "px": "1242 × 2604", "name": "Lock screen", "cut": true, "mm": null}, {"src": "img/762c1ce2d1.png", "w": 954, "h": 2000, "px": "1242 × 2604", "name": "Wallet pass", "cut": true, "mm": null}], "dup": true}]}, {"id": "roison", "name": "Roison", "kind": "Self-initiated · 2026", "rule": "", "bio": "A fictional Ankara workshop making two cast-aluminium dining chairs. In the logo, the r and n are one piece like the chair’s leg: the stem doesn’t join the arch, it bends like a tube.", "tags": ["logo", "identity", "stationery", "email", "social", "web", "magazine"], "rows": [["Role", "Logo, corporate identity, catalogue photography, web interface, art direction"], ["Year", "2026"]], "note": "The logo and identity are my design.", "works": [{"title": "Dining armchair", "desc": "Cast aluminium frame, cowhide upholstery", "frames": [{"src": "img/4c86c0f675.jpg", "w": 1600, "h": 1067, "px": "1600 × 1067", "name": "Dining armchair"}], "dup": false}, {"title": "Logo construction", "desc": "Based on Jost 300, r and n drawn by hand", "frames": [{"src": "img/99f95ecaa8.jpg", "w": 2000, "h": 1500, "px": "1400 × 1050", "name": "Logo construction"}], "dup": false}, {"title": "Identity", "desc": "Logotype, clear space, mark, colour, type", "frames": [{"src": "img/f81d9b1d28.jpg", "w": 2000, "h": 1500, "px": "3200 × 2400", "name": "Identity"}], "dup": false}, {"title": "Website", "desc": "", "frames": [{"src": "img/32bd87d918.png", "w": 1441, "h": 2000, "px": "2205 × 3060", "name": "Desktop home", "cut": true, "mm": null}, {"src": "img/0c642e7282.png", "w": 927, "h": 2000, "px": "966 × 2085", "name": "Mobile product page", "cut": true, "mm": null}, {"src": "img/b3dbe94422.png", "w": 924, "h": 2000, "px": "963 × 2085", "name": "Mobile upholstery picker", "cut": true, "mm": null}], "dup": false}, {"title": "Stationery", "desc": "Letterhead, envelope, business card front and back, serial plate", "frames": [{"src": "img/d429379201.jpg", "w": 2000, "h": 1500, "px": "2400 × 1800", "name": "Stationery"}], "dup": false}, {"title": "Print applications", "desc": "All at the same scale", "frames": [{"src": "img/9c9e84e13c.jpg", "w": 1414, "h": 2000, "px": "1680 × 2376", "name": "Letterhead", "cut": false, "mm": [210, 297]}, {"src": "img/b2ccb0712d.jpg", "w": 2000, "h": 1000, "px": "2000 × 1000", "name": "Envelope", "cut": false, "mm": [220, 110]}, {"src": "img/bc4606230e.jpg", "w": 2000, "h": 1294, "px": "2000 × 1294", "name": "Business card · front", "cut": false, "mm": [85, 55]}, {"src": "img/84de76a5f4.jpg", "w": 2000, "h": 1294, "px": "2000 × 1294", "name": "Business card · back", "cut": false, "mm": [85, 55]}, {"src": "img/1bcb66f11b.jpg", "w": 1333, "h": 2000, "px": "1333 × 2000", "name": "Sample card", "cut": false, "mm": [100, 150]}, {"src": "img/4885b97172.jpg", "w": 1419, "h": 2000, "px": "1419 × 2000", "name": "Care card", "cut": false, "mm": [105, 148]}, {"src": "img/d8987f6602.png", "w": 2000, "h": 688, "px": "2000 × 688", "name": "Serial plate", "cut": false, "mm": [64, 22]}], "dup": false}, {"title": "Digital", "desc": "Email campaign, Instagram, email signature", "frames": [{"src": "img/fdca661d3b.png", "w": 682, "h": 2000, "px": "774 × 2270", "name": "Email campaign and signature", "cut": false, "mm": null}, {"src": "img/3506a39f3d.jpg", "w": 1600, "h": 2000, "px": "1600 × 2000", "name": "Instagram 1", "cut": false, "mm": null}, {"src": "img/f51e1c9ef6.jpg", "w": 1600, "h": 2000, "px": "1600 × 2000", "name": "Instagram 2", "cut": false, "mm": null}, {"src": "img/ccc001c9fa.jpg", "w": 1600, "h": 2000, "px": "1600 × 2000", "name": "Instagram 3", "cut": false, "mm": null}, {"src": "img/0ac23c6718.jpg", "w": 1125, "h": 2000, "px": "1125 × 2000", "name": "Story", "cut": false, "mm": null}], "dup": false}, {"title": "Magazine editorial spread", "desc": "2 × A4, workshop visit", "frames": [{"src": "img/9437274b30.jpg", "w": 2000, "h": 1500, "px": "2400 × 1800", "name": "Magazine editorial spread"}], "dup": false}]}, {"id": "reseplia", "name": "Reseplia", "kind": "At Beyond · 2026", "rule": "", "bio": "A guest app and management panel for hotels. I tied the identity into a system: Fraunces headings with one italic accent, DM Sans text, numbered section labels.", "tags": ["identity system", "brochure", "poster", "social"], "rows": [["Role", "Identity system, brochure, poster and social media"], ["Year", "2026"]], "note": "The logo, colours and app interface are not mine.", "works": [{"title": "Identity system", "desc": "Type, colour ratio, labels, call to action", "frames": [{"src": "img/327aa2b703.jpg", "w": 2000, "h": 1500, "px": "1400 × 1050", "name": "Identity system"}], "dup": false}, {"title": "Brochure", "desc": "A5, 12 pages, Turkish", "frames": [{"src": "img/fbbcca10be.jpg", "w": 1600, "h": 1067, "px": "1600 × 1067", "name": "Brochure"}], "dup": false}, {"title": "Poster", "desc": "50 × 70 cm, hotel lift lobby", "frames": [{"src": "img/ff24589263.jpg", "w": 1600, "h": 1067, "px": "1600 × 1067", "name": "Poster"}], "dup": false}, {"title": "Social media set", "desc": "1080 × 1350", "frames": [{"src": "img/beea8d541d.jpg", "w": 1600, "h": 2000, "px": "1620 × 2025", "name": "Social media set 1"}, {"src": "img/c128f5ca69.jpg", "w": 1600, "h": 2000, "px": "1620 × 2025", "name": "Social media set 2"}, {"src": "img/e5382f19ec.jpg", "w": 1600, "h": 2000, "px": "1620 × 2025", "name": "Social media set 3"}], "dup": false}]}, {"id": "ugur", "name": "Uğur Okulları", "kind": "Samsun branches · 2025", "rule": "", "bio": "In the school’s purple and yellow, I made content explaining its education models, clubs and student achievements. This was my job right before Beyond. All copy is in Turkish.", "tags": ["instagram", "social", "announcements", "clubs"], "rows": [["Role", "Social Media Manager; graphic design and content"], ["Period", "2025 · 3 months"]], "note": "The logo belongs to the school. Student names are hidden.", "works": [{"title": "Digital safety and club posts", "desc": "Instagram", "frames": [{"src": "img/b30679738a.jpg", "w": 1168, "h": 1449, "px": "1168 × 1449", "name": "Digital safety and club posts 1"}, {"src": "img/6dadbbcf00.jpg", "w": 1168, "h": 1465, "px": "1168 × 1465", "name": "Digital safety and club posts 2"}, {"src": "img/f8c53aff04.jpg", "w": 1147, "h": 1162, "px": "1147 × 1162", "name": "Digital safety and club posts 3"}], "dup": false}, {"title": "Education model, tournament and achievement posts", "desc": "", "frames": [{"src": "img/360400ea08.jpg", "w": 1175, "h": 1556, "px": "1175 × 1556", "name": "Education model, tournament and achievement posts 1"}, {"src": "img/11c05fabb5.jpg", "w": 1179, "h": 1560, "px": "1179 × 1560", "name": "Education model, tournament and achievement posts 2"}, {"src": "img/426372d080.jpg", "w": 1127, "h": 1546, "px": "1127 × 1546", "name": "Education model, tournament and achievement posts 3"}], "dup": false}]}]}, "logos": {"beyond": "<div style=\"width:56px;height:56px;border-radius:4px;background:#151342;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:none;\"><img src=\"img/651b022bb5.png\" style=\"width:78%;display:block\"><\/div>", "rahvan": "<div style=\"width:56px;height:56px;border-radius:4px;background:#1E3A2C;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:none;\"><img src=\"img/08a54222cd.png\" style=\"width:74%;display:block\"><\/div>", "roison": "<div style=\"width:56px;height:56px;border-radius:4px;background:#18171A;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:none;\"><svg style=\"display:block;height:23.52px;color:#F0F1F1\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 236 470\"><title>roison r<\/title><g fill=\"currentColor\"><path d=\"M0 470H84V166.56C84 118.75 124.07 80 173.5 80H235.5V0H173.5C77.68 0 0 74.57 0 166.56Z\"/><\/g><\/svg><\/div>", "reseplia": "<div style=\"width:56px;height:56px;border-radius:4px;background:#1D3E31;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:none;\"><img src=\"img/c99055f556.png\" style=\"width:82%;display:block\"><\/div>", "ugur": "<div style=\"width:56px;height:56px;border-radius:4px;background:#5E2C6E;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:none;\"><span style=\"color:#fff;font-weight:700;font-size:19px;letter-spacing:-.03em\">UO<\/span><\/div>"}, "about": {"tr": {"role": "Grafik Tasarımcı", "loc": "Ankara · ofis, hibrit, uzaktan", "bio": "Tasarıma film setlerinde sanat yönetimiyle başladım; bir sahneyi tek kurala bağlı, kendi içinde tutarlı bir dünya olarak kurmayı orada öğrendim. Kasım 2025 – Kasım 2026 arasında Beyond Technologies’te basılı, fuar ve dijital işlerin neredeyse tamamını hazırladım.", "note": "Beyond işleri kurum içinde üretildi; logotip ve ürün görselleri şirkete aittir. Reseplia kitapçığı Beyond bünyesinde üretildi; logo, renkler ve uygulama arayüzü bana ait değildir, afiş ve sosyal medya seti önerimdir. Uğur Okulları’nın logosu kuruma aittir, öğrenci adları gizlendi. Rahvan ve Roison kişisel, üretilmemiş projelerdir; ikisinin de logosu ve kimliği benim tasarımımdır, görseller yapay zeka desteğiyle, benim sanat yönetimimde üretildi.", "cols": [["Uzmanlık", ["Marka kimliği ve logo", "Kurumsal kimlik", "Afiş, billboard, reklam", "Katalog ve broşür", "Web ve mobil arayüz", "Baskı dosyası hazırlığı"]], ["Araçlar", ["Adobe Illustrator", "Adobe Photoshop", "Adobe InDesign", "Figma · Canva", "Yapay Zeka Araçları (Claude, ChatGPT, Gemini vb.)"]], ["Eğitim", ["TOBB Ekonomi ve Teknoloji Üniversitesi", "Görsel İletişim Tasarımı, lisans", "GNO 3,8 / 4,0"]], ["Diller", ["Türkçe, ana dil", "İngilizce, sınırlı çalışma yeterliliği", "Rusça, başlangıç"]]]}, "en": {"role": "Graphic Designer", "loc": "Ankara · on-site, hybrid, remote", "bio": "I started in design as an art director on film sets, where I learned to build a scene as one consistent world tied to a single rule. From November 2025 to November 2026 I produced almost all of the print, trade-show and digital work at Beyond Technologies.", "note": "Beyond work was produced in-house; the logotype and product images belong to the company. The Reseplia brochure was produced at Beyond; the logo, colours and app interface are not mine, and the poster and social set are my proposals. The Uğur Okulları logo belongs to the school; student names are hidden. Rahvan and Roison are self-initiated, unproduced projects; both logos and identities are my own design, and the images were generated with AI support under my art direction.", "cols": [["Expertise", ["Brand identity and logos", "Corporate identity", "Posters, billboards, advertising", "Catalogues and brochures", "Web and mobile interfaces", "Print-ready artwork"]], ["Tools", ["Adobe Illustrator", "Adobe Photoshop", "Adobe InDesign", "Figma · Canva", "AI tools (Claude, ChatGPT, Gemini, etc.)"]], ["Education", ["TOBB University of Economics and Technology", "BA, Visual Communication Design", "GPA 3.8 / 4.0"]], ["Languages", ["Turkish, native", "English, limited working proficiency", "Russian, elementary"]]]}}};
+const UI = {
+  tr:{pages:'Sayfalar',layers:'Katmanlar',insp:'Tasarım',cover:'Kapak',about:'Hakkımda',contact:'İletişim',title:'Portfolyo',
+      size:'Görsel boyutu',mm:'Gerçek ölçü',proj:'Proje',desc:'Açıklama',big:'Büyüt',close:'Kapat',
+      copy:'Kopyala',copied:'Kopyalandı',del:'Teslimler',profile:'Profil',note:'Not',card:'Kart',name:'Ad',bio:'Biyografi',info:'Bilgiler',projs:'Projeler',
+      email:'E-posta',kapak:'Kapak',files:'Dosyalar',design:'Tasarım',inspect:'İncele',pins:'Yorumlar (C)',grid:'Izgara (⌃G)',zoomIn:'Yakınlaştır (⌘+)',zoomOut:'Uzaklaştır (⌘−)',zoom100:'%100 (⇧0)',exp:'PDF indir',copyCss:'CSS kopyala',measure:'Seçiliyken ⌥ basılı tutup başka bir öğenin üzerine gel: aradaki mesafe kırmızıyla görünür.',role:'Unvan',kind:'Tür',rule:'Kural',list:'Liste',logo:'Logo',portrait:'Portre',city:'Şehir',contact:'İletişim',
+      move:'Seç (V)',hand:'El (H)',undo:'Geri al (⌘Z)',redo:'Yinele (⇧⌘Z)',reset:'Sıfırla',
+      pos:'Konum',text:'Metin',fsize:'Boyut',color:'Renk',opacity:'Opaklık',rot:'Açı',scale:'Ölçek',
+      hide:'Gizle',show:'Göster',parent:'Üst katman',child:'Alt katman',resetEl:'Sıfırla',open:'Sayfaya git',hidden:'gizli',
+      kinds:{frame:'Çerçeve',group:'Grup',text:'Metin',char:'Harf',img:'Görsel'},
+      none:'Bir öğenin üzerine gel, tıklayıp seç. Her başlığın her harfi ayrı bir katman; harfleri ve görselleri seçip köşesinden çekerek büyütüp küçültebilirsin.',
+      keys:[['Köşeden çek','Harfi ya da görseli büyüt / küçült'],['+  −','Adım adım büyüt / küçült (⇧ ile daha fazla)'],['⌥ + üzerine gel','Mesafeyi ölç'],['⌘ + kaydır','Yakınlaştır'],['⇧ Enter','Üst katmanı seç'],['Enter','Alt katmanı seç'],['⌘Z','Geri al'],['Esc','Seçimi bırak'],['H / boşluk','El aracı'],['Çift tık','Görseli büyüt']]},
+  en:{pages:'Pages',layers:'Layers',insp:'Design',cover:'Cover',about:'About',contact:'Contact',title:'Portfolio',
+      size:'Image size',mm:'Actual size',proj:'Project',desc:'Description',big:'Enlarge',close:'Close',
+      copy:'Copy',copied:'Copied',del:'Deliverables',profile:'Profile',note:'Note',card:'Card',name:'Name',bio:'Bio',info:'Details',projs:'Projects',
+      email:'Email',kapak:'Cover',files:'Files',design:'Design',inspect:'Inspect',pins:'Comments (C)',grid:'Grid (⌃G)',zoomIn:'Zoom in (⌘+)',zoomOut:'Zoom out (⌘−)',zoom100:'100% (⇧0)',exp:'Download PDF',copyCss:'Copy CSS',measure:'With something selected, hold ⌥ and hover another element to see the distance in red.',role:'Role',kind:'Type',rule:'Rule',list:'List',logo:'Logo',portrait:'Portrait',city:'City',contact:'Contact',
+      move:'Select (V)',hand:'Hand (H)',undo:'Undo (⌘Z)',redo:'Redo (⇧⌘Z)',reset:'Reset',
+      pos:'Position',text:'Text',fsize:'Size',color:'Fill',opacity:'Opacity',rot:'Angle',scale:'Scale',
+      hide:'Hide',show:'Show',parent:'Parent',child:'Child',resetEl:'Reset',open:'Go to page',hidden:'hidden',
+      kinds:{frame:'Frame',group:'Group',text:'Text',char:'Letter',img:'Image'},
+      none:'Hover over anything, click to select. Every letter of every heading is its own layer; select a letter or image and drag a corner to scale it.',
+      keys:[['Drag a corner','Scale a letter or image'],['+  −','Step size up / down (more with ⇧)'],['⌥ + hover','Measure distance'],['⌘ + scroll','Zoom'],['⇧ Enter','Select parent'],['Enter','Select child'],['⌘Z','Undo'],['Esc','Deselect'],['H / space','Hand tool'],['Double-click','Enlarge image']]}};
+let lang = 'tr';
+try{ const s = localStorage.getItem('rayme-lang'); if(s==='en'||s==='tr') lang = s; }catch(e){}
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const N = (n,k) => ' data-n="'+esc(n)+'" data-k="'+k+'"';
+const split = t => [...t].map(c => c===' ' ? ' ' : c==='\u00a0' ? '&nbsp;' : '<span class="ch"'+N(c,'char')+'>'+esc(c)+'</span>').join('');
+// piç kelime olmasın: son iki kelime bölünmez boşlukla birbirine bağlanır
+const nb = s => String(s||'').replace(/\s+(\S+)\s*$/, '\u00a0$1');
+const capF = s => s ? s.charAt(0).toLocaleUpperCase(lang==='tr'?'tr':'en') + s.slice(1) : s;
+const CUR = '<svg width="22" height="26" viewBox="0 0 22 26"><path d="M2 2 L2 21 L7.5 16 L11 24 L14 22.6 L10.6 15 L18 15 Z" fill="#C8142B" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>';
+const IMGI = '<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="1" y="1" width="10" height="10" rx="1.5"/><path d="M1.5 9l3-3 2.5 2.5L8.5 7l2 2"/></svg>';
+const ICON = {frame:'#', group:'<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2 1.6"><rect x="1" y="1" width="10" height="10" rx="1"/></svg>', text:'T', char:'<span style="font-size:11px">a</span>', img:IMGI};
+
+function sections(){ const D = P.data[lang], u = UI[lang];
+  return [{id:'kapak',name:u.cover},{id:'hakkimda',name:u.about},...D.map(s=>({id:s.id,name:s.name,proj:s})),{id:'iletisim',name:u.contact}]; }
+let cur = 'kapak', sel = null, hov = null, tool = 'V', space = false, home = true, Z = 1, alt = false, insTab = 'd', gridOn = false, pinsOn = true;
+const PDF = {tr:['pdf/Rayme_Ozgen_Portfolyo_2026_TR.pdf','Rayme_Ozgen_Portfolyo_2026_TR.pdf'], en:['pdf/Rayme_Ozgen_Portfolio_2026_EN.pdf','Rayme_Ozgen_Portfolio_2026_EN.pdf']};
+const NOTES = {"tr": {"rahvan:3-0": "Hepsi gerçek ölçüsüyle, aynı ölçekte dizildi: A4 antetli, 85 × 55 mm üyelik kartı, 180 × 65 mm ders bileti.", "roison:6-0": "Bülten ve e-posta imzası aynı e-postanın parçaları; burada üst üste gösteriliyor."}, "en": {"rahvan:3-0": "Everything sits at true relative size: A4 letterhead, 85 × 55 mm membership card, 180 × 65 mm lesson ticket.", "roison:6-0": "The newsletter and the email signature belong to the same message; they are stacked here."}};
+const PAGES = {"tr": ["pages/tr/01.webp", "pages/tr/02.webp", "pages/tr/03.webp", "pages/tr/04.webp", "pages/tr/05.webp", "pages/tr/06.webp", "pages/tr/07.webp", "pages/tr/08.webp", "pages/tr/09.webp", "pages/tr/10.webp", "pages/tr/11.webp", "pages/tr/12.webp", "pages/tr/13.webp", "pages/tr/14.webp", "pages/tr/15.webp", "pages/tr/16.webp", "pages/tr/17.webp", "pages/tr/18.webp", "pages/tr/19.webp", "pages/tr/20.webp", "pages/tr/21.webp", "pages/tr/22.webp", "pages/tr/23.webp", "pages/tr/24.webp", "pages/tr/25.webp", "pages/tr/26.webp", "pages/tr/27.webp", "pages/tr/28.webp", "pages/tr/29.webp", "pages/tr/30.webp", "pages/tr/31.webp", "pages/tr/32.webp", "pages/tr/33.webp", "pages/tr/34.webp", "pages/tr/35.webp", "pages/tr/36.webp", "pages/tr/37.webp", "pages/tr/38.webp", "pages/tr/39.webp", "pages/tr/40.webp"], "en": ["pages/en/01.webp", "pages/en/02.webp", "pages/en/03.webp", "pages/en/04.webp", "pages/en/05.webp", "pages/en/06.webp", "pages/en/07.webp", "pages/en/08.webp", "pages/en/09.webp", "pages/en/10.webp", "pages/en/11.webp", "pages/en/12.webp", "pages/en/13.webp", "pages/en/14.webp", "pages/en/15.webp", "pages/en/16.webp", "pages/en/17.webp", "pages/en/18.webp", "pages/en/19.webp", "pages/en/20.webp", "pages/en/21.webp", "pages/en/22.webp", "pages/en/23.webp", "pages/en/24.webp", "pages/en/25.webp", "pages/en/26.webp", "pages/en/27.webp", "pages/en/28.webp", "pages/en/29.webp", "pages/en/30.webp", "pages/en/31.webp", "pages/en/32.webp", "pages/en/33.webp", "pages/en/34.webp", "pages/en/35.webp", "pages/en/36.webp", "pages/en/37.webp", "pages/en/38.webp", "pages/en/39.webp", "pages/en/40.webp"]};
+const FILE = {tr:'Portfolyo Türkçe', en:'Portfolyo English'};
+const SIZES = {desk:{tr:'Masaüstü',en:'Desktop',w:1440,h:900,u:'px'}, lap:{tr:'Dizüstü',en:'Laptop',w:1280,h:800,u:'px'},
+  tab:{tr:'Tablet',en:'Tablet',w:834,h:1194,u:'px'}, mob:{tr:'Mobil',en:'Mobile',w:390,h:844,u:'px'},
+  a4:{tr:'A4 yatay',en:'A4 landscape',w:297,h:210,u:'mm',print:true}, book:{tr:'Portfolyo kitabı',en:'Portfolio book',w:280,h:210,u:'mm',print:true}};
+let size = null, newLang = 'tr', FS = 1;
+const DEV = document.getElementById('dev');
+const isMob = () => DEV.clientWidth <= 760;
+const devH = () => DEV.clientHeight;
+let ED = {}, HIST = [], FUT = [], EXP = new Set(), lbW = null;
+const key = () => lang + ':' + cur;
+const edits = () => ED[key()] || (ED[key()] = {});
+const elById = id => document.querySelector('#stage [data-id="'+id+'"]');
+
+/* ---------- sayfa ---------- */
+function render(){
+  home = false; document.body.classList.remove('is-home','is-print'); $('#home').hidden = true; $('#print').hidden = true; applyFrame();
+  const u = UI[lang], S = sections(), idx = Math.max(0, S.findIndex(s=>s.id===cur)), sec = S[idx];
+  document.documentElement.lang = lang;
+  $('#lang-tr').setAttribute('aria-pressed', lang==='tr'); $('#lang-en').setAttribute('aria-pressed', lang==='en');
+  $('#h-pages').textContent = u.pages; $('#h-layers').textContent = u.layers; $('#h-insp').textContent = u.insp; $('#lb-x').textContent = u.close;
+  [['#t-move',u.move],['#t-hand',u.hand],['#t-undo',u.undo],['#t-redo',u.redo]].forEach(([s,t])=>{ $(s).title=t; $(s).setAttribute('aria-label',t); });
+  $('#t-reset').textContent = u.reset;
+  [['#t-pins',u.pins],['#t-grid',u.grid],['#z-in',u.zoomIn],['#z-out',u.zoomOut],['#z-pct',u.zoom100],['#t-exp',u.exp],['#t-home',u.files]].forEach(([s,t])=>{ $(s).title=t; $(s).setAttribute('aria-label',t); });
+  tabs();
+  $('#path').textContent = '/ ' + FILE[lang] + ' / ' + sec.name;
+  $('#pages').innerHTML = S.map(s=>'<button class="row'+(s.id===cur?' on':'')+'" type="button" data-go="'+s.id+'"'+(s.id===cur?' aria-current="page"':'')+'><span class="t">'+esc(s.name)+'</span></button>').join('');
+  sel = null; hov = null; EXP.clear(); setZoom(1, true);
+  let h = '<div class="counter">'+String(idx+1).padStart(2,'0')+' / '+String(S.length).padStart(2,'0')+'</div>';
+  if(sec.id==='kapak'){
+    h += '<div class="cover"><div class="ttl" data-tag="2026"'+N(u.title,'text')+'>'+split(u.title)+'</div></div>';
+  } else if(sec.id==='hakkimda'){
+    const A = P.about[lang];
+    h += '<section class="card about"'+N(u.profile,'frame')+'><span class="lab">'+u.profile+'</span>'
+      + '<div class="ahead"><div class="ph" data-tag="Hello"'+N(u.portrait,'img')+'><img src="img/portre.jpg" alt="Rayme Özgen" draggable="false" width="640" height="640"></div>'
+      + '<div class="aname"><div class="nm"'+N('Rayme Özgen','text')+'>'+split('Rayme Özgen')+'</div>'
+      + '<div class="city"'+N(u.city,'text')+'><b>'+esc(A.loc.split(' · ')[0])+'</b><span>'+esc(A.loc.split(' · ').slice(1).join(' · '))+'</span></div>'
+      + '<p class="lead"'+N(u.bio,'text')+'><b>'+esc(A.role)+'.</b> '+esc(nb(A.bio))+'</p>'
+      + '<div class="chips"'+N(u.contact,'group')+'><span class="chip"'+N(u.email,'text')+'>raymeozgen@gmail.com</span><a class="chip" href="https://www.linkedin.com/in/rayme-ozgen-6a9b15262/" target="_blank" rel="noopener">linkedin.com/in/rayme-ozgen-6a9b15262</a></div>'
+      + '</div></div>'
+      + '<div class="projs"'+N(u.projs,'group')+'>'+P.data[lang].map(s=>'<button class="proj" type="button" data-proj="'+s.id+'"'+N(s.name,'group')+'>'+P.logos[s.id]+'<span>'+esc(s.name.split(' ')[0])+'</span></button>').join('')+'</div>'
+      + '<div class="cols"'+N(u.info,'group')+'>'+A.cols.map(c=>'<div'+N(c[0],'group')+'><h4'+N(c[0],'text')+'>'+esc(c[0])+'</h4><ul'+N(u.list,'text')+'>'+c[1].map(x=>'<li>'+esc(nb(x))+'</li>').join('')+'</ul></div>').join('')+'</div></section>'
+      + '<section class="card note"'+N(u.note,'frame')+'><span class="lab">'+u.note+'</span><p class="small"'+N(u.note,'text')+'>'+esc(nb(A.note))+'</p></section>';
+  } else if(sec.id==='iletisim'){
+    h += '<section class="card contact"'+N(u.card,'frame')+'><span class="lab">'+u.card+'</span><div class="mail"><span class="addr" id="addr"'+N(u.email,'text')+'>'+split('raymeozgen@gmail.com')+'</span>'
+      + '<button class="btn" type="button" id="copy">'+u.copy+'</button></div>'
+      + '<p style="margin:22px 0 0"><a href="https://www.linkedin.com/in/rayme-ozgen-6a9b15262/" target="_blank" rel="noopener">linkedin.com/in/rayme-ozgen-6a9b15262</a></p></section>';
+  } else {
+    const s = sec.proj;
+    h += '<section class="card pcover"'+N(u.kapak,'frame')+'><span class="lab">'+u.kapak+'</span><div class="stack"><div class="nm"><span class="logo"'+N(u.logo,'img')+'>'+P.logos[s.id]+'</span><div><h2'+N(s.name,'text')+'>'+split(s.name)+'</h2><div class="kind"'+N(u.kind,'text')+'>'+esc(s.kind)+'</div></div></div>'
+      + (s.rule ? '<div class="rule"'+N(u.rule,'text')+'>'+split(nb(capF(s.rule)))+'</div>' : '') + '</div>'
+      + '<div class="stack"><p'+N(u.bio,'text')+'>'+esc(nb(s.bio))+'</p><div class="small"'+N(u.del,'text')+'>'+u.del+'</div><div class="chips"'+N(u.del,'group')+'>'+s.tags.map(t=>'<span class="chip"'+N(t,'text')+'>'+esc(t)+'</span>').join('')+'</div>'
+      + '<div'+N(u.info,'group')+'>'+s.rows.map(r=>'<div class="kv"'+N(r[0],'text')+'><span>'+esc(r[0])+'</span><span>'+esc(nb(r[1]))+'</span></div>').join('')+'</div><div class="small"'+N(u.note,'text')+'>'+esc(nb(s.note))+'</div></div></section>';
+    s.works.forEach((w,wi)=>{
+      const showTitle = !w.dup && w.frames.length>1 && w.frames[0].name.indexOf(w.title)!==0;
+      h += '<article class="work">'
+        + (showTitle ? '<h3 class="wt"'+N(w.title,'text')+'>'+esc(w.title)+'</h3>' : '')
+        + '<div class="frames" data-w="'+wi+'"></div>'
+        + (w.desc ? '<div class="cap"'+N(u.desc,'text')+'>'+esc(nb(w.desc))+'</div>' : '')
+        + '</article>';
+    });
+  }
+  $('#stage').innerHTML = h;
+  if(sec.proj) layout(sec.proj, true); else finish();
+  $('#canvas').scrollTop = 0; $('.app').scrollTop = 0; window.scrollTo(0,0);
+}
+// metin kendi kutusuna sığmazsa üstüne taşmasın: punto kutuya sığana kadar küçülür
+function fitAll(){
+  document.querySelectorAll('#stage .pcover h2, #stage .about .nm, #stage .ttl, #stage .addr, #stage .contact a, #stage .pcover .rule').forEach(el=>{
+    el.style.removeProperty('--fit');
+    const box = el.classList.contains('ttl') ? el.parentElement : el;
+    let fs = parseFloat(getComputedStyle(el).fontSize), i = 0;
+    const over = () => (box===el ? el.scrollWidth > el.clientWidth + 1 : el.getBoundingClientRect().width > box.getBoundingClientRect().width - 32);
+    while(over() && fs > 12 && i++ < 120){ fs -= 1; el.style.setProperty('--fit', fs+'px'); }
+  });
+}
+function finish(keepId){
+  fitAll(); grids();
+  document.querySelectorAll('#stage [data-n]').forEach((el,i)=>el.dataset.id = i);
+  const E = edits(); for(const id in E){ const el = elById(id); if(el) applyEd(el, E[id]); }
+  sel = keepId!=null ? elById(keepId) : null;
+  document.querySelectorAll('.fr').forEach(f=>f.classList.toggle('isSel', f===sel));
+  layers(); inspector(); bar();
+}
+
+// tek ölçekli raf yerleşimi: basılı parçalar gerçek ölçüleriyle, diğerleri piksel oranıyla
+function pack(sizes, W, H, gap){
+  const shelf = sc => { const rows=[]; let r=[], cw=0;
+    sizes.forEach((s,i)=>{ const w=s[0]*sc; if(r.length && cw+gap+w>W){rows.push(r); r=[]; cw=0;} r.push(i); cw+=(r.length>1?gap:0)+w; });
+    rows.push(r); const tot = rows.reduce((a,r)=>a+Math.max(...r.map(i=>sizes[i][1]*sc)),0)+(rows.length-1)*(gap+26);
+    return {rows, tot, ok: sizes.every(s=>s[0]*sc<=W)}; };
+  let lo=1e-4, hi=100; for(let k=0;k<50;k++){ const m=(lo+hi)/2, r=shelf(m); if(r.ok && r.tot<=H) lo=m; else hi=m; }
+  const {rows} = shelf(lo), out=[]; let y=26;
+  rows.forEach(r=>{ const rh=Math.max(...r.map(i=>sizes[i][1]*lo)), rw=r.reduce((a,i)=>a+sizes[i][0]*lo,0)+gap*(r.length-1); let x=(W-rw)/2;
+    r.forEach(i=>{ out[i]={x,y,w:sizes[i][0]*lo,h:sizes[i][1]*lo}; x+=sizes[i][0]*lo+gap; }); y+=rh+gap+26; });
+  return {boxes:out, height:y-gap};
+}
+function layout(proj, fresh){
+  const keep = !fresh && sel ? sel.dataset.id : null, mob = isMob();
+  document.querySelectorAll('.frames').forEach(box=>{
+    const w = proj.works[+box.dataset.w], W = box.clientWidth;
+    const H = Math.max(320, Math.min(mob? devH()*.62 : devH()-220, 820));
+    const {boxes, height} = pack(w.frames.map(f=> f.mm ? [f.mm[0], f.mm[1]] : [f.w, f.h]), W, H, mob? 16 : 36);
+    box.style.height = height+'px';
+    box.innerHTML = w.frames.map((f,i)=>{ const b=boxes[i];
+      return '<div class="fr '+(f.cut?'cut':'box')+'" tabindex="0"'+N(f.name,'img')+' aria-label="'+esc(f.name)+'" data-wf="'+box.dataset.w+'-'+i+'" style="left:'+b.x+'px;top:'+b.y+'px;width:'+b.w+'px;height:'+b.h+'px">'
+        + (NOTES[lang][proj.id+':'+box.dataset.w+'-'+i] ? '<button class="pin" type="button" aria-label="'+UI[lang].pins+'">R</button><div class="cm" hidden><b>Rayme Özgen</b>'+esc(nb(NOTES[lang][proj.id+':'+box.dataset.w+'-'+i]))+'</div>' : '')
+        + '<span class="lab">'+esc(f.name)+'</span><img src="'+f.src+'" alt="'+esc(f.name)+'" draggable="false" loading="lazy" decoding="async" width="'+f.w+'" height="'+f.h+'"></div>'; }).join('');
+  });
+  finish(keep);
+}
+function getF(wf){ const s = sections().find(s=>s.id===cur); if(!s||!s.proj||!wf) return null; const [wi,fi]=wf.split('-').map(Number); const w=s.proj.works[wi]; return w?{w,f:w.frames[fi],proj:s.proj}:null; }
+
+/* ---------- düzenleme ---------- */
+function norm(e){ const o={}; for(const k in e){ const v=e[k]; if(v==null||v==='') continue; if((k==='x'||k==='y'||k==='r')&&!v) continue; if(k==='o'&&v===100) continue; if(k==='s'&&v===1) continue; if(k==='h'&&!v) continue; o[k]=v; } return o; }
+function applyEd(el, e){ e = e||{}; const s = el.style;
+  if(el.classList.contains('ch')) s.display = (e.x||e.y||e.r) ? 'inline-block' : '';
+  s.translate = (e.x||e.y) ? (e.x||0)+'px '+(e.y||0)+'px' : '';
+  s.rotate = e.r ? e.r+'deg' : '';
+  s.scale = (e.s && e.s!==1) ? String(e.s) : '';
+  s.opacity = e.o!=null ? e.o/100 : '';
+  s.color = e.c||''; s.fontSize = e.fs ? e.fs+'px' : ''; s.visibility = e.h ? 'hidden' : ''; }
+function setEd(el, patch){ const E = edits(), id = el.dataset.id; const v = norm(Object.assign({}, E[id], patch));
+  if(Object.keys(v).length) E[id] = v; else delete E[id]; applyEd(el, v); }
+function commit(el, before){ const k = key(), id = el.dataset.id, after = Object.assign({}, edits()[id]||{});
+  if(JSON.stringify(norm(before||{}))===JSON.stringify(after)) return;
+  HIST.push({k, id, before:norm(before||{}), after}); FUT = []; bar(); layers(); }
+function restore(k, id, val){ const E = ED[k] || (ED[k] = {});
+  if(id==='*'){ ED[k] = JSON.parse(JSON.stringify(val)); if(k===key()) { document.querySelectorAll('#stage [data-id]').forEach(el=>applyEd(el, ED[k][el.dataset.id])); } }
+  else { if(Object.keys(val).length) E[id] = Object.assign({}, val); else delete E[id]; if(k===key()){ const el = elById(id); if(el) applyEd(el, E[id]); } }
+  bar(); layers(); inspector(); }
+function undo(){ const h = HIST.pop(); if(!h) return; restore(h.k, h.id, h.before); FUT.push(h); bar(); }
+function redo(){ const h = FUT.pop(); if(!h) return; restore(h.k, h.id, h.after); HIST.push(h); bar(); }
+function resetPage(){ const k = key(), before = JSON.parse(JSON.stringify(ED[k]||{})); if(!Object.keys(before).length) return;
+  HIST.push({k, id:'*', before, after:{}}); FUT = []; restore(k, '*', {}); }
+function bar(){ $('#t-undo').disabled = !HIST.length; $('#t-redo').disabled = !FUT.length; $('#t-reset').hidden = !Object.keys(ED[key()]||{}).length;
+  document.querySelectorAll('[data-tool]').forEach(b=>b.setAttribute('aria-pressed', b.dataset.tool===(space?'H':tool)));
+  document.body.classList.toggle('tool-H', tool==='H'||space); }
+
+/* ---------- seçim ---------- */
+const isText = el => el && (el.dataset.k==='text' || el.dataset.k==='char');
+const isImg = el => el && el.dataset.k==='img';
+const sizable = el => isText(el) || isImg(el);
+const parentOf = el => el && el.parentElement && el.parentElement.closest('#stage [data-n]');
+function select(el, from){
+  sel = el || null;
+  document.querySelectorAll('.fr').forEach(f=>f.classList.toggle('isSel', f===sel));
+  layers(); inspector();
+  if(sel && from==='layers'){ const r = sel.getBoundingClientRect(), c = $('#canvas').getBoundingClientRect();
+    if(r.bottom < Math.max(c.top,0)+60 || r.top > Math.min(c.bottom,innerHeight)-60) sel.scrollIntoView({behavior:'smooth', block:'center'}); }
+  if(sel && from!=='layers'){ const row = $('#layers .row.sel'); if(row) row.scrollIntoView({block:'nearest'}); }
+}
+function depth(el){ let d=0, p=parentOf(el); while(p){ d++; p=parentOf(p); } return d; }
+function layers(){
+  const u = UI[lang], all = [...document.querySelectorAll('#stage [data-n]')], anc = new Set();
+  for(let p = sel; p; p = parentOf(p)) anc.add(p);
+  const hasKids = new Set(); all.forEach(el=>{ const p=parentOf(el); if(p) hasKids.add(p); });
+  const open = el => anc.has(el) || EXP.has(el.dataset.id) || (depth(el)===0 && el.dataset.k!=='text');
+  const shown = el => { const p = parentOf(el); return !p || (shown(p) && open(p)); };
+  const E = edits();
+  $('#layers').innerHTML = all.filter(shown).map(el=>{ const d = depth(el), id = el.dataset.id, off = E[id] && E[id].h;
+    return '<button class="row'+(el===sel?' sel':'')+(off?' off':'')+'" type="button" data-id="'+id+'" style="padding-left:'+(10+d*14)+'px">'
+      + '<span class="car">'+(hasKids.has(el)?(open(el)?'▾':'▸'):'')+'</span><span class="ic">'+ICON[el.dataset.k]+'</span><span class="t">'+esc(el.dataset.n)+'</span>'
+      + (off?'<span class="hid">'+u.hidden+'</span>':'')+'</button>'; }).join('');
+}
+function hex(c){ const m = c.match(/\d+(\.\d+)?/g)||[0,0,0]; return '#'+m.slice(0,3).map(v=>(+v).toString(16).padStart(2,'0')).join(''); }
+const fld = (f,l,v,suf) => '<label class="f"><span>'+l+'</span><input type="number" data-f="'+f+'" value="'+v+'" step="1">'+(suf?'<span>'+suf+'</span>':'')+'</label>';
+const ro = (l,v) => '<label class="f ro"><span>'+l+'</span><input type="text" value="'+v+'" readonly tabindex="-1"></label>';
+function posOf(el){ const r = el.getBoundingClientRect(), s = $('#stage').getBoundingClientRect(); const k = Z*FS; return {x:Math.round((r.left-s.left)/k), y:Math.round((r.top-s.top)/k), w:Math.round(r.width/k), h:Math.round(r.height/k)}; }
+function inspector(){
+  const u = UI[lang], box = $('#insp');
+  if(!sel){ box.innerHTML = '<div class="empty">'+u.none+' '+u.measure+'<div class="keys">'+u.keys.map(k=>'<kbd>'+k[0]+'</kbd><span>'+k[1]+'</span>').join('')+'</div></div>'; return; }
+  const k = sel.dataset.k, E = edits()[sel.dataset.id]||{}, cs = getComputedStyle(sel), p = posOf(sel);
+  if(insTab==='i'){ box.innerHTML = '<div class="grp"><div class="ttlv"><span class="ic">'+ICON[k]+'</span><span>'+esc(sel.dataset.n)+'</span></div><div class="k">'+u.kinds[k]+'</div></div>' + inspectHTML(sel, cs, p); return; }
+  let h = '<div class="grp"><div class="ttlv"><span class="ic">'+ICON[k]+'</span><span>'+esc(sel.dataset.n)+'</span></div><div class="k">'+u.kinds[k]+'</div></div>'
+    + '<div class="grp"><div class="k">'+u.pos+'</div><div class="fields">'+ro('X',p.x)+ro('Y',p.y)+ro('W',p.w)+ro('H',p.h)+fld('r',u.rot,E.r||0,'°')+fld('o',u.opacity,E.o!=null?E.o:100,'%')+(isImg(sel)?fld('sc',u.scale,Math.round((E.s||1)*100),'%'):'')+'</div></div>';
+  if(k==='text'||k==='char'){ const c = hex(cs.color);
+    h += '<div class="grp"><div class="k">'+u.text+'</div><div class="v">Instrument Sans · '+cs.fontWeight+'</div><div class="fields">'+fld('fs',u.fsize,Math.round(parseFloat(cs.fontSize)),'px')
+      + '<label class="f"><input type="color" data-f="c" value="'+c+'"><span class="hx">'+c.slice(1).toUpperCase()+'</span></label></div></div>'; }
+  const d = sel.classList.contains('fr') && getF(sel.dataset.wf);
+  if(d) h += '<div class="grp"><div class="k">'+u.size+'</div><div class="v">'+esc(d.f.px)+' px</div>'+(d.f.mm?'<div class="k">'+u.mm+'</div><div class="v">'+d.f.mm[0]+' × '+d.f.mm[1]+' mm</div>':'')
+      + '<div class="k">'+u.proj+'</div><div class="v">'+esc(d.proj.name)+'</div>'
+      + ((d.w.desc||d.w.title!==d.f.name)?'<div class="k">'+u.desc+'</div><div class="v">'+(d.w.title!==d.f.name?'<b>'+esc(d.w.title)+'</b><br>':'')+esc(d.w.desc)+'</div>':'')
+      + '<div class="acts"><button class="btn" type="button" data-act="big">'+u.big+'</button></div></div>';
+  const kid = sel.querySelector('[data-n]');
+  h += '<div class="grp"><div class="acts">'
+    + (sel.dataset.proj?'<button class="btn" type="button" data-act="open">'+u.open+'</button>':'')
+    + (parentOf(sel)?'<button class="btn" type="button" data-act="parent">'+u.parent+'</button>':'')
+    + (kid?'<button class="btn" type="button" data-act="child">'+u.child+'</button>':'')
+    + (Object.keys(E).length?'<button class="btn" type="button" data-act="reset">'+u.resetEl+'</button>':'')
+    + '</div></div>';
+  box.innerHTML = h;
+}
+function syncPos(){ if(!sel) return; const p = posOf(sel);
+  [['x',p.x],['y',p.y]].forEach(([f,v])=>{ const i = $('#insp [data-f="'+f+'"]'); if(i && document.activeElement!==i) i.value = v; });
+  const ros = document.querySelectorAll('#insp .f.ro input'); if(ros.length===2){ ros[0].value = p.w; ros[1].value = p.h; } }
+let insBefore = null;
+$('#insp').addEventListener('focusin', e=>{ if(e.target.dataset.f && sel) insBefore = Object.assign({}, edits()[sel.dataset.id]||{}); });
+$('#insp').addEventListener('input', e=>{ const f = e.target.dataset.f; if(!f || !sel) return;
+  if(f==='c'){ setEd(sel,{c:e.target.value}); e.target.nextElementSibling.textContent = e.target.value.slice(1).toUpperCase(); return; }
+  const v = parseFloat(e.target.value); if(isNaN(v)) return;
+  if(f==='x'||f==='y'){ const p = posOf(sel), E = edits()[sel.dataset.id]||{}; setEd(sel, {[f]: Math.round((E[f]||0) + v - (f==='x'?p.x:p.y))}); }
+  else if(f==='o') setEd(sel,{o:Math.max(0,Math.min(100,v))});
+  else if(f==='fs') { if(v>0) setEd(sel,{fs:v}); }
+  else if(f==='sc') { if(v>0) setEd(sel,{s:Math.max(0.2,Math.min(4,v/100))}); }
+  else setEd(sel,{[f]:v});
+  syncPos(); });
+$('#insp').addEventListener('change', e=>{ if(e.target.dataset.f && sel){ commit(sel, insBefore||{}); insBefore = Object.assign({}, edits()[sel.dataset.id]||{}); } });
+$('#insp').addEventListener('keydown', e=>{ if(e.key==='Enter' && e.target.dataset.f) e.target.blur(); });
+$('#insp').addEventListener('click', e=>{ const a = e.target.closest('[data-act]'); if(!a || !sel) return; const act = a.dataset.act;
+  if(act==='big') openLB(sel.dataset.wf);
+  else if(act==='open') go(sel.dataset.proj);
+  else if(act==='parent') select(parentOf(sel));
+  else if(act==='child') select(sel.querySelector('[data-n]'));
+  else if(act==='reset'){ const b = Object.assign({}, edits()[sel.dataset.id]||{}); delete edits()[sel.dataset.id]; applyEd(sel,{}); commit(sel,b); inspector(); } });
+
+/* ---------- seçim katmanı (hover ve seçim kutuları) ---------- */
+const OV = $('#ov'), HV = $('#hv'), SL = $('#sl'), BD = $('#bd'), MS = document.createElement('div'); OV.appendChild(MS);
+function place(b, el, L, T){ if(!el || !el.isConnected){ b.hidden = true; return null; } const r = el.getBoundingClientRect();
+  if(!r.width && !r.height){ b.hidden = true; return null; }
+  b.hidden = false; b.style.transform = 'translate('+(r.left-L)+'px,'+(r.top-T)+'px)'; b.style.width = r.width+'px'; b.style.height = r.height+'px'; return r; }
+function tick(){
+  const c = $('#canvas').getBoundingClientRect();
+  const dv = DEV.getBoundingClientRect(); let T = Math.max(c.top,dv.top,0); if(isMob()) T = Math.max(T, $('.left').getBoundingClientRect().bottom);
+  const L = Math.max(c.left,dv.left,0), R = Math.min(c.right,dv.right,innerWidth), B = Math.min(c.bottom,dv.bottom,innerHeight);
+  OV.style.left = L+'px'; OV.style.top = T+'px'; OV.style.width = Math.max(0,R-L)+'px'; OV.style.height = Math.max(0,B-T)+'px';
+  const mt = (alt && sel && $('#lb').hidden) ? ((hov && hov!==sel) ? hov : parentOf(sel)) : null;
+  place(HV, mt || (hov && hov!==sel && $('#lb').hidden ? hov : null), L, T); HV.classList.toggle('m', !!mt);
+  MS.innerHTML = mt ? measure(sel.getBoundingClientRect(), mt.getBoundingClientRect(), L, T) : '';
+  const r = place(SL, $('#lb').hidden ? sel : null, L, T); SL.classList.toggle('rs', !!sel && sizable(sel)); BD.hidden = !!mt; if(r) BD.textContent = Math.round(r.width/(Z*FS))+' × '+Math.round(r.height/(Z*FS));
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+
+/* ---------- fare: seç, sürükle, el aracı ---------- */
+const stage = $('#stage'), canvas = $('#canvas');
+const pick = t => (t.closest('#copy, a, .pin, .cm') ? null : t.closest('#stage [data-n]'));
+let drag = null, pan = null;
+const scroller = () => isMob() ? $('.app') : canvas;
+canvas.addEventListener('pointerdown', e=>{
+  if(e.button!==0) return;
+  if((tool==='H'||space) && e.pointerType==='mouse'){ const s = scroller(); pan = {x:e.clientX, y:e.clientY, l:s.scrollLeft, t:s.scrollTop, s}; document.body.classList.add('panning'); e.preventDefault(); return; }
+  const deep = pick(e.target);
+  if(!deep){ if(!e.target.closest('#copy, a, .pin, .cm')) select(null); return; }
+  if(deep!==sel) select(deep);
+});
+// köşe tutamaçlarından çekince harf/metin büyür ya da küçülür (yeri değişmez)
+SL.addEventListener('pointerdown', e=>{ const i = e.target.closest('i'); if(!i || !sel || !sizable(sel) || e.button!==0) return;
+  e.preventDefault(); e.stopPropagation(); const n = [...SL.querySelectorAll('i')].indexOf(i), r = sel.getBoundingClientRect();
+  drag = {el:sel, x:e.clientX, y:e.clientY, w:r.width, h:r.height, sx:(n%2?1:-1), sy:(n<2?-1:1), fs:parseFloat(getComputedStyle(sel).fontSize), s0:(edits()[sel.dataset.id]||{}).s||1, img:isImg(sel), b:Object.assign({}, edits()[sel.dataset.id]||{})};
+  document.body.classList.add('sizing'); });
+addEventListener('pointermove', e=>{
+  if(pan){ pan.s.scrollLeft = pan.l-(e.clientX-pan.x)/FS; pan.s.scrollTop = pan.t-(e.clientY-pan.y)/FS; return; }
+  if(drag){ const f = ((drag.w + drag.sx*(e.clientX-drag.x))/drag.w + (drag.h + drag.sy*(e.clientY-drag.y))/drag.h) / 2;
+    hov = null;
+    if(drag.img){ const sc = Math.round(Math.max(0.2, Math.min(4, drag.s0*f))*100)/100; setEd(drag.el, {s:sc}); const i = $('#insp [data-f="sc"]'); if(i) i.value = Math.round(sc*100); syncPos(); return; }
+    setEd(drag.el, {fs: Math.max(6, Math.min(600, Math.round(drag.fs*f)))});
+    const i = $('#insp [data-f="fs"]'); if(i) i.value = drag.el.style.fontSize ? parseInt(drag.el.style.fontSize) : Math.round(drag.fs); syncPos(); return; }
+  if(e.pointerType!=='mouse') return;
+  const row = e.target.closest && e.target.closest('#layers .row[data-id]');
+  if(row){ hov = elById(row.dataset.id); return; }
+  hov = (tool==='V' && !space && e.target.closest && e.target.closest('#canvas')) ? pick(e.target) : null;
+});
+addEventListener('pointerup', ()=>{
+  if(pan){ pan = null; document.body.classList.remove('panning'); }
+  if(drag){ commit(drag.el, drag.b); drag = null; document.body.classList.remove('sizing'); inspector(); }
+});
+document.addEventListener('mouseleave', ()=>{ hov = null; });
+canvas.addEventListener('dblclick', e=>{ const el = pick(e.target); if(!el) return;
+  if(el.classList.contains('fr')) openLB(el.dataset.wf);
+  else if(el.dataset.proj) go(el.dataset.proj); });
+stage.addEventListener('focusin', e=>{ if(e.target.closest('.pin')) return; const f = e.target.closest('.fr'); if(f && sel!==f && !drag) select(f); });
+
+/* ---------- klavye ---------- */
+addEventListener('keydown', e=>{
+  if(!$('#lb').hidden){ if(e.key==='Escape') closeLB(); else if(e.key==='ArrowRight') stepLB(1); else if(e.key==='ArrowLeft') stepLB(-1); return; }
+  if(e.target.closest && e.target.closest('input, textarea, select')) return;
+  const m = e.metaKey || e.ctrlKey, k = e.key;
+  if(home) return;
+  if(m && (k==='='||k==='+')){ e.preventDefault(); zoomBy(1.25); return; }
+  if(m && (k==='-'||k==='_')){ e.preventDefault(); zoomBy(0.8); return; }
+  if(e.ctrlKey && k.toLowerCase()==='g'){ e.preventDefault(); toggleGrid(); return; }
+  if(k==='Alt'){ alt = true; e.preventDefault(); return; }
+  if(m && k.toLowerCase()==='z'){ e.preventDefault(); e.shiftKey ? redo() : undo(); return; }
+  if(m && k.toLowerCase()==='y'){ e.preventDefault(); redo(); return; }
+  if(m || e.altKey) return;
+  if(e.shiftKey && (k===')'||k==='=' || e.code==='Digit0' || e.code==='Digit1')){ e.preventDefault(); setZoom(1); return; }
+  if(k==='c'||k==='C'){ togglePins(); return; }
+  if(k===' ' && !e.target.closest('button')){ e.preventDefault(); if(!space){ space = true; hov = null; bar(); } return; }
+  if(k==='v'||k==='V'){ tool = 'V'; bar(); return; }
+  if(k==='h'||k==='H'){ tool = 'H'; hov = null; bar(); return; }
+  if(!sel) return;
+  if(k==='Escape'){ select(null); return; }
+  if(k==='Enter'){ e.preventDefault();
+    if(e.shiftKey){ const p = parentOf(sel); if(p) select(p); }
+    else { const c = sel.querySelector('[data-n]'); if(c) select(c); else if(sel.classList.contains('fr')) openLB(sel.dataset.wf); }
+    return; }
+  const dz = {'+':1,'=':1,'-':-1,'_':-1}[k];
+  if(dz && isText(sel)){ e.preventDefault(); const b = Object.assign({}, edits()[sel.dataset.id]||{}), fs = parseFloat(getComputedStyle(sel).fontSize);
+    setEd(sel, {fs: Math.max(6, Math.min(600, Math.round(fs) + dz*(e.shiftKey?10:1)))}); commit(sel, b); inspector(); }
+  else if(dz && isImg(sel)){ e.preventDefault(); const b = Object.assign({}, edits()[sel.dataset.id]||{});
+    setEd(sel, {s: Math.round(Math.max(0.2, Math.min(4, (b.s||1) + dz*(e.shiftKey?0.25:0.05)))*100)/100}); commit(sel, b); inspector(); }
+});
+addEventListener('keyup', e=>{ if(e.key===' ' && space){ space = false; bar(); } });
+
+/* ---------- büyütme ---------- */
+function allF(){ const s=sections().find(s=>s.id===cur); const r=[]; if(s&&s.proj) s.proj.works.forEach((w,wi)=>w.frames.forEach((f,fi)=>r.push(wi+'-'+fi))); return r; }
+function openLB(wf){ const d=getF(wf); if(!d) return; lbW = wf; const el = document.querySelector('.fr[data-wf="'+wf+'"]'); if(el && sel!==el) select(el);
+  $('#lb-img').src=d.f.src; $('#lb-img').alt=d.f.name; $('#lb-t').textContent=d.f.name; $('#lb').hidden=false; $('#lb-x').focus(); }
+function stepLB(n){ const a=allF(), i=a.indexOf(lbW); if(i<0) return; openLB(a[(i+n+a.length)%a.length]); }
+function closeLB(){ $('#lb').hidden=true; const el=document.querySelector('.fr[data-wf="'+lbW+'"]'); if(el) el.focus({preventScroll:true}); }
+$('#lb').addEventListener('click', e=>{ if(e.target.id==='lb' || e.target.classList.contains('im')) closeLB(); });
+
+/* ---------- gezinme ---------- */
+function setHash(push){ const h = home ? '#dosyalar' : '#'+lang+(size?'@'+size:'')+((size && SIZES[size].print) ? '' : '/'+cur); try{ history[push?'pushState':'replaceState'](null,'',h); }catch(e){} }
+function go(id){ if(id===cur) return; cur=id; setHash(); render(); }
+function openFile(l, sz){ lang=l; size=sz||null; cur='kapak'; home=false; setHash(true); show(); }
+function show(){ if(size && SIZES[size].print) renderPrint(); else render(); }
+function goHome(){ home=true; setHash(true); renderHome(); }
+function renderHome(){ home=true; size=null; sel=null; hov=null; applyFrame(); document.body.classList.remove('is-print'); document.body.classList.add('is-home'); $('#print').hidden=true; $('#home').hidden=false; $('#path').textContent='/ Dosyalar · Files'; document.documentElement.lang='tr'; presets(); }
+function presets(){
+  $('#new-h').innerHTML = newLang==='tr' ? 'Yeni dosya oluştur <span>· Create new</span>' : 'Create new <span>· Yeni dosya oluştur</span>';
+  document.querySelectorAll('[data-nl]').forEach(b=>b.setAttribute('aria-pressed', b.dataset.nl===newLang));
+  $('#presets').innerHTML = Object.entries(SIZES).map(([k,v])=>{ const sc = 56/Math.max(v.w,v.h);
+    return '<button class="preset" type="button" data-size="'+k+'"><span class="pv"><i style="width:'+Math.round(v.w*sc)+'px;height:'+Math.round(v.h*sc)+'px"></i></span><b>'+v[newLang]+'</b><small>'+v.w+' × '+v.h+' '+v.u+'</small></button>'; }).join('');
+}
+function applyFrame(){
+  const S = size && SIZES[size], fr = $('#frm');
+  if(!S || S.print){ document.body.classList.remove('framed'); DEV.style.cssText = ''; FS = 1; fr.hidden = true; return; }
+  document.body.classList.add('framed');
+  const aw = innerWidth - 48, ah = innerHeight - 88; FS = Math.min(1, aw/S.w, ah/S.h);
+  const left = Math.round((innerWidth - S.w*FS)/2), top = Math.round(56 + Math.max(0, (ah - S.h*FS)/2));
+  DEV.style.cssText = 'width:'+S.w+'px;height:'+S.h+'px;left:'+left+'px;top:'+top+'px;transform:scale('+FS+')';
+  fr.hidden = false; fr.style.left = left+'px'; fr.style.top = (top-30)+'px';
+  $('#frm-t').textContent = FILE[lang]+' · '+S[lang]; $('#frm-s').textContent = S.w+' × '+S.h+' px'+(FS<1 ? ' · '+(lang==='tr' ? '%'+Math.round(FS*100) : Math.round(FS*100)+'%') : '');
+}
+function renderPrint(){
+  const S = SIZES[size], tr = lang==='tr', pg = PAGES[lang];
+  home=false; sel=null; hov=null; applyFrame();
+  document.body.classList.remove('is-home'); document.body.classList.add('is-print'); $('#home').hidden=true; $('#print').hidden=false;
+  document.documentElement.lang = lang;
+  $('#path').textContent = '/ '+FILE[lang]+' / '+S[lang];
+  $('#print').innerHTML = '<div class="print-in"><div class="ph"><h1>'+FILE[lang]+' <span>· '+S[lang]+', '+S.w+' × '+S.h+' mm · '+pg.length+(tr?' sayfa':' pages')+'</span></h1>'
+    + '<button class="btn" type="button" data-pdf="'+lang+'">'+(tr?'PDF indir':'Download PDF')+'</button></div>'
+    + pg.map((p,i)=>'<figure class="pb"><figcaption>'+String(i+1).padStart(2,'0')+'</figcaption><div class="pg" style="aspect-ratio:'+S.w+' / '+S.h+'"><img src="'+p+'" alt="'+(i+1)+'" loading="lazy" decoding="async"></div></figure>').join('')
+    + '</div>';
+  $('#print').scrollTop = 0;
+}
+function fromHash(){ const h=(location.hash||'').slice(1), m=h.match(/^(tr|en)(?:@(\w+))?(?:\/(.*))?$/);
+  if(m){ lang=m[1]; size = SIZES[m[2]] ? m[2] : null; cur = sections().some(s=>s.id===m[3]) ? m[3] : 'kapak'; show(); return; }
+  if(sections().some(s=>s.id===h)){ lang='tr'; cur=h; render(); return; }
+  renderHome(); }
+function setLang(l){ if(l===lang) return; lang=l; setHash(); show(); }
+document.addEventListener('click', e=>{
+  const menu = $('#exp-menu');
+  if(e.target.closest('#t-exp')){ menu.hidden = !menu.hidden; $('#t-exp').setAttribute('aria-expanded', !menu.hidden); return; }
+  if(!menu.hidden && !e.target.closest('#exp-menu')){ menu.hidden = true; $('#t-exp').setAttribute('aria-expanded', false); }
+  const pd = e.target.closest('[data-pdf]'); if(pd){ menu.hidden = true; download(...PDF[pd.dataset.pdf]); return; }
+  const fo = e.target.closest('[data-open]'); if(fo){ openFile(fo.dataset.open); return; }
+  const sz = e.target.closest('[data-size]'); if(sz){ openFile(newLang, sz.dataset.size); return; }
+  const nl = e.target.closest('[data-nl]'); if(nl){ newLang = nl.dataset.nl; presets(); return; }
+  if(e.target.closest('#frm-x')){ goHome(); return; }
+  if(e.target.closest('#t-home')){ goHome(); return; }
+  const pin = e.target.closest('.pin'); if(pin){ const c = pin.nextElementSibling, open = c.hidden; document.querySelectorAll('.cm').forEach(x=>{ x.hidden = true; x.parentElement.classList.remove('open'); }); c.hidden = !open; c.classList.remove('flip'); pin.parentElement.classList.toggle('open', open); if(open){ const cr = c.getBoundingClientRect(), vr = canvas.getBoundingClientRect(); if(cr.right > Math.min(vr.right, innerWidth) - 8) c.classList.add('flip'); } return; }
+  if(!e.target.closest('.cm')) document.querySelectorAll('.cm:not([hidden])').forEach(x=>{ x.hidden = true; x.parentElement.classList.remove('open'); });
+  const tb2 = e.target.closest('[data-tab]'); if(tb2){ insTab = tb2.dataset.tab; tabs(); inspector(); return; }
+  if(e.target.closest('#t-pins')){ togglePins(); return; }
+  if(e.target.closest('#t-grid')){ toggleGrid(); return; }
+  if(e.target.closest('#z-in')){ zoomBy(1.25); return; } if(e.target.closest('#z-out')){ zoomBy(0.8); return; } if(e.target.closest('#z-pct')){ setZoom(1); return; }
+  if(e.target.closest('[data-act="copycss"]')){ const t = $('#insp .code'); if(t){ try{ navigator.clipboard.writeText(t.textContent); e.target.closest('button').textContent = UI[lang].copied; }catch(err){} } return; }
+  const g = e.target.closest('[data-go]'); if(g){ go(g.dataset.go); return; }
+  const car = e.target.closest('#layers .car'); const ly = e.target.closest('#layers .row[data-id]');
+  if(car && ly && car.textContent){ const id = ly.dataset.id; EXP.has(id) ? EXP.delete(id) : EXP.add(id); layers(); return; }
+  if(ly){ select(elById(ly.dataset.id), 'layers'); return; }
+  const tb = e.target.closest('[data-tool]'); if(tb){ tool = tb.dataset.tool; bar(); return; }
+  if(e.target.closest('#t-undo')){ undo(); return; } if(e.target.closest('#t-redo')){ redo(); return; } if(e.target.closest('#t-reset')){ resetPage(); return; }
+  if(e.target.closest('#lb-x')){ closeLB(); return; }
+  if(e.target.closest('#lb-prev')){ stepLB(-1); return; }
+  if(e.target.closest('#lb-next')){ stepLB(1); return; }
+  if(e.target.closest('#copy')){ const b=e.target.closest('#copy'), u=UI[lang];
+    try{ navigator.clipboard.writeText('raymeozgen@gmail.com').then(()=>{ b.textContent=u.copied; setTimeout(()=>b.textContent=u.copy,1600); }, ()=>{}); }catch(err){} return; }
+  if(e.target.closest('#lang-tr')){ setLang('tr'); return; } if(e.target.closest('#lang-en')){ setLang('en'); return; }
+});
+$('#layers').addEventListener('mouseleave', ()=>{ hov = null; });
+let rz; addEventListener('resize', ()=>{ clearTimeout(rz); rz=setTimeout(()=>{ if(home) return; applyFrame(); if(document.body.classList.contains('is-print')) return; setZoom(Z,true); const s=sections().find(s=>s.id===cur); if(s&&s.proj) layout(s.proj); else { fitAll(); grids(); } },120); });
+addEventListener('hashchange', fromHash);
+addEventListener('popstate', fromHash);
+/* imleç etiketi: yalnızca gerçek fare öğenin üzerindeyken görünür */
+const CT = $('#ctag'); let ctT = null;
+function tagAt(t, x, y){ if(!t){ CT.hidden = true; return; } CT.textContent = t.dataset.tag; CT.hidden = false; CT.style.transform = 'translate('+(x+16)+'px,'+(y+20)+'px)'; }
+addEventListener('pointermove', e=>{ if(e.pointerType!=='mouse') return; const t = (!drag && !pan && !space && tool==='V' && e.target.closest) ? e.target.closest('[data-tag]') : null; tagAt(t, e.clientX, e.clientY); });
+addEventListener('pointerdown', e=>{ if(e.pointerType==='mouse') return; const t = e.target.closest && e.target.closest('[data-tag]'); clearTimeout(ctT); tagAt(t, e.clientX, e.clientY); if(t) ctT = setTimeout(()=>{ CT.hidden = true; }, 1500); });
+document.addEventListener('mouseleave', ()=>{ CT.hidden = true; });
+addEventListener('scroll', ()=>{ CT.hidden = true; }, true);
+addEventListener('keyup', e=>{ if(e.key==='Alt') alt = false; });
+addEventListener('blur', ()=>{ alt = false; space = false; });
+addEventListener('pointermove', e=>{ alt = e.altKey; }, true);
+
+/* ---------- yakınlaştırma ---------- */
+function baseW(){ return canvas.clientWidth; }
+function setZoom(z, quiet, mx, my){
+  const mob = isMob(); z = mob ? 1 : Math.max(0.25, Math.min(4, z));
+  const st = $('#stage'), c = canvas, r = c.getBoundingClientRect();
+  mx = mx==null ? c.clientWidth/2 : (mx - r.left)/FS; my = my==null ? c.clientHeight/2 : (my - r.top)/FS;
+  const px = (c.scrollLeft + mx)/Z, py = (c.scrollTop + my)/Z;
+  Z = z; st.style.zoom = z===1 ? '' : z; st.style.width = (mob || z===1) ? '' : baseW()+'px';
+  if(!quiet){ c.scrollLeft = px*z - mx; c.scrollTop = py*z - my; }
+  $('#z-pct').textContent = Math.round(z*100)+'%';
+}
+function zoomBy(f, mx, my){ setZoom(Math.round(Z*f*100)/100, false, mx, my); }
+canvas.addEventListener('wheel', e=>{ if(!(e.ctrlKey||e.metaKey) || home) return; e.preventDefault(); zoomBy(Math.exp(Math.max(-0.25, Math.min(0.25, -e.deltaY*0.004))), e.clientX, e.clientY); }, {passive:false});
+
+/* ---------- ızgara ---------- */
+function grids(){
+  document.querySelectorAll('#stage .gl').forEach(g=>g.remove());
+  document.querySelectorAll('#stage .card, #stage .projs, #stage .cols').forEach(el=>{
+    const cs = getComputedStyle(el), g = document.createElement('div'); g.className = 'gl';
+    g.style.left = cs.paddingLeft; g.style.right = cs.paddingRight; g.style.top = cs.paddingTop; g.style.bottom = cs.paddingBottom;
+    if(cs.display==='grid'){ g.style.gridTemplateColumns = cs.gridTemplateColumns; g.style.columnGap = cs.columnGap; g.innerHTML = cs.gridTemplateColumns.split(' ').map(()=>'<i></i>').join(''); }
+    else g.classList.add('box');
+    el.appendChild(g); });
+}
+function toggleGrid(){ gridOn = !gridOn; document.body.classList.toggle('grid', gridOn); if(gridOn) grids(); $('#t-grid').setAttribute('aria-pressed', gridOn); }
+function togglePins(){ pinsOn = !pinsOn; document.body.classList.toggle('no-pins', !pinsOn); $('#t-pins').setAttribute('aria-pressed', pinsOn); }
+
+/* ---------- ölçü ---------- */
+function measure(a, b, L, T){
+  const out = [], inA = b.left<=a.left+.5 && b.right>=a.right-.5 && b.top<=a.top+.5 && b.bottom>=a.bottom-.5,
+        inB = a.left<=b.left+.5 && a.right>=b.right-.5 && a.top<=b.top+.5 && a.bottom>=b.bottom-.5;
+  if(inA || inB){ const o = inA ? b : a, i = inA ? a : b, cy = (i.top+i.bottom)/2, cx = (i.left+i.right)/2;
+    out.push(['h',o.left,i.left,cy],['h',i.right,o.right,cy],['v',o.top,i.top,cx],['v',i.bottom,o.bottom,cx]); }
+  else {
+    const oy = [Math.max(a.top,b.top), Math.min(a.bottom,b.bottom)], ox = [Math.max(a.left,b.left), Math.min(a.right,b.right)];
+    const ym = oy[1]>oy[0] ? (oy[0]+oy[1])/2 : (a.top+a.bottom)/2, xm = ox[1]>ox[0] ? (ox[0]+ox[1])/2 : (a.left+a.right)/2;
+    if(b.left>=a.right) out.push(['h',a.right,b.left,ym]); else if(a.left>=b.right) out.push(['h',b.right,a.left,ym]);
+    if(b.top>=a.bottom) out.push(['v',a.bottom,b.top,xm]); else if(a.top>=b.bottom) out.push(['v',b.bottom,a.top,xm]);
+    if(!out.length){ out.push(['h',Math.min(a.left,b.left),Math.max(a.left,b.left),Math.max(a.top,b.top)+4],['v',Math.min(a.top,b.top),Math.max(a.top,b.top),Math.max(a.left,b.left)+4]); }
+  }
+  return out.filter(l=>l[2]-l[1]>=1).map(l=>{ const v = Math.round((l[2]-l[1])/(Z*FS));
+    return l[0]==='h' ? '<div class="ml h" style="left:'+(l[1]-L)+'px;top:'+(l[3]-T)+'px;width:'+(l[2]-l[1])+'px"><b>'+v+'</b></div>'
+                      : '<div class="ml v" style="top:'+(l[1]-T)+'px;left:'+(l[3]-L)+'px;height:'+(l[2]-l[1])+'px"><b>'+v+'</b></div>'; }).join('');
+}
+
+/* ---------- incele ---------- */
+function tabs(){ const u = UI[lang]; $('#h-insp').innerHTML = '<div class="tabs"><button type="button" data-tab="d" aria-pressed="'+(insTab==='d')+'">'+u.design+'</button><button type="button" data-tab="i" aria-pressed="'+(insTab==='i')+'">'+u.inspect+'</button></div>'; }
+const gcd = (a,b) => b ? gcd(b, a%b) : a;
+function inspectHTML(el, cs, p){
+  const k = el.dataset.k, L = [], r1 = v => Math.round(v*10)/10;
+  if(k==='text'||k==='char'){ const fs = parseFloat(cs.fontSize), lh = parseFloat(cs.lineHeight), ls = parseFloat(cs.letterSpacing)||0;
+    L.push(['font-family','"Instrument Sans"'],['font-weight',cs.fontWeight],['font-size',r1(fs)+'px'],
+      ['line-height', isNaN(lh) ? 'normal' : r1(lh)+'px /* '+Math.round(lh/fs*100)+'% */'],
+      ['letter-spacing', r1(ls)+'px /* '+r1(ls/fs*100)+'% */'],['color',hex(cs.color).toUpperCase()]);
+    if(cs.textAlign!=='start' && cs.textAlign!=='left') L.push(['text-align',cs.textAlign]); }
+  else if(el.classList.contains('fr')){ const d = getF(el.dataset.wf), m = (d.f.px.match(/\d+/g)||[]).map(Number);
+    let ar = ''; if(m.length===2){ const g = gcd(m[0],m[1]), a = m[0]/g, b = m[1]/g; ar = (a<=32 && b<=32) ? a+' / '+b : (Math.round(m[0]/m[1]*100)/100)+' / 1'; }
+    L.push(['width',p.w+'px'],['height',p.h+'px']); if(ar) L.push(['aspect-ratio',ar]);
+    L.push(['object-fit', d.f.cut ? 'contain' : 'cover']); if(d.f.mm) L.push(['/* baskı */', d.f.mm[0]+' × '+d.f.mm[1]+' mm']);
+    L.push(['/* kaynak */', d.f.px+' px, '+(d.f.src.endsWith('.png')?'PNG':'JPG')]); }
+  else { L.push(['width',p.w+'px'],['height',p.h+'px'],['display',cs.display]);
+    if(cs.display==='grid') L.push(['grid-template-columns',cs.gridTemplateColumns]);
+    if(cs.gap && cs.gap!=='normal') L.push(['gap',cs.gap]);
+    if(cs.padding && cs.padding!=='0px') L.push(['padding',cs.padding]);
+    if(cs.backgroundColor && !/rgba\(.*,\s*0\)$/.test(cs.backgroundColor) && cs.backgroundColor!=='transparent') L.push(['background',hex(cs.backgroundColor).toUpperCase()]);
+    if(cs.borderRadius && cs.borderRadius!=='0px') L.push(['border-radius',cs.borderRadius]); }
+  return '<div class="grp"><div class="k">CSS</div><pre class="code">'+L.map(([a,b])=>a.startsWith('/*') ? '<span class="p">'+esc(a)+' '+esc(b)+'</span>' : '<span class="p">'+esc(a)+':</span> '+esc(b)+';').join('\n')+'</pre><div class="acts"><button class="btn" type="button" data-act="copycss">'+UI[lang].copyCss+'</button></div></div>';
+}
+
+/* ---------- PDF ---------- */
+async function download(path, name){
+  let d = null;
+  try{ d = (window.claude && window.claude.use) ? await window.claude.use('downloads') : null; }catch(e){ d = null; }
+  if(d){ try{ const blob = await (await fetch(path)).blob(); await d.save({filename:name, data:blob}); return; }catch(err){ if(err && (err.code==='declined' || err.code==='rate_limited')) return; } }
+  const a = document.createElement('a'); a.href = path; a.download = name; a.target = '_blank'; a.rel = 'noopener'; document.body.appendChild(a); a.click(); a.remove();
+}
+$('#t-pins').setAttribute('aria-pressed', true); $('#t-grid').setAttribute('aria-pressed', false);
+fromHash();
+try{ document.fonts.ready.then(()=>{ if(!home) fitAll(); }); }catch(e){}
+</script>
+
+</body>
+</html>
