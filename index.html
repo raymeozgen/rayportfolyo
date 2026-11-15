@@ -86,6 +86,7 @@ body:not(.tool-H):not(.tool-I) [data-tag], body:not(.tool-H):not(.tool-I) [data-
 #gbtn{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:46;display:flex;align-items:center;gap:10px;background:#161616;color:#F2F2F0;border:0;border-radius:999px;padding:11px 18px;font:600 14px/1 var(--f);letter-spacing:0;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.25)}
 #gbtn kbd{font:500 11px/1 var(--f);color:#A9A9A6;border:1px solid #3A3A3A;border-radius:4px;padding:3px 5px}
 #gbtn[hidden]{display:none}
+@media (hover:none){#gbtn kbd{display:none}}
 /* komut paleti */
 #ck{position:fixed;inset:0;z-index:80;background:rgba(10,10,10,.28);display:flex;justify-content:center;align-items:flex-start;padding-top:16vh}
 #ck[hidden]{display:none}
@@ -1149,6 +1150,18 @@ $('#grav').addEventListener('pointermove', e=>{ const r = $('#grav').getBounding
   GM.vx = (x-GM.x)/dt; GM.vy = (y-GM.y)/dt; GM.x = x; GM.y = y; GM.t = now; });
 addEventListener('pointerup', ()=>{ if(GM.grab){ GM.grab = null; $('#grav').classList.remove('dragging'); } });
 $('#gbtn').addEventListener('click', gravUp);
+/* kendiliğinden tetiklenme: fareyi hızla sallamak, telefonu sallamak ya da uzun süre hiçbir şey yapmamak */
+const canGrav = () => !home && $('#lb').hidden && $('#ck').hidden && $('#grav').hidden && !document.body.classList.contains('is-print') && !drag;
+let SH = {dir:0, x:0, t:0, flips:[]}, IDLE = 0, idleDone = false;
+addEventListener('pointermove', e=>{ IDLE = performance.now(); if(e.pointerType!=='mouse' || !canGrav()) return;
+  const now = performance.now(), dx = e.clientX-SH.x, dt = Math.max(1, now-SH.t); SH.x = e.clientX; SH.t = now;
+  if(Math.abs(dx)/dt < 1.4) return; const d = Math.sign(dx);
+  if(d && d!==SH.dir){ SH.dir = d; SH.flips.push(now); SH.flips = SH.flips.filter(f=>now-f<900); if(SH.flips.length>=6){ SH.flips = []; gravity(); } } }, {passive:true});
+['keydown','wheel','scroll','pointerdown','touchstart'].forEach(ev=>addEventListener(ev, ()=>{ IDLE = performance.now(); }, {passive:true, capture:true}));
+IDLE = performance.now();
+setInterval(()=>{ if(idleDone || document.hidden || !canGrav() || sel) return; if(performance.now()-IDLE > 45000){ idleDone = true; gravity(); } }, 2000);
+let SHK = 0; addEventListener('devicemotion', e=>{ const a = e.accelerationIncludingGravity; if(!a || !canGrav()) return; const m = Math.hypot(a.x||0, a.y||0, a.z||0), now = performance.now();
+  if(m>28){ if(now-SHK<700) { SHK = 0; gravity(); } else SHK = now; } });
 /* ---------- küçük sürprizler ---------- */
 function toast(msg){ const T = $('#toast'); T.querySelector('span').textContent = msg; T.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(()=>T.classList.remove('on'), 3200); }
 function vcf(){ const v = ['BEGIN:VCARD','VERSION:3.0','N:Özgen;Rayme;;;','FN:Rayme Özgen','TITLE:'+(lang==='tr' ? 'Grafik Tasarımcı' : 'Graphic Designer'),'ADR;TYPE=WORK:;;;Ankara;;;'+(lang==='tr' ? 'Türkiye' : 'Türkiye'),
