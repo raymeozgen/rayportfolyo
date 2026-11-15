@@ -77,6 +77,15 @@ body:not(.tool-H):not(.tool-I) [data-tag], body:not(.tool-H):not(.tool-I) [data-
 .guide.h::after{left:0;right:0;top:4px;height:1px}.guide.v::after{top:0;bottom:0;left:4px;width:1px}
 #glab{position:fixed;left:0;top:0;z-index:62;pointer-events:none;font:600 11px/1 var(--f);letter-spacing:0;color:#fff;background:#F24822;padding:4px 6px;border-radius:4px;font-variant-numeric:tabular-nums}
 #glab[hidden]{display:none}
+/* yerçekimi: harfler ve bloklar ekranın dibine dökülür */
+#grav{position:fixed;z-index:45;overflow:hidden;cursor:grab;touch-action:none}
+#grav.dragging{cursor:grabbing}
+#grav .gb{position:absolute;left:0;top:0;will-change:transform;transform-origin:50% 50%;user-select:none;-webkit-user-select:none;white-space:pre;pointer-events:none}
+#grav img.gb{display:block;object-fit:cover}
+.gv-h{visibility:hidden!important}
+#gbtn{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:46;display:flex;align-items:center;gap:10px;background:#161616;color:#F2F2F0;border:0;border-radius:999px;padding:11px 18px;font:600 14px/1 var(--f);letter-spacing:0;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+#gbtn kbd{font:500 11px/1 var(--f);color:#A9A9A6;border:1px solid #3A3A3A;border-radius:4px;padding:3px 5px}
+#gbtn[hidden]{display:none}
 /* komut paleti */
 #ck{position:fixed;inset:0;z-index:80;background:rgba(10,10,10,.28);display:flex;justify-content:center;align-items:flex-start;padding-top:16vh}
 #ck[hidden]{display:none}
@@ -432,6 +441,7 @@ body.is-print .left,body.is-print .tbx,body.is-print .canvas,body.is-print .righ
 <div id="ctag" hidden></div>
 <div class="rul" id="rh" hidden><canvas></canvas></div><div class="rul" id="rv" hidden><canvas></canvas></div><div class="rul" id="rc" hidden></div><div id="glab" hidden></div>
 <div id="ck" hidden><div class="box" role="dialog" aria-modal="true"><input id="ck-i" type="text" autocomplete="off" spellcheck="false"><ul id="ck-l" role="listbox"></ul></div></div>
+<div id="grav" hidden></div><button type="button" id="gbtn" hidden></button>
 <div id="toast" role="status" aria-live="polite"><i></i><span></span></div>
 <div id="loupe" hidden><canvas width="11" height="11"></canvas><b><i></i><span></span></b></div>
 <div id="ov"><div class="b" id="hv" hidden></div><div class="b" id="sl" hidden><i></i><i></i><i></i><i></i><span id="bd"></span></div></div>
@@ -448,7 +458,7 @@ const UI = {
       size:'Görsel boyutu',mm:'Gerçek ölçü',proj:'Proje',desc:'Açıklama',big:'Büyüt',close:'Kapat',
       copy:'Kopyala',copied:'Kopyalandı',del:'Teslimler',profile:'Profil',note:'Not',card:'Kart',name:'Ad',bio:'Biyografi',info:'Bilgiler',projs:'Projeler',
       email:'E-posta',kapak:'Kapak',files:'Dosyalar',design:'Tasarım',inspect:'İncele',pins:'Yorumlar (⇧C)',grid:'Izgara (⌃G)',zoomIn:'Yakınlaştır (⌘+)',zoomOut:'Uzaklaştır (⌘−)',zoom100:'%100 (⇧0)',exp:'PDF indir',copyCss:'CSS kopyala',measure:'Seçiliyken ⌥ basılı tutup başka bir öğenin üzerine gel: aradaki mesafe kırmızıyla görünür.',role:'Unvan',kind:'Tür',rule:'Kural',list:'Liste',logo:'Logo',portrait:'Portre',city:'Şehir',contact:'İletişim',
-      inspT:'Tasarım panelini aç / kapat',inspX:'Paneli küçült',glyphs:'Glifler',gW:'Ağırlık',gCopied:'kopyalandı',ckPh:'Bir sayfa ya da komut yazın…',ckNone:'Sonuç yok',ckGo:'Sayfa',ckRul:'Cetveller',ckOl:'Anahat görünümü',ckGrid:'Izgara',ckEye:'Damlalık',ckPins:'Yorumlar',ckGly:'Glifler',ckPdf:'PDF indir',ckVcf:'Kartviziti indir',ckLang:'English',ckInsp:'Tasarım paneli',ckZ:'Yakınlaştırma %100',ckFiles:'Dosyalar',ckEgg:'Kahve molası',coffee:'Kahve molası. Dosya bekleyebilir, kahve bekleyemez.',saveA:'Kaydedildi. Aslında bir şey değiştirmedin ama refleksini sevdim.',saveB:'Değişikliklerin bu tarayıcıda kaldı. Rayme’nin dosyası güvende.',noUndo:'Geri alınacak bir şey yok, her şey olması gerektiği yerde.',expT:'Dışa aktar',expV:'Rayme',expP:'Portfolyo',vcfOk:'Kartvizit indirildi, rehberine ekleyebilirsin.',ysT:'Yapım sırası',ysS:['Çizgi','Değer','Ton','Renk'],ysPlay:'▶ Oynat',ysStop:'■ Durdur',ysN:'Katmanlar final dosyadan türetilir: kontur, üç tonlu değer çalışması, gri ton ve renk.',move:'Seç (V)',hand:'El (H)',eye:'Damlalık (C)',ol:'Anahat (⌘Y)',eyeT:'Damlalık',eyeHint:'Görselin ya da bir öğenin üzerinde gezin, büyüteçte rengi gör. Tıklayınca HEX kodu kopyalanır ve aşağıya eklenir.',eyeNone:'Henüz renk alınmadı.',eyeErr:'Bu görselin rengi okunamadı.',undo:'Geri al (⌘Z)',redo:'Yinele (⇧⌘Z)',reset:'Sıfırla',
+      inspT:'Tasarım panelini aç / kapat',inspX:'Paneli küçült',glyphs:'Glifler',gW:'Ağırlık',gCopied:'kopyalandı',ckPh:'Bir sayfa ya da komut yazın…',ckNone:'Sonuç yok',ckGo:'Sayfa',ckRul:'Cetveller',ckOl:'Anahat görünümü',ckGrid:'Izgara',ckEye:'Damlalık',ckPins:'Yorumlar',ckGly:'Glifler',ckPdf:'PDF indir',ckVcf:'Kartviziti indir',ckLang:'English',ckInsp:'Tasarım paneli',ckZ:'Yakınlaştırma %100',ckFiles:'Dosyalar',ckEgg:'Kahve molası',ckGrav:'Yerçekimi',gUp:'Toparla',coffee:'Kahve molası. Dosya bekleyebilir, kahve bekleyemez.',saveA:'Kaydedildi. Aslında bir şey değiştirmedin ama refleksini sevdim.',saveB:'Değişikliklerin bu tarayıcıda kaldı. Rayme’nin dosyası güvende.',noUndo:'Geri alınacak bir şey yok, her şey olması gerektiği yerde.',expT:'Dışa aktar',expV:'Rayme',expP:'Portfolyo',vcfOk:'Kartvizit indirildi, rehberine ekleyebilirsin.',ysT:'Yapım sırası',ysS:['Çizgi','Değer','Ton','Renk'],ysPlay:'▶ Oynat',ysStop:'■ Durdur',ysN:'Katmanlar final dosyadan türetilir: kontur, üç tonlu değer çalışması, gri ton ve renk.',move:'Seç (V)',hand:'El (H)',eye:'Damlalık (C)',ol:'Anahat (⌘Y)',eyeT:'Damlalık',eyeHint:'Görselin ya da bir öğenin üzerinde gezin, büyüteçte rengi gör. Tıklayınca HEX kodu kopyalanır ve aşağıya eklenir.',eyeNone:'Henüz renk alınmadı.',eyeErr:'Bu görselin rengi okunamadı.',undo:'Geri al (⌘Z)',redo:'Yinele (⇧⌘Z)',reset:'Sıfırla',
       pos:'Konum',text:'Metin',fsize:'Boyut',track:'Espas',kern:'Kerning',color:'Renk',opacity:'Opaklık',rot:'Açı',scale:'Ölçek',
       hide:'Gizle',show:'Göster',parent:'Üst katman',child:'Alt katman',resetEl:'Sıfırla',open:'Sayfaya git',hidden:'gizli',
       kinds:{frame:'Çerçeve',group:'Grup',text:'Metin',char:'Harf',img:'Görsel'},
@@ -458,7 +468,7 @@ const UI = {
       size:'Image size',mm:'Actual size',proj:'Project',desc:'Description',big:'Enlarge',close:'Close',
       copy:'Copy',copied:'Copied',del:'Deliverables',profile:'Profile',note:'Note',card:'Card',name:'Name',bio:'Bio',info:'Details',projs:'Projects',
       email:'Email',kapak:'Cover',files:'Files',design:'Design',inspect:'Inspect',pins:'Comments (⇧C)',grid:'Grid (⌃G)',zoomIn:'Zoom in (⌘+)',zoomOut:'Zoom out (⌘−)',zoom100:'100% (⇧0)',exp:'Download PDF',copyCss:'Copy CSS',measure:'With something selected, hold ⌥ and hover another element to see the distance in red.',role:'Role',kind:'Type',rule:'Rule',list:'List',logo:'Logo',portrait:'Portrait',city:'City',contact:'Contact',
-      inspT:'Show / hide design panel',inspX:'Collapse panel',glyphs:'Glyphs',gW:'Weight',gCopied:'copied',ckPh:'Type a page or a command…',ckNone:'No results',ckGo:'Page',ckRul:'Rulers',ckOl:'Outline view',ckGrid:'Grid',ckEye:'Eyedropper',ckPins:'Comments',ckGly:'Glyphs',ckPdf:'Download PDF',ckVcf:'Download contact card',ckLang:'Türkçe',ckInsp:'Design panel',ckZ:'Zoom to 100%',ckFiles:'Files',ckEgg:'Coffee break',coffee:'Coffee break. The file can wait, the coffee can’t.',saveA:'Saved. You didn’t actually change anything, but I like the reflex.',saveB:'Your changes stay in this browser. Rayme’s file is safe.',noUndo:'Nothing to undo. Everything is where it should be.',expT:'Export',expV:'Rayme',expP:'Portfolio',vcfOk:'Contact card downloaded, add it to your contacts.',ysT:'Build-up',ysS:['Line','Value','Tone','Colour'],ysPlay:'▶ Play',ysStop:'■ Stop',ysN:'Layers are derived from the final file: contour, three-tone value study, greyscale and colour.',move:'Select (V)',hand:'Hand (H)',eye:'Eyedropper (C)',ol:'Outline (⌘Y)',eyeT:'Eyedropper',eyeHint:'Move over an image or any element to see its colour in the loupe. Click to copy the HEX code and add it below.',eyeNone:'No colours picked yet.',eyeErr:'Could not read this image.',undo:'Undo (⌘Z)',redo:'Redo (⇧⌘Z)',reset:'Reset',
+      inspT:'Show / hide design panel',inspX:'Collapse panel',glyphs:'Glyphs',gW:'Weight',gCopied:'copied',ckPh:'Type a page or a command…',ckNone:'No results',ckGo:'Page',ckRul:'Rulers',ckOl:'Outline view',ckGrid:'Grid',ckEye:'Eyedropper',ckPins:'Comments',ckGly:'Glyphs',ckPdf:'Download PDF',ckVcf:'Download contact card',ckLang:'Türkçe',ckInsp:'Design panel',ckZ:'Zoom to 100%',ckFiles:'Files',ckEgg:'Coffee break',ckGrav:'Gravity',gUp:'Tidy up',coffee:'Coffee break. The file can wait, the coffee can’t.',saveA:'Saved. You didn’t actually change anything, but I like the reflex.',saveB:'Your changes stay in this browser. Rayme’s file is safe.',noUndo:'Nothing to undo. Everything is where it should be.',expT:'Export',expV:'Rayme',expP:'Portfolio',vcfOk:'Contact card downloaded, add it to your contacts.',ysT:'Build-up',ysS:['Line','Value','Tone','Colour'],ysPlay:'▶ Play',ysStop:'■ Stop',ysN:'Layers are derived from the final file: contour, three-tone value study, greyscale and colour.',move:'Select (V)',hand:'Hand (H)',eye:'Eyedropper (C)',ol:'Outline (⌘Y)',eyeT:'Eyedropper',eyeHint:'Move over an image or any element to see its colour in the loupe. Click to copy the HEX code and add it below.',eyeNone:'No colours picked yet.',eyeErr:'Could not read this image.',undo:'Undo (⌘Z)',redo:'Redo (⇧⌘Z)',reset:'Reset',
       pos:'Position',text:'Text',fsize:'Size',track:'Tracking',kern:'Kerning',color:'Fill',opacity:'Opacity',rot:'Angle',scale:'Scale',
       hide:'Hide',show:'Show',parent:'Parent',child:'Child',resetEl:'Reset',open:'Go to page',hidden:'hidden',
       kinds:{frame:'Frame',group:'Group',text:'Text',char:'Letter',img:'Image'},
@@ -763,6 +773,7 @@ stage.addEventListener('focusin', e=>{ if(e.target.closest('.pin')) return; cons
 
 /* ---------- klavye ---------- */
 addEventListener('keydown', e=>{
+  if(!$('#grav').hidden){ if(e.key==='Escape'||e.key==='Enter'){ e.preventDefault(); gravUp(); } return; }
   if(!$('#ck').hidden){ ckKey(e); return; }
   if((e.metaKey||e.ctrlKey) && (e.key==='k'||e.key==='K'||e.key==='/')){ e.preventDefault(); ckOpen(); return; }
   if(!$('#lb').hidden){ if(/^[1-4]$/.test(e.key)){ ysSet(+e.key-1); return; } if(e.key==='Escape') closeLB(); else if(e.key==='ArrowRight') stepLB(1); else if(e.key==='ArrowLeft') stepLB(-1); return; }
@@ -1061,7 +1072,7 @@ function ckItems(){ const u = UI[lang], P = sections().map(p=>({t:p.name, s:u.ck
     {t:u.ckOl, k:'⌘Y', run:toggleOl}, {t:u.ckGrid, k:'⌃G', run:toggleGrid}, {t:u.ckRul, k:'⇧R', run:()=>toggleRul()},
     {t:u.ckEye, k:'C', run:()=>{ tool = 'I'; bar(); }}, {t:u.ckPins, k:'⇧C', run:togglePins}, {t:u.ckGly, run:()=>{ insTab = 'g'; toggleInsp(true); tabs(); inspector(); }},
     {t:u.ckInsp, run:()=>toggleInsp()}, {t:u.ckZ, k:'⇧0', run:()=>setZoom(1)}, {t:u.ckPdf, run:()=>download(PDF[lang][0], PDF[lang][1])}, {t:u.ckVcf, run:vcf},
-    {t:u.ckLang, run:()=>setLang(lang==='tr' ? 'en' : 'tr')}, {t:u.ckFiles, run:goHome}, {t:u.ckEgg, run:()=>toast(u.coffee)} ]); }
+    {t:u.ckLang, run:()=>setLang(lang==='tr' ? 'en' : 'tr')}, {t:u.ckFiles, run:goHome}, {t:u.ckEgg, run:()=>toast(u.coffee)}, {t:u.ckGrav, run:()=>gravity()} ]); }
 function ckOpen(){ if(home) return; $('#ck').hidden = false; const i = $('#ck-i'); i.placeholder = UI[lang].ckPh; i.value = ''; CKS = 0; ckDraw(); i.focus(); }
 function ckClose(){ $('#ck').hidden = true; }
 function ckDraw(){ const q = ckn($('#ck-i').value.trim()), all = ckItems(); CKI = q ? all.filter(x=>ckn(x.t+' '+(x.s||'')).includes(q)) : all; CKS = Math.min(CKS, Math.max(0, CKI.length-1));
@@ -1082,6 +1093,62 @@ function glyphHTML(){ const u = UI[lang], c = GC, cp = 'U+'+c.codePointAt(0).toS
     + '<div class="gg" style="font-weight:'+GW+'">'+[...GLY].map(g=>'<button type="button" data-gl="'+esc(g)+'" title="'+esc(g)+'">'+esc(g)+'</button>').join('')+'</div></div>'; }
 $('#insp').addEventListener('mouseover', e=>{ const b = e.target.closest('[data-gl]'); if(!b) return; GC = b.dataset.gl; const big = $('#g-big'); if(big){ big.textContent = GC; $('#g-cp').textContent = 'U+'+GC.codePointAt(0).toString(16).toUpperCase().padStart(4,'0'); } });
 requestAnimationFrame(frameLoop);
+/* ---------- yerçekimi ---------- */
+let GB = [], GRAF = 0, GOFF = false, GM = {x:0, y:0, vx:0, vy:0, t:0, grab:null, gx:0, gy:0};
+const GCOPY = ['fontFamily','fontSize','fontWeight','lineHeight','letterSpacing','color','backgroundColor','borderRadius','padding','border','textTransform','fontVariantNumeric','textDecoration'];
+function gravity(){
+  if(home || !$('#grav').hidden) return; select(null); hov = null;
+  const V = view(), G = $('#grav'); G.innerHTML = ''; G.style.left = V.L+'px'; G.style.top = V.T+'px'; G.style.width = (V.R-V.L)+'px'; G.style.height = (V.B-V.T)+'px';
+  const inView = r => r.width>1 && r.height>1 && r.bottom>V.T && r.top<V.B && r.right>V.L && r.left<V.R;
+  const st = $('#stage'), picks = [];
+  st.querySelectorAll('.ch').forEach(el=>{ if(el.textContent.trim()) picks.push(el); });
+  st.querySelectorAll('[data-k="text"], .lab, .chip, img').forEach(el=>{ if(el.querySelector('.ch') || el.closest('.ch') || el.querySelector('[data-k="text"], .chip')) return; if(picks.some(p=>p.contains(el)||el.contains(p))) return; picks.push(el); });
+  GB = [];
+  picks.forEach(el=>{ const r = el.getBoundingClientRect(); if(!inView(r) || GB.length>420) return; if(el.tagName==='IMG' && (r.width>(V.R-V.L)*.34 || r.height>(V.B-V.T)*.4)) return; const cs = getComputedStyle(el);
+    let n; if(el.tagName==='IMG'){ n = document.createElement('img'); n.src = el.currentSrc||el.src; n.alt = ''; }
+    else { n = document.createElement('div'); n.textContent = el.textContent; GCOPY.forEach(k=>{ n.style[k] = cs[k]; }); n.style.whiteSpace = el.classList.contains('ch') || r.height < parseFloat(cs.fontSize)*1.9 ? 'pre' : 'normal'; }
+    n.className = 'gb'; n.style.width = r.width+'px'; n.style.height = r.height+'px'; n.style.boxSizing = 'border-box';
+    const b = {el, n, w:r.width, h:r.height, x0:r.left-V.L, y0:r.top-V.T, x:r.left-V.L, y:r.top-V.T, vx:(Math.random()-.5)*60, vy:-Math.random()*80, a:0, va:0, m:Math.max(1, r.width*r.height/400), small: r.width<60 && r.height<80, delay: Math.max(0, (r.top-V.T))/(V.B-V.T)*0.0};
+    G.appendChild(n); GB.push(b); el.classList.add('gv-h'); });
+  if(!GB.length) return;
+  G.hidden = false; canvas.style.overflow = 'hidden'; const bt = $('#gbtn'); bt.innerHTML = UI[lang].gUp+' <kbd>Esc</kbd>'; bt.hidden = false; GOFF = false;
+  let last = performance.now(); cancelAnimationFrame(GRAF);
+  const W = V.R-V.L, H = V.B-V.T, g = 2600;
+  const step = now=>{ let dt = Math.min(1/30, (now-last)/1000); last = now; if(GOFF) return;
+    const sub = 2; dt /= sub;
+    for(let s=0; s<sub; s++){
+      GB.forEach(b=>{ if(b===GM.grab){ b.vx = (GM.x-b.w/2-b.x)*18 - 0; b.vy = (GM.y-b.h/2-b.y)*18; } else b.vy += g*dt; b.x += b.vx*dt; b.y += b.vy*dt; b.a += b.va*dt;
+        if(b.y+b.h>H){ b.y = H-b.h; if(b.vy>0) b.vy = -b.vy*.22; b.vx *= .9; b.va *= .8; }
+        if(b.x<0){ b.x = 0; b.vx = Math.abs(b.vx)*.4; } if(b.x+b.w>W){ b.x = W-b.w; b.vx = -Math.abs(b.vx)*.4; } if(b.y<-H){ b.y = -H; b.vy = 0; } });
+      // çarpışmalar: kaba ızgara + AABB ayrıştırma
+      const C = 90, grid = new Map(); GB.forEach((b,i)=>{ for(let gx=Math.floor(b.x/C); gx<=Math.floor((b.x+b.w)/C); gx++) for(let gy=Math.floor(b.y/C); gy<=Math.floor((b.y+b.h)/C); gy++){ const k = gx+','+gy; (grid.get(k)||grid.set(k,[]).get(k)).push(i); } });
+      const seen = new Set();
+      for(let it=0; it<4; it++) grid.forEach(L=>{ for(let p=0; p<L.length; p++) for(let q=p+1; q<L.length; q++){ const i = L[p], j = L[q], key2 = i<j ? i*1000+j : j*1000+i; if(it===0 && seen.has(key2)) continue; seen.add(key2);
+        const A = GB[i], B = GB[j], ox = Math.min(A.x+A.w, B.x+B.w)-Math.max(A.x, B.x), oy = Math.min(A.y+A.h, B.y+B.h)-Math.max(A.y, B.y); if(ox<=0 || oy<=0) continue;
+        const ia = A===GM.grab ? 0 : 1/A.m, ib = B===GM.grab ? 0 : 1/B.m, sum = ia+ib; if(!sum) continue;
+        if(oy<ox){ const d = (A.y<B.y ? -1 : 1)*oy; A.y += d*ia/sum; B.y -= d*ib/sum; const rv = B.vy-A.vy; if(rv*(A.y<B.y?1:-1)<0){ const jn = -(1.2)*rv/sum; A.vy -= jn*ia; B.vy += jn*ib; const tv = (B.vx-A.vx)*.15; A.vx += tv*ia/sum*A.m*0 + tv*.5; B.vx -= tv*.5; } A.va += (B.vx-A.vx)*.02*(A.small?1:0); B.va -= (B.vx-A.vx)*.02*(B.small?1:0); }
+        else { const d = (A.x<B.x ? -1 : 1)*ox; A.x += d*ia/sum; B.x -= d*ib/sum; const rv = B.vx-A.vx; if(rv*(A.x<B.x?1:-1)<0){ const jn = -(1.2)*rv/sum; A.vx -= jn*ia; B.vx += jn*ib; } } } });
+    }
+    // fareyle itme
+    if(!GM.grab && now-GM.t<60){ const sp = Math.hypot(GM.vx, GM.vy); if(sp>200) GB.forEach(b=>{ if(GM.x>b.x-24 && GM.x<b.x+b.w+24 && GM.y>b.y-24 && GM.y<b.y+b.h+24){ b.vx += GM.vx*.35/Math.sqrt(b.m); b.vy += GM.vy*.35/Math.sqrt(b.m); if(b.small) b.va += (Math.random()-.5)*8; } }); }
+    GB.forEach(b=>{ if(!b.small) b.va = 0; b.va *= .995; b.n.style.transform = 'translate('+b.x.toFixed(1)+'px,'+b.y.toFixed(1)+'px) rotate('+b.a.toFixed(3)+'rad)'; });
+    GRAF = requestAnimationFrame(step); };
+  GRAF = requestAnimationFrame(step);
+}
+function gravUp(){ if($('#grav').hidden || GOFF) return; GOFF = true; cancelAnimationFrame(GRAF); GM.grab = null; $('#gbtn').hidden = true;
+  const t0 = performance.now(), D = 720; GB.forEach(b=>{ b.sx = b.x; b.sy = b.y; b.sa = b.a; b.dl = Math.random()*240; });
+  const ease = x=>{ const c = 1.4; return 1 + (c+1)*Math.pow(x-1,3) + c*Math.pow(x-1,2); };
+  const anim = now=>{ let done = true; GB.forEach(b=>{ const p = Math.max(0, Math.min(1, (now-t0-b.dl)/D)); if(p<1) done = false; const e = ease(p);
+      const x = b.sx+(b.x0-b.sx)*e, y = b.sy+(b.y0-b.sy)*e, a = b.sa*(1-Math.min(1,p*1.2)); b.n.style.transform = 'translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px) rotate('+a.toFixed(3)+'rad)'; });
+    if(!done){ requestAnimationFrame(anim); return; }
+    GB.forEach(b=>b.el.classList.remove('gv-h')); GB = []; const G = $('#grav'); G.hidden = true; G.innerHTML = ''; canvas.style.overflow = ''; };
+  requestAnimationFrame(anim); }
+$('#grav').addEventListener('pointerdown', e=>{ const G = $('#grav'), r = G.getBoundingClientRect(), x = e.clientX-r.left, y = e.clientY-r.top;
+  for(let i=GB.length-1; i>=0; i--){ const b = GB[i]; if(x>=b.x && x<=b.x+b.w && y>=b.y && y<=b.y+b.h){ GM.grab = b; G.classList.add('dragging'); G.setPointerCapture(e.pointerId); break; } } GM.x = x; GM.y = y; });
+$('#grav').addEventListener('pointermove', e=>{ const r = $('#grav').getBoundingClientRect(), x = e.clientX-r.left, y = e.clientY-r.top, now = performance.now(), dt = Math.max(8, now-GM.t)/1000;
+  GM.vx = (x-GM.x)/dt; GM.vy = (y-GM.y)/dt; GM.x = x; GM.y = y; GM.t = now; });
+addEventListener('pointerup', ()=>{ if(GM.grab){ GM.grab = null; $('#grav').classList.remove('dragging'); } });
+$('#gbtn').addEventListener('click', gravUp);
 /* ---------- küçük sürprizler ---------- */
 function toast(msg){ const T = $('#toast'); T.querySelector('span').textContent = msg; T.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(()=>T.classList.remove('on'), 3200); }
 function vcf(){ const v = ['BEGIN:VCARD','VERSION:3.0','N:Özgen;Rayme;;;','FN:Rayme Özgen','TITLE:'+(lang==='tr' ? 'Grafik Tasarımcı' : 'Graphic Designer'),'ADR;TYPE=WORK:;;;Ankara;;;'+(lang==='tr' ? 'Türkiye' : 'Türkiye'),
