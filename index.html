@@ -64,6 +64,48 @@ body.insp-off .app{grid-template-columns:0 1fr var(--pw)}body.insp-off .right{di
 body:not(.tool-H):not(.tool-I) [data-tag], body:not(.tool-H):not(.tool-I) [data-tag] *{cursor:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2222%22%20height%3D%2226%22%20viewBox%3D%220%200%2022%2026%22%3E%3Cpath%20d%3D%22M2%202%20L2%2021%20L7.5%2016%20L11%2024%20L14%2022.6%20L10.6%2015%20L18%2015%20Z%22%20fill%3D%22%23C8142B%22%20stroke%3D%22%23fff%22%20stroke-width%3D%221.6%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E") 2 2, default}
 #ctag{position:fixed;left:0;top:0;z-index:60;pointer-events:none;background:var(--red);color:#fff;font:600 13px/1.2 var(--f);letter-spacing:0;padding:4px 9px;border-radius:5px 12px 12px 12px;white-space:nowrap;will-change:transform}
 #ctag[hidden]{display:none}
+/* cetvel ve kılavuzlar */
+.rul{position:fixed;z-index:22;background:var(--panel);pointer-events:auto}
+.rul[hidden]{display:none}
+#rh{height:20px;border-bottom:1px solid var(--line);cursor:row-resize}
+#rv{width:20px;border-right:1px solid var(--line);cursor:col-resize}
+#rc{width:20px;height:20px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.guide{position:absolute;z-index:7}
+.guide.h{left:0;right:0;height:9px;margin-top:-4px;cursor:row-resize}
+.guide.v{top:0;bottom:0;width:9px;margin-left:-4px;cursor:col-resize}
+.guide::after{content:"";position:absolute;background:#F24822}
+.guide.h::after{left:0;right:0;top:4px;height:1px}.guide.v::after{top:0;bottom:0;left:4px;width:1px}
+#glab{position:fixed;left:0;top:0;z-index:62;pointer-events:none;font:600 11px/1 var(--f);letter-spacing:0;color:#fff;background:#F24822;padding:4px 6px;border-radius:4px;font-variant-numeric:tabular-nums}
+#glab[hidden]{display:none}
+/* gezgin */
+#nav{position:fixed;z-index:24;width:188px;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.12);overflow:hidden}
+#nav[hidden]{display:none}
+#nav header{display:flex;align-items:center;justify-content:space-between;padding:7px 8px 6px 11px;font:600 11.5px/1 var(--f);letter-spacing:0;color:var(--ink)}
+#nav header button{border:0;background:none;color:var(--mute);cursor:pointer;width:20px;height:20px;border-radius:5px;font-size:14px;line-height:1}
+#nav header button:hover{background:var(--on);color:var(--ink)}
+#nav .nb{position:relative;height:200px;background:var(--canvas);cursor:pointer;touch-action:none}
+#nav canvas{position:absolute;inset:0;width:100%;height:100%}
+/* komut paleti */
+#ck{position:fixed;inset:0;z-index:80;background:rgba(10,10,10,.28);display:flex;justify-content:center;align-items:flex-start;padding-top:16vh}
+#ck[hidden]{display:none}
+#ck .box{width:min(560px,calc(100vw - 32px));background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:0 24px 60px rgba(0,0,0,.25);overflow:hidden}
+#ck input{width:100%;border:0;border-bottom:1px solid var(--line);background:none;color:var(--ink);font:500 16px/1 var(--f);letter-spacing:0;padding:16px 18px;outline:none}
+#ck ul{list-style:none;margin:0;padding:6px;max-height:min(360px,52vh);overflow:auto}
+#ck li{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 12px;border-radius:7px;cursor:pointer;font:500 14px/1.2 var(--f);color:var(--ink)}
+#ck li small{color:var(--mute);font-size:12px}
+#ck li kbd{font:500 11px/1 var(--f);color:var(--mute);border:1px solid var(--line);border-radius:4px;padding:3px 5px}
+#ck li.on{background:var(--sel);color:#fff}#ck li.on small,#ck li.on kbd{color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.35)}
+#ck .none{padding:14px 12px;color:var(--mute);font-size:13px}
+/* glifler */
+.gp{display:grid;grid-template-columns:1fr auto;align-items:end;gap:6px 12px;padding:4px 0 10px}
+.gp .big{grid-row:span 2;font-size:88px;line-height:1;height:96px;display:flex;align-items:center;justify-content:center;background:var(--on);border-radius:8px}
+.gp b{font-size:13px}.gp span{font-size:12px;color:var(--mute);font-variant-numeric:tabular-nums}
+.gw{display:flex;gap:4px;margin:4px 0 10px;flex-wrap:wrap}
+.gw button{border:1px solid var(--line);background:none;color:var(--ink);border-radius:6px;padding:5px 8px;font:500 12px/1 var(--f);cursor:pointer}
+.gw button[aria-pressed="true"]{background:var(--ink);color:var(--panel);border-color:var(--ink)}
+.gg{display:grid;grid-template-columns:repeat(auto-fill,minmax(30px,1fr));border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.gg button{aspect-ratio:1;border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:none;color:var(--ink);font-size:17px;cursor:pointer;padding:0;display:grid;place-items:center}
+.gg button:hover{background:var(--sel);color:#fff}
 /* küçük sürprizler */
 #toast{position:fixed;left:50%;bottom:28px;z-index:70;transform:translate(-50%,8px);opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;display:flex;align-items:center;gap:10px;background:#161616;color:#F2F2F0;font:500 13px/1.35 var(--f);letter-spacing:0;padding:11px 16px;border-radius:9px;box-shadow:0 10px 30px rgba(0,0,0,.22);max-width:min(92vw,460px)}
 #toast.on{opacity:1;transform:translate(-50%,0)}
@@ -327,7 +369,7 @@ body.is-print .left,body.is-print .tbx,body.is-print .canvas,body.is-print .righ
 @container dev (max-width:760px){
   .app{display:block;height:100%;overflow:auto}
   .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20}
-  .tools,.tbx{display:none}
+  .tools,.tbx,.rul,#nav{display:none!important}
   .left{position:sticky;top:calc(var(--bar) + env(safe-area-inset-top,0px));z-index:19;border-right:0;border-bottom:1px solid var(--line);overflow:visible}
   .left .h,.left .sep,#layers{display:none}
   #pages{flex-direction:row;overflow-x:auto;padding:6px max(8px,env(safe-area-inset-left,0px));gap:4px;scrollbar-width:none}
@@ -396,6 +438,9 @@ body.is-print .left,body.is-print .tbx,body.is-print .canvas,body.is-print .righ
 </div></div>
 <div id="frm" hidden><b id="frm-t"></b><span id="frm-s"></span><button type="button" id="frm-x" aria-label="Kapat">✕</button></div>
 <div id="ctag" hidden></div>
+<div class="rul" id="rh" hidden><canvas></canvas></div><div class="rul" id="rv" hidden><canvas></canvas></div><div class="rul" id="rc" hidden></div><div id="glab" hidden></div>
+<div id="nav" hidden><header><span id="nav-t"></span><button type="button" id="nav-x">×</button></header><div class="nb"><canvas id="nav-c"></canvas></div></div>
+<div id="ck" hidden><div class="box" role="dialog" aria-modal="true"><input id="ck-i" type="text" autocomplete="off" spellcheck="false"><ul id="ck-l" role="listbox"></ul></div></div>
 <div id="toast" role="status" aria-live="polite"><i></i><span></span></div>
 <div id="loupe" hidden><canvas width="11" height="11"></canvas><b><i></i><span></span></b></div>
 <div id="ov"><div class="b" id="hv" hidden></div><div class="b" id="sl" hidden><i></i><i></i><i></i><i></i><span id="bd"></span></div></div>
@@ -412,22 +457,22 @@ const UI = {
       size:'Görsel boyutu',mm:'Gerçek ölçü',proj:'Proje',desc:'Açıklama',big:'Büyüt',close:'Kapat',
       copy:'Kopyala',copied:'Kopyalandı',del:'Teslimler',profile:'Profil',note:'Not',card:'Kart',name:'Ad',bio:'Biyografi',info:'Bilgiler',projs:'Projeler',
       email:'E-posta',kapak:'Kapak',files:'Dosyalar',design:'Tasarım',inspect:'İncele',pins:'Yorumlar (⇧C)',grid:'Izgara (⌃G)',zoomIn:'Yakınlaştır (⌘+)',zoomOut:'Uzaklaştır (⌘−)',zoom100:'%100 (⇧0)',exp:'PDF indir',copyCss:'CSS kopyala',measure:'Seçiliyken ⌥ basılı tutup başka bir öğenin üzerine gel: aradaki mesafe kırmızıyla görünür.',role:'Unvan',kind:'Tür',rule:'Kural',list:'Liste',logo:'Logo',portrait:'Portre',city:'Şehir',contact:'İletişim',
-      inspT:'Tasarım panelini aç / kapat',inspX:'Paneli küçült',saveA:'Kaydedildi. Aslında bir şey değiştirmedin ama refleksini sevdim.',saveB:'Değişikliklerin bu tarayıcıda kaldı. Rayme’nin dosyası güvende.',noUndo:'Geri alınacak bir şey yok, her şey olması gerektiği yerde.',expT:'Dışa aktar',expV:'Rayme',expP:'Portfolyo',vcfOk:'Kartvizit indirildi, rehberine ekleyebilirsin.',ysT:'Yapım sırası',ysS:['Çizgi','Değer','Ton','Renk'],ysPlay:'▶ Oynat',ysStop:'■ Durdur',ysN:'Katmanlar final dosyadan türetilir: kontur, üç tonlu değer çalışması, gri ton ve renk.',move:'Seç (V)',hand:'El (H)',eye:'Damlalık (C)',ol:'Anahat (⌘Y)',eyeT:'Damlalık',eyeHint:'Görselin ya da bir öğenin üzerinde gezin, büyüteçte rengi gör. Tıklayınca HEX kodu kopyalanır ve aşağıya eklenir.',eyeNone:'Henüz renk alınmadı.',eyeErr:'Bu görselin rengi okunamadı.',undo:'Geri al (⌘Z)',redo:'Yinele (⇧⌘Z)',reset:'Sıfırla',
+      inspT:'Tasarım panelini aç / kapat',inspX:'Paneli küçült',glyphs:'Glifler',gW:'Ağırlık',gCopied:'kopyalandı',navT:'Gezgin',navX:'Gezgini kapat',ckPh:'Bir sayfa ya da komut yazın…',ckNone:'Sonuç yok',ckGo:'Sayfa',ckRul:'Cetveller',ckNav:'Gezgin',ckOl:'Anahat görünümü',ckGrid:'Izgara',ckEye:'Damlalık',ckPins:'Yorumlar',ckGly:'Glifler',ckPdf:'PDF indir',ckVcf:'Kartviziti indir',ckLang:'English',ckInsp:'Tasarım paneli',ckZ:'Yakınlaştırma %100',ckFiles:'Dosyalar',ckEgg:'Kahve molası',coffee:'Kahve molası. Dosya bekleyebilir, kahve bekleyemez.',saveA:'Kaydedildi. Aslında bir şey değiştirmedin ama refleksini sevdim.',saveB:'Değişikliklerin bu tarayıcıda kaldı. Rayme’nin dosyası güvende.',noUndo:'Geri alınacak bir şey yok, her şey olması gerektiği yerde.',expT:'Dışa aktar',expV:'Rayme',expP:'Portfolyo',vcfOk:'Kartvizit indirildi, rehberine ekleyebilirsin.',ysT:'Yapım sırası',ysS:['Çizgi','Değer','Ton','Renk'],ysPlay:'▶ Oynat',ysStop:'■ Durdur',ysN:'Katmanlar final dosyadan türetilir: kontur, üç tonlu değer çalışması, gri ton ve renk.',move:'Seç (V)',hand:'El (H)',eye:'Damlalık (C)',ol:'Anahat (⌘Y)',eyeT:'Damlalık',eyeHint:'Görselin ya da bir öğenin üzerinde gezin, büyüteçte rengi gör. Tıklayınca HEX kodu kopyalanır ve aşağıya eklenir.',eyeNone:'Henüz renk alınmadı.',eyeErr:'Bu görselin rengi okunamadı.',undo:'Geri al (⌘Z)',redo:'Yinele (⇧⌘Z)',reset:'Sıfırla',
       pos:'Konum',text:'Metin',fsize:'Boyut',color:'Renk',opacity:'Opaklık',rot:'Açı',scale:'Ölçek',
       hide:'Gizle',show:'Göster',parent:'Üst katman',child:'Alt katman',resetEl:'Sıfırla',open:'Sayfaya git',hidden:'gizli',
       kinds:{frame:'Çerçeve',group:'Grup',text:'Metin',char:'Harf',img:'Görsel'},
       none:'Bir öğenin üzerine gel, tıklayıp seç. Her başlığın her harfi ayrı bir katman; harfleri ve görselleri seçip köşesinden çekerek büyütüp küçültebilirsin.',
-      keys:[['Köşeden çek','Harfi ya da görseli büyüt / küçült'],['+  −','Adım adım büyüt / küçült (⇧ ile daha fazla)'],['⌥ + üzerine gel','Mesafeyi ölç'],['⌘Y','Anahat görünümü'],['C','Damlalık'],['⌘ + kaydır','Yakınlaştır'],['⇧ Enter','Üst katmanı seç'],['Enter','Alt katmanı seç'],['⌘Z','Geri al'],['Esc','Seçimi bırak'],['H / boşluk','El aracı'],['Çift tık','Görseli büyüt, yapım\u00a0sırasını\u00a0izle']]},
+      keys:[['Köşeden çek','Harfi ya da görseli büyüt / küçült'],['+  −','Adım adım büyüt / küçült (⇧ ile daha fazla)'],['⌥ + üzerine gel','Mesafeyi ölç'],['⌘K','Komut paleti'],['⇧R','Cetveller'],['⇧N','Gezgin'],['⌘Y','Anahat görünümü'],['C','Damlalık'],['⌘ + kaydır','Yakınlaştır'],['⇧ Enter','Üst katmanı seç'],['Enter','Alt katmanı seç'],['⌘Z','Geri al'],['Esc','Seçimi bırak'],['H / boşluk','El aracı'],['Çift tık','Görseli büyüt, yapım\u00a0sırasını\u00a0izle']]},
   en:{pages:'Pages',layers:'Layers',insp:'Design',cover:'Cover',about:'About',contact:'Contact',title:'Portfolio',
       size:'Image size',mm:'Actual size',proj:'Project',desc:'Description',big:'Enlarge',close:'Close',
       copy:'Copy',copied:'Copied',del:'Deliverables',profile:'Profile',note:'Note',card:'Card',name:'Name',bio:'Bio',info:'Details',projs:'Projects',
       email:'Email',kapak:'Cover',files:'Files',design:'Design',inspect:'Inspect',pins:'Comments (⇧C)',grid:'Grid (⌃G)',zoomIn:'Zoom in (⌘+)',zoomOut:'Zoom out (⌘−)',zoom100:'100% (⇧0)',exp:'Download PDF',copyCss:'Copy CSS',measure:'With something selected, hold ⌥ and hover another element to see the distance in red.',role:'Role',kind:'Type',rule:'Rule',list:'List',logo:'Logo',portrait:'Portrait',city:'City',contact:'Contact',
-      inspT:'Show / hide design panel',inspX:'Collapse panel',saveA:'Saved. You didn’t actually change anything, but I like the reflex.',saveB:'Your changes stay in this browser. Rayme’s file is safe.',noUndo:'Nothing to undo. Everything is where it should be.',expT:'Export',expV:'Rayme',expP:'Portfolio',vcfOk:'Contact card downloaded, add it to your contacts.',ysT:'Build-up',ysS:['Line','Value','Tone','Colour'],ysPlay:'▶ Play',ysStop:'■ Stop',ysN:'Layers are derived from the final file: contour, three-tone value study, greyscale and colour.',move:'Select (V)',hand:'Hand (H)',eye:'Eyedropper (C)',ol:'Outline (⌘Y)',eyeT:'Eyedropper',eyeHint:'Move over an image or any element to see its colour in the loupe. Click to copy the HEX code and add it below.',eyeNone:'No colours picked yet.',eyeErr:'Could not read this image.',undo:'Undo (⌘Z)',redo:'Redo (⇧⌘Z)',reset:'Reset',
+      inspT:'Show / hide design panel',inspX:'Collapse panel',glyphs:'Glyphs',gW:'Weight',gCopied:'copied',navT:'Navigator',navX:'Close navigator',ckPh:'Type a page or a command…',ckNone:'No results',ckGo:'Page',ckRul:'Rulers',ckNav:'Navigator',ckOl:'Outline view',ckGrid:'Grid',ckEye:'Eyedropper',ckPins:'Comments',ckGly:'Glyphs',ckPdf:'Download PDF',ckVcf:'Download contact card',ckLang:'Türkçe',ckInsp:'Design panel',ckZ:'Zoom to 100%',ckFiles:'Files',ckEgg:'Coffee break',coffee:'Coffee break. The file can wait, the coffee can’t.',saveA:'Saved. You didn’t actually change anything, but I like the reflex.',saveB:'Your changes stay in this browser. Rayme’s file is safe.',noUndo:'Nothing to undo. Everything is where it should be.',expT:'Export',expV:'Rayme',expP:'Portfolio',vcfOk:'Contact card downloaded, add it to your contacts.',ysT:'Build-up',ysS:['Line','Value','Tone','Colour'],ysPlay:'▶ Play',ysStop:'■ Stop',ysN:'Layers are derived from the final file: contour, three-tone value study, greyscale and colour.',move:'Select (V)',hand:'Hand (H)',eye:'Eyedropper (C)',ol:'Outline (⌘Y)',eyeT:'Eyedropper',eyeHint:'Move over an image or any element to see its colour in the loupe. Click to copy the HEX code and add it below.',eyeNone:'No colours picked yet.',eyeErr:'Could not read this image.',undo:'Undo (⌘Z)',redo:'Redo (⇧⌘Z)',reset:'Reset',
       pos:'Position',text:'Text',fsize:'Size',color:'Fill',opacity:'Opacity',rot:'Angle',scale:'Scale',
       hide:'Hide',show:'Show',parent:'Parent',child:'Child',resetEl:'Reset',open:'Go to page',hidden:'hidden',
       kinds:{frame:'Frame',group:'Group',text:'Text',char:'Letter',img:'Image'},
       none:'Hover over anything, click to select. Every letter of every heading is its own layer; select a letter or image and drag a corner to scale it.',
-      keys:[['Drag a corner','Scale a letter or image'],['+  −','Step size up / down (more with ⇧)'],['⌥ + hover','Measure distance'],['⌘Y','Outline view'],['C','Eyedropper'],['⌘ + scroll','Zoom'],['⇧ Enter','Select parent'],['Enter','Select child'],['⌘Z','Undo'],['Esc','Deselect'],['H / space','Hand tool'],['Double-click','Enlarge image and play\u00a0the\u00a0build\u2011up']]}};
+      keys:[['Drag a corner','Scale a letter or image'],['+  −','Step size up / down (more with ⇧)'],['⌥ + hover','Measure distance'],['⌘K','Command palette'],['⇧R','Rulers'],['⇧N','Navigator'],['⌘Y','Outline view'],['C','Eyedropper'],['⌘ + scroll','Zoom'],['⇧ Enter','Select parent'],['Enter','Select child'],['⌘Z','Undo'],['Esc','Deselect'],['H / space','Hand tool'],['Double-click','Enlarge image and play\u00a0the\u00a0build\u2011up']]}};
 let lang = 'tr';
 try{ const s = localStorage.getItem('rayme-lang'); if(s==='en'||s==='tr') lang = s; }catch(e){}
 const $ = s => document.querySelector(s);
@@ -466,7 +511,7 @@ function render(){
   const u = UI[lang], S = sections(), idx = Math.max(0, S.findIndex(s=>s.id===cur)), sec = S[idx];
   document.documentElement.lang = lang;
   $('#lang-tr').setAttribute('aria-pressed', lang==='tr'); $('#lang-en').setAttribute('aria-pressed', lang==='en');
-  $('#h-pages').textContent = u.pages; $('#h-layers').textContent = u.layers; $('#h-insp').textContent = u.insp; $('#lb-x').textContent = u.close;
+  $('#h-pages').textContent = u.pages; $('#h-layers').textContent = u.layers; $('#h-insp').textContent = u.insp; $('#lb-x').textContent = u.close; $('#nav-t').textContent = u.navT; $('#nav-x').title = u.navX; $('#nav-x').setAttribute('aria-label', u.navX);
   [['#t-insp',u.inspT],['#insp-x',u.inspX],['#t-move',u.move],['#t-hand',u.hand],['#t-eye',u.eye],['#t-ol',u.ol],['#t-undo',u.undo],['#t-redo',u.redo]].forEach(([s,t])=>{ $(s).title=t; $(s).setAttribute('aria-label',t); });
   $('#t-reset').textContent = u.reset;
   [['#t-pins',u.pins],['#t-grid',u.grid],['#z-in',u.zoomIn],['#z-out',u.zoomOut],['#z-pct',u.zoom100],['#t-exp',u.exp],['#t-home',u.files]].forEach(([s,t])=>{ $(s).title=t; $(s).setAttribute('aria-label',t); });
@@ -620,6 +665,7 @@ function posOf(el){ const r = el.getBoundingClientRect(), s = $('#stage').getBou
 function inspector(){
   const u = UI[lang], box = $('#insp');
   if(tool==='I'){ box.innerHTML = eyeHTML(); return; }
+  if(insTab==='g'){ box.innerHTML = glyphHTML(); return; }
   if(!sel){ box.innerHTML = '<div class="empty">'+u.none+' '+u.measure+'<div class="keys">'+u.keys.map(k=>'<kbd>'+k[0]+'</kbd><span>'+k[1]+'</span>').join('')+'</div></div>'; return; }
   const k = sel.dataset.k, E = edits()[sel.dataset.id]||{}, cs = getComputedStyle(sel), p = posOf(sel);
   if(insTab==='i'){ box.innerHTML = '<div class="grp"><div class="ttlv"><span class="ic">'+ICON[k]+'</span><span>'+esc(sel.dataset.n)+'</span></div><div class="k">'+u.kinds[k]+'</div></div>' + inspectHTML(sel, cs, p); return; }
@@ -725,6 +771,8 @@ stage.addEventListener('focusin', e=>{ if(e.target.closest('.pin')) return; cons
 
 /* ---------- klavye ---------- */
 addEventListener('keydown', e=>{
+  if(!$('#ck').hidden){ ckKey(e); return; }
+  if((e.metaKey||e.ctrlKey) && (e.key==='k'||e.key==='K'||e.key==='/')){ e.preventDefault(); ckOpen(); return; }
   if(!$('#lb').hidden){ if(/^[1-4]$/.test(e.key)){ ysSet(+e.key-1); return; } if(e.key==='Escape') closeLB(); else if(e.key==='ArrowRight') stepLB(1); else if(e.key==='ArrowLeft') stepLB(-1); return; }
   if(e.target.closest && e.target.closest('input, textarea, select')) return;
   const m = e.metaKey || e.ctrlKey, k = e.key;
@@ -739,6 +787,8 @@ addEventListener('keydown', e=>{
   if(m || e.altKey) return;
   if(e.shiftKey && (k===')'||k==='=' || e.code==='Digit0' || e.code==='Digit1')){ e.preventDefault(); setZoom(1); return; }
   if(k==='C' && e.shiftKey){ togglePins(); return; }
+  if((k==='R'||k==='r') && e.shiftKey && !m){ toggleRul(); return; }
+  if((k==='N'||k==='n') && e.shiftKey && !m){ toggleNav(); return; }
   if(k==='c'||k==='C'||k==='i'||k==='I'){ tool = 'I'; bar(); return; }
   if(k===' ' && !e.target.closest('button')){ e.preventDefault(); if(!space){ space = true; hov = null; bar(); } return; }
   if(k==='v'||k==='V'){ tool = 'V'; bar(); return; }
@@ -869,6 +919,9 @@ document.addEventListener('click', e=>{
   if(e.target.closest('#lb-prev')){ stepLB(-1); return; }
   if(e.target.closest('#lb-next')){ stepLB(1); return; }
   if(e.target.closest('#x-vcf')){ vcf(); return; }
+  if(e.target.closest('#nav-x')){ toggleNav(false); return; }
+  const gb = e.target.closest('[data-gl]'); if(gb){ const c = gb.dataset.gl; try{ navigator.clipboard.writeText(c).catch(()=>{}); }catch(err){} toast(c+' '+UI[lang].gCopied); return; }
+  const gwb = e.target.closest('[data-gw]'); if(gwb){ GW = +gwb.dataset.gw; inspector(); return; }
   if(e.target.closest('#x-pdf')){ download(PDF[lang][0], PDF[lang][1]); return; }
   if(e.target.closest('#copy')){ const b=e.target.closest('#copy'), u=UI[lang];
     try{ navigator.clipboard.writeText('raymeozgen@gmail.com').then(()=>{ b.textContent=u.copied; setTimeout(()=>b.textContent=u.copy,1600); }, ()=>{}); }catch(err){} return; }
@@ -912,7 +965,7 @@ function grids(){
     if(cs.display==='grid'){ g.style.gridTemplateColumns = cs.gridTemplateColumns; g.style.columnGap = cs.columnGap; g.innerHTML = cs.gridTemplateColumns.split(' ').map(()=>'<i></i>').join(''); }
     else g.classList.add('box');
     el.appendChild(g); });
-  olLabels();
+  olLabels(); drawGuides();
 }
 function toggleGrid(){ gridOn = !gridOn; document.body.classList.toggle('grid', gridOn); if(gridOn) grids(); $('#t-grid').setAttribute('aria-pressed', gridOn); }
 /* ---------- anahat ---------- */
@@ -965,6 +1018,100 @@ document.addEventListener('mouseleave', ()=>{ LP.hidden = true; });
 function toggleInsp(on){ const off = on==null ? !document.body.classList.contains('insp-off') : !on; document.body.classList.toggle('insp-off', off); $('#t-insp').setAttribute('aria-pressed', !off);
   try{ localStorage.setItem('insp-off', off ? '1' : ''); }catch(e){} dispatchEvent(new Event('resize')); }
 try{ if(localStorage.getItem('insp-off')) document.body.classList.add('insp-off'), $('#t-insp').setAttribute('aria-pressed', false); }catch(e){}
+/* ---------- görünüm yardımcıları: tuvalin ekrandaki kutusu ve sahne ölçeği ---------- */
+function view(){ const c = canvas.getBoundingClientRect(), dv = DEV.getBoundingClientRect(), s = $('#stage').getBoundingClientRect();
+  return {L:Math.max(c.left,dv.left,0), T:Math.max(c.top,dv.top,0), R:Math.min(c.right,dv.right,innerWidth), B:Math.min(c.bottom,dv.bottom,innerHeight), s, k:Z*FS}; }
+/* ---------- cetveller ve kılavuzlar ---------- */
+let rulOn = true, navOn = true, GW = 400; const GD = {};
+try{ if(localStorage.getItem('rul-off')) rulOn = false; if(localStorage.getItem('nav-off')) navOn = false; }catch(e){}
+function toggleRul(on){ rulOn = on==null ? !rulOn : on; try{ localStorage.setItem('rul-off', rulOn ? '' : '1'); }catch(e){} RS = ''; }
+function toggleNav(on){ navOn = on==null ? !navOn : on; try{ localStorage.setItem('nav-off', navOn ? '' : '1'); }catch(e){} NS = ''; }
+function drawRuler(cv, len, horiz, o, k){ const dpr = devicePixelRatio||1, w = horiz ? len : 20, h = horiz ? 20 : len;
+  cv.width = w*dpr; cv.height = h*dpr; cv.style.width = w+'px'; cv.style.height = h+'px';
+  const x = cv.getContext('2d'); x.setTransform(dpr,0,0,dpr,0,0); x.clearRect(0,0,w,h);
+  const cs = getComputedStyle(document.body), ink = cs.getPropertyValue('--mute').trim()||'#8E8E8A';
+  let step = [1,2,5,10,20,50,100,200,500,1000,2000].find(s=>s*k>=70)||5000; const sub = step*k/10>=6 ? 10 : 5;
+  x.fillStyle = ink; x.strokeStyle = ink; x.lineWidth = 1; x.font = '500 9.5px '+cs.getPropertyValue('--f'); x.textBaseline = 'top';
+  const a = Math.floor(-o/k/step)*step, b = (len-o)/k;
+  for(let v = a; v<=b+step; v += step/sub){ const p = Math.round(o+v*k)+.5, major = Math.abs(v/step-Math.round(v/step))<1e-6; const L = major ? 20 : 5;
+    x.beginPath(); if(horiz){ x.moveTo(p, 20-L); x.lineTo(p, 20); } else { x.moveTo(20-L, p); x.lineTo(20, p); } x.globalAlpha = major ? .7 : .45; x.stroke();
+    if(major){ x.globalAlpha = .95; const lab = String(Math.round(v)); if(horiz) x.fillText(lab, p+3, 3); else { x.save(); x.translate(3, p-3); x.rotate(-Math.PI/2); x.fillText(lab, 0, 0); x.restore(); } } }
+  x.globalAlpha = 1; }
+let RS = '', NS = '', NV = '';
+function drawGuides(){ document.querySelectorAll('#stage .guide').forEach(g=>g.remove()); const st = $('#stage');
+  (GD[key()]||[]).forEach((g,i)=>{ const d = document.createElement('div'); d.className = 'guide '+g.d; d.dataset.gi = i; d.style[g.d==='h' ? 'top' : 'left'] = g.v+'px'; st.appendChild(d); }); }
+function frameLoop(){
+  const show = !home && $('#lb').hidden && !document.body.classList.contains('is-print') && !isMob();
+  const V = show ? view() : null;
+  // cetveller
+  const rOn = show && rulOn, rh = $('#rh'), rv = $('#rv'), rc = $('#rc');
+  const rsig = rOn ? [V.L,V.T,V.R,V.B,Math.round(V.s.left*2),Math.round(V.s.top*2),V.k,document.body.className].join(',') : 'off';
+  if(rsig!==RS){ RS = rsig; rh.hidden = rv.hidden = rc.hidden = !rOn;
+    if(rOn){ rh.style.left = (V.L+20)+'px'; rh.style.top = V.T+'px'; rv.style.left = V.L+'px'; rv.style.top = (V.T+20)+'px'; rc.style.left = V.L+'px'; rc.style.top = V.T+'px';
+      drawRuler(rh.firstChild, Math.max(0, V.R-V.L-20), true, V.s.left-(V.L+20), V.k); drawRuler(rv.firstChild, Math.max(0, V.B-V.T-20), false, V.s.top-(V.T+20), V.k); } }
+  // gezgin
+  const nOn = show && navOn, nv = $('#nav');
+  if(!nOn){ if(!nv.hidden){ nv.hidden = true; NS = ''; } }
+  else { nv.hidden = false; nv.style.left = (V.R-188-14)+'px'; nv.style.top = (V.B-232-14)+'px';
+    const st = $('#stage'), sw = st.scrollWidth, sh = st.scrollHeight, cv = $('#nav-c'), W = 188, H = 200, sc = Math.min((W-16)/sw, (H-16)/sh), ox = (W-sw*sc)/2, oy = (H-sh*sc)/2;
+    const sig = [cur,lang,sw,sh,document.body.className, Object.keys(edits()).length, [...st.querySelectorAll('img')].filter(i=>i.complete&&i.naturalWidth).length].join(',');
+    const dpr = devicePixelRatio||1;
+    if(sig!==NS){ NS = sig; NB = document.createElement('canvas'); NB.width = W*dpr; NB.height = H*dpr; const x = NB.getContext('2d'); x.setTransform(dpr,0,0,dpr,0,0);
+      const S = st.getBoundingClientRect(), kk = Z*FS, rel = el=>{ const r = el.getBoundingClientRect(); return [ox+(r.left-S.left)/kk*sc, oy+(r.top-S.top)/kk*sc, r.width/kk*sc, r.height/kk*sc]; };
+      [...st.children].forEach(el=>{ if(el.classList.contains('guide') || el.classList.contains('olab')) return; const r = rel(el); if(!r[2]||!r[3]) return; const bg = getComputedStyle(el).backgroundColor;
+        x.fillStyle = (!bg || /rgba\(.*,\s*0\)$|transparent/.test(bg)) ? 'rgba(0,0,0,.06)' : bg; x.fillRect(r[0], r[1], r[2], r[3]); });
+      st.querySelectorAll('img').forEach(im=>{ const r = rel(im); if(r[2]<1||r[3]<1) return; try{ x.drawImage(im, r[0], r[1], r[2], r[3]); }catch(e){} }); NV = ''; }
+    const S = V.s, kk = V.k, vx = ox+(V.L-S.left)/kk*sc, vy = oy+(V.T-S.top)/kk*sc, vw = (V.R-V.L)/kk*sc, vh = (V.B-V.T)/kk*sc, vs = [vx,vy,vw,vh].map(Math.round).join(',')+NS;
+    if(vs!==NV){ NV = vs; cv.width = W*dpr; cv.height = H*dpr; const x = cv.getContext('2d'); x.setTransform(1,0,0,1,0,0); x.drawImage(NB, 0, 0); x.setTransform(dpr,0,0,dpr,0,0);
+      x.fillStyle = 'rgba(13,153,255,.08)'; x.fillRect(vx, vy, vw, vh); x.strokeStyle = '#0D99FF'; x.lineWidth = 1.5; x.strokeRect(vx+.75, vy+.75, Math.max(0,vw-1.5), Math.max(0,vh-1.5)); }
+    NG = {ox, oy, sc}; }
+  requestAnimationFrame(frameLoop); }
+let NB = null, NG = null;
+function navTo(e){ const b = $('#nav-c').getBoundingClientRect(), V = view(); if(!NG) return;
+  const sx = (e.clientX-b.left-NG.ox)/NG.sc, sy = (e.clientY-b.top-NG.oy)/NG.sc;
+  canvas.scrollLeft += (V.s.left + sx*V.k - (V.L+V.R)/2)/FS; canvas.scrollTop += (V.s.top + sy*V.k - (V.T+V.B)/2)/FS; }
+$('#nav-c').parentElement.addEventListener('pointerdown', e=>{ e.preventDefault(); e.stopPropagation(); navTo(e); const mv = ev=>navTo(ev), up = ()=>{ removeEventListener('pointermove', mv); removeEventListener('pointerup', up); };
+  addEventListener('pointermove', mv); addEventListener('pointerup', up); });
+// kılavuz sürükleme: cetvelden çek, tuvale bırak; cetvele geri bırakınca silinir
+addEventListener('pointerdown', e=>{
+  const g = e.target.closest && e.target.closest('#stage .guide'), fromR = e.target.closest && e.target.closest('#rh, #rv');
+  if(!g && !fromR) return; e.preventDefault(); e.stopImmediatePropagation();
+  const k_ = key(), L = GD[k_] || (GD[k_] = []);
+  let gi = g ? +g.dataset.gi : L.push({d: e.target.closest('#rh') ? 'h' : 'v', v: 0})-1; const d = L[gi].d, GL = $('#glab');
+  const at = ev=>{ const V = view(); return d==='h' ? (ev.clientY-V.s.top)/V.k : (ev.clientX-V.s.left)/V.k; };
+  const mv = ev=>{ L[gi].v = Math.round(at(ev)); drawGuides(); GL.hidden = false; GL.textContent = (d==='h' ? 'Y ' : 'X ')+L[gi].v; GL.style.transform = 'translate('+(ev.clientX+14)+'px,'+(ev.clientY+14)+'px)'; };
+  const up = ev=>{ removeEventListener('pointermove', mv, true); removeEventListener('pointerup', up, true); GL.hidden = true; const V = view();
+    if(d==='h' ? ev.clientY < V.T+20 : ev.clientX < V.L+20){ L.splice(gi,1); } drawGuides(); };
+  addEventListener('pointermove', mv, true); addEventListener('pointerup', up, true); mv(e); }, true);
+/* ---------- komut paleti ---------- */
+const ckn = s => String(s).toLocaleLowerCase('tr').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ı/g,'i');
+let CKI = [], CKS = 0;
+function ckItems(){ const u = UI[lang], P = sections().map(p=>({t:p.name, s:u.ckGo, run:()=>go(p.id)}));
+  return P.concat([
+    {t:u.ckOl, k:'⌘Y', run:toggleOl}, {t:u.ckGrid, k:'⌃G', run:toggleGrid}, {t:u.ckRul, k:'⇧R', run:()=>toggleRul()}, {t:u.ckNav, k:'⇧N', run:()=>toggleNav()},
+    {t:u.ckEye, k:'C', run:()=>{ tool = 'I'; bar(); }}, {t:u.ckPins, k:'⇧C', run:togglePins}, {t:u.ckGly, run:()=>{ insTab = 'g'; toggleInsp(true); tabs(); inspector(); }},
+    {t:u.ckInsp, run:()=>toggleInsp()}, {t:u.ckZ, k:'⇧0', run:()=>setZoom(1)}, {t:u.ckPdf, run:()=>download(PDF[lang][0], PDF[lang][1])}, {t:u.ckVcf, run:vcf},
+    {t:u.ckLang, run:()=>setLang(lang==='tr' ? 'en' : 'tr')}, {t:u.ckFiles, run:goHome}, {t:u.ckEgg, run:()=>toast(u.coffee)} ]); }
+function ckOpen(){ if(home) return; $('#ck').hidden = false; const i = $('#ck-i'); i.placeholder = UI[lang].ckPh; i.value = ''; CKS = 0; ckDraw(); i.focus(); }
+function ckClose(){ $('#ck').hidden = true; }
+function ckDraw(){ const q = ckn($('#ck-i').value.trim()), all = ckItems(); CKI = q ? all.filter(x=>ckn(x.t+' '+(x.s||'')).includes(q)) : all; CKS = Math.min(CKS, Math.max(0, CKI.length-1));
+  $('#ck-l').innerHTML = CKI.length ? CKI.map((x,i)=>'<li role="option" data-ci="'+i+'" class="'+(i===CKS ? 'on' : '')+'"><span>'+esc(x.t)+(x.s ? ' <small>'+esc(x.s)+'</small>' : '')+'</span>'+(x.k ? '<kbd>'+x.k+'</kbd>' : '')+'</li>').join('') : '<div class="none">'+UI[lang].ckNone+'</div>';
+  const on = $('#ck-l .on'); if(on) on.scrollIntoView({block:'nearest'}); }
+function ckRun(i){ const x = CKI[i]; ckClose(); if(x) x.run(); }
+function ckKey(e){ if(e.key==='Escape'){ e.preventDefault(); ckClose(); return; } if(e.key==='ArrowDown'||e.key==='ArrowUp'){ e.preventDefault(); CKS = (CKS + (e.key==='ArrowDown' ? 1 : -1) + CKI.length) % Math.max(1,CKI.length); ckDraw(); return; }
+  if(e.key==='Enter'){ e.preventDefault(); ckRun(CKS); } }
+$('#ck-i').addEventListener('input', ()=>{ CKS = 0; ckDraw(); });
+$('#ck').addEventListener('pointerdown', e=>{ e.stopPropagation(); const li = e.target.closest('[data-ci]'); if(li){ e.preventDefault(); ckRun(+li.dataset.ci); return; } if(!e.target.closest('.box')) ckClose(); });
+$('#ck-l').addEventListener('mousemove', e=>{ const li = e.target.closest('[data-ci]'); if(li && +li.dataset.ci!==CKS){ CKS = +li.dataset.ci; document.querySelectorAll('#ck-l li').forEach((x,i)=>x.classList.toggle('on', i===CKS)); } });
+/* ---------- glifler ---------- */
+const GLY = 'ABCÇDEFGĞHIİJKLMNOÖPQRSŞTUÜVWXYZabcçdefgğhıijklmnoöpqrsştuüvwxyz0123456789.,:;!?\'"’“”()[]{}&@#%+−×÷=/\\–—·•*€₺$';
+let GC = 'ğ';
+function glyphHTML(){ const u = UI[lang], c = GC, cp = 'U+'+c.codePointAt(0).toString(16).toUpperCase().padStart(4,'0');
+  return '<div class="grp"><div class="gp"><div class="big" id="g-big" style="font-weight:'+GW+'">'+esc(c)+'</div><b>Instrument Sans</b><span id="g-cp">'+cp+'</span></div>'
+    + '<div class="k">'+u.gW+'</div><div class="gw">'+[400,500,600,700].map(w=>'<button type="button" data-gw="'+w+'" aria-pressed="'+(w===GW)+'">'+w+'</button>').join('')+'</div>'
+    + '<div class="gg" style="font-weight:'+GW+'">'+[...GLY].map(g=>'<button type="button" data-gl="'+esc(g)+'" title="'+esc(g)+'">'+esc(g)+'</button>').join('')+'</div></div>'; }
+$('#insp').addEventListener('mouseover', e=>{ const b = e.target.closest('[data-gl]'); if(!b) return; GC = b.dataset.gl; const big = $('#g-big'); if(big){ big.textContent = GC; $('#g-cp').textContent = 'U+'+GC.codePointAt(0).toString(16).toUpperCase().padStart(4,'0'); } });
+requestAnimationFrame(frameLoop);
 /* ---------- küçük sürprizler ---------- */
 function toast(msg){ const T = $('#toast'); T.querySelector('span').textContent = msg; T.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(()=>T.classList.remove('on'), 3200); }
 function vcf(){ const v = ['BEGIN:VCARD','VERSION:3.0','N:Özgen;Rayme;;;','FN:Rayme Özgen','TITLE:'+(lang==='tr' ? 'Grafik Tasarımcı' : 'Graphic Designer'),'ADR;TYPE=WORK:;;;Ankara;;;'+(lang==='tr' ? 'Türkiye' : 'Türkiye'),
@@ -1000,7 +1147,7 @@ function measure(a, b, L, T){
 }
 
 /* ---------- incele ---------- */
-function tabs(){ const u = UI[lang]; $('#h-insp').innerHTML = '<div class="tabs"><button type="button" data-tab="d" aria-pressed="'+(insTab==='d')+'">'+u.design+'</button><button type="button" data-tab="i" aria-pressed="'+(insTab==='i')+'">'+u.inspect+'</button></div>'; }
+function tabs(){ const u = UI[lang]; $('#h-insp').innerHTML = '<div class="tabs"><button type="button" data-tab="d" aria-pressed="'+(insTab==='d')+'">'+u.design+'</button><button type="button" data-tab="i" aria-pressed="'+(insTab==='i')+'">'+u.inspect+'</button><button type="button" data-tab="g" aria-pressed="'+(insTab==='g')+'">'+u.glyphs+'</button></div>'; }
 const gcd = (a,b) => b ? gcd(b, a%b) : a;
 function inspectHTML(el, cs, p){
   const k = el.dataset.k, L = [], r1 = v => Math.round(v*10)/10;
