@@ -739,7 +739,7 @@ let drag = null, pan = null;
 const scroller = () => isMob() ? $('.app') : canvas;
 canvas.addEventListener('pointerdown', e=>{
   if(e.button!==0) return;
-  if((tool==='H'||space) && e.pointerType==='mouse'){ const s = scroller(); pan = {x:e.clientX, y:e.clientY, l:s.scrollLeft, t:s.scrollTop, s}; document.body.classList.add('panning'); e.preventDefault(); return; }
+  if((tool==='H'||space) && e.pointerType==='mouse'){ SPM = true; const s = scroller(); pan = {x:e.clientX, y:e.clientY, l:s.scrollLeft, t:s.scrollTop, s}; document.body.classList.add('panning'); e.preventDefault(); return; }
   if(tool==='I' && !space){ e.preventDefault(); eyeAt(e.target, e.clientX, e.clientY, true, e.pointerType!=='mouse'); return; }
   const deep = pick(e.target);
   if(!deep){ if(!e.target.closest('#copy, a, .pin, .cm')) select(null); return; }
@@ -774,7 +774,7 @@ stage.addEventListener('focusin', e=>{ if(e.target.closest('.pin')) return; cons
 
 /* ---------- klavye ---------- */
 addEventListener('keydown', e=>{
-  if(!$('#grav').hidden){ if(e.key==='Escape'||e.key==='Enter'){ e.preventDefault(); gravUp(); } return; }
+  if(!$('#grav').hidden){ if(e.key==='Escape'||e.key==='Enter'){ e.preventDefault(); gravUp(); } if(e.key===' ') e.preventDefault(); return; }
   if(!$('#ck').hidden){ ckKey(e); return; }
   if((e.metaKey||e.ctrlKey) && (e.key==='k'||e.key==='K'||e.key==='/')){ e.preventDefault(); ckOpen(); return; }
   if(!$('#lb').hidden){ if(/^[1-4]$/.test(e.key)){ ysSet(+e.key-1); return; } if(e.key==='Escape') closeLB(); else if(e.key==='ArrowRight') stepLB(1); else if(e.key==='ArrowLeft') stepLB(-1); return; }
@@ -796,7 +796,7 @@ addEventListener('keydown', e=>{
   if(k==='C' && e.shiftKey){ togglePins(); return; }
   if((k==='R'||k==='r') && e.shiftKey && !m){ toggleRul(); return; }
   if(k==='c'||k==='C'||k==='i'||k==='I'){ tool = 'I'; bar(); return; }
-  if(k===' ' && !e.target.closest('button')){ e.preventDefault(); if(!space){ space = true; hov = null; bar(); } return; }
+  if(k===' ' && !e.target.closest('button')){ e.preventDefault(); if(!space){ space = true; SPT = performance.now(); SPM = false; hov = null; bar(); } return; }
   if(k==='v'||k==='V'){ tool = 'V'; bar(); return; }
   if(k==='h'||k==='H'){ tool = 'H'; hov = null; bar(); return; }
   if(k==='Escape' && tool==='I'){ tool = 'V'; bar(); return; }
@@ -812,7 +812,10 @@ addEventListener('keydown', e=>{
   else if(dz && isImg(sel)){ e.preventDefault(); const b = Object.assign({}, edits()[sel.dataset.id]||{});
     setEd(sel, {s: Math.round(Math.max(0.2, Math.min(4, (b.s||1) + dz*(e.shiftKey?0.25:0.05)))*100)/100}); commit(sel, b); inspector(); }
 });
-addEventListener('keyup', e=>{ if(e.key===' ' && space){ space = false; bar(); } });
+let SPT = 0, SPM = false;
+addEventListener('keyup', e=>{ if(e.key!==' ') return;
+  if(!$('#grav').hidden){ if(!(e.target.closest && e.target.closest('input, textarea, button'))) gravUp(); return; }
+  if(space){ space = false; bar(); if(!SPM && performance.now()-SPT < 260 && typeof canGrav==='function' && canGrav()) gravity(); } });
 
 /* ---------- büyütme ---------- */
 function allF(){ const s=sections().find(s=>s.id===cur); const r=[]; if(s&&s.proj) s.proj.works.forEach((w,wi)=>w.frames.forEach((f,fi)=>r.push(wi+'-'+fi))); return r; }
