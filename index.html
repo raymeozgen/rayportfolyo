@@ -1144,7 +1144,7 @@ function gravity(){
     }
     // fareyle itme
     if(!GM.grab && now-GM.t<60){ const sp = Math.hypot(GM.vx, GM.vy); if(sp>200) GB.forEach(b=>{ if(GM.x>b.x-24 && GM.x<b.x+b.w+24 && GM.y>b.y-24 && GM.y<b.y+b.h+24){ b.vx += GM.vx*.35/Math.sqrt(b.m); b.vy += GM.vy*.35/Math.sqrt(b.m); if(b.small) b.va += (Math.random()-.5)*8; } }); }
-    GB.forEach(b=>{ if(!b.small) b.va = 0; b.va *= .995; const j = (b.wait>0 && b.wait<.32) ? Math.sin(now/26 + b.x0)*.16*(1-b.wait/.32) : 0; b.n.style.transform = 'translate('+b.x.toFixed(1)+'px,'+b.y.toFixed(1)+'px) rotate('+(b.a+j).toFixed(3)+'rad)'; });
+    GB.forEach(b=>{ b.va = 0; b.a = 0; const j = (b.wait>0 && b.wait<.32) ? Math.sin(now/26 + b.x0)*.16*(1-b.wait/.32) : 0; b.n.style.transform = 'translate('+b.x.toFixed(1)+'px,'+b.y.toFixed(1)+'px) rotate('+(b.a+j).toFixed(3)+'rad)'; });
     GRAF = requestAnimationFrame(step); };
   GRAF = requestAnimationFrame(step);
 }
